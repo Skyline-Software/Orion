@@ -1,0 +1,73 @@
+<RestClientRequest>
+  <option name="biscuits">
+    <list>
+      <Biscuit>
+        <option name="date" value="-1" />
+        <option name="domain" value="api.card.test" />
+        <option name="name" value="_csrf" />
+        <option name="path" value="/" />
+        <option name="value" value="5ccc6631b09c3c3fe9aecbb3677e962c01e7fc91c0f199220b48e9c9fbd6ec6ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%225ZtM9j1dDdhlMFhN2BpWf4EmYjFQ-7KG%22%3B%7D" />
+      </Biscuit>
+      <Biscuit>
+        <option name="date" value="-1" />
+        <option name="domain" value="api.card.test" />
+        <option name="name" value="PHPSESSID" />
+        <option name="path" value="/" />
+        <option name="value" value="b2ahn3ll1fvbnkevrrs8bqv3ku" />
+      </Biscuit>
+    </list>
+  </option>
+  <option name="httpMethod" value="POST" />
+  <option name="urlBase" value="http://api.card.test" />
+  <option name="urlPath" value="user/registration" />
+  <option name="headers">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="Accept" />
+        <option name="value" value="*/*" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cache-Control" />
+        <option name="value" value="no-cache" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Authorization" />
+        <option name="value" value="Bearer xu_Vt1-upfzG2_dtJYQkjgOA6PuMCm0h" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parameters">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="email" />
+        <option name="value" value="asd2@com.ru" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="password" />
+        <option name="value" value="49dcbe" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="name" />
+        <option name="value" value="test_rest" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="phone" />
+        <option name="value" value="+380662165871" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="address" />
+        <option name="value" value="asdasd2233232" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="type" />
+        <option name="value" value="1" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parametersEnabled" value="true" />
+  <option name="haveTextToSend" value="false" />
+  <option name="haveFileToSend" value="false" />
+  <option name="isFileUpload" value="false" />
+  <option name="textToSend" value="" />
+  <option name="filesToSend" value="" />
+</RestClientRequest>

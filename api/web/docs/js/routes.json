@@ -1,0 +1,3 @@
+{"base_url":"","routes":{"api_index":{"tokens":[["variable","/","v\\d+","version"],["text","/api"]],"defaults":[],"requirements":{"version":"v\\d+"},"hosttokens":[],"methods":["GET","POST"],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http"}
+
+

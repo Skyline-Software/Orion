@@ -1,0 +1,17 @@
+#app{
+    background: #f2f2f2;
+    max-width: 960px;
+    padding: 30px 10px;
+    margin: 30px auto;
+    border-radius: 7px;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+#app .nav .nav-item .nav-link.active {
+    color: #212529;
+    cursor: default;
+}
+
+#app .nav .nav-item .nav-link {
+    cursor: pointer;
+    color: #0062cc;
+}

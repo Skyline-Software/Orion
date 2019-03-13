@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Документация к API</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <span class="nav-link"
+                              v-bind:class="{active: !currentMethod && !currentModel}"
+                              v-on:click="showMain()" style="text-transform: uppercase;">Главная</span>
+                    </li>
+                    <li>
+                        <hr/>
+                    </li>
+                    <li class="nav-item">
+                            <span class="nav-link active" style="
+                            cursor: default; text-transform: uppercase;">Ответы</span></li>
+
+                    <li class="nav-item" v-for="model in models">
+                        <span class="nav-link"
+                              v-bind:class="{active: currentModel && currentModel.name === model.name}"
+                              v-on:click="setModel(model)">{{ model.name }}</span>
+                    </li>
+                    <li>
+                        <hr/>
+                    </li>
+                    <li class="nav-item">
+                            <span class="nav-link active" style="
+                            cursor: default; text-transform: uppercase;">Методы</span></li>
+                    <li class="nav-item" v-for="method in methods">
+                        <span class="nav-link"
+                              v-bind:class="{active: currentMethod && currentMethod.name === method.name}"
+                              v-on:click="setMethod(method)">{{ method.name }}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-9">
+                <div class="main-description" v-if="!currentMethod && !currentModel">
+                    <h2 class="text-center">Добро пожаловать на API UR</h2>
+                    <p>На данной странице вы можете изучить документацию по API UR.</p>
+                    <p>
+                        Endpoint URL:<br/>
+                        <b>https://api.ulitsarubinshteina.ru/</b>
+                    </p>
+                    <p>Данные отправляются POST запросом.</p>
+                    <p>
+                        После того, как будет выполнен Login и получен токен авторизации,
+                        данный токен обязательно нужно отправлять во все последующие запросы как HTTP заголовок с
+                        названием <b>Authorization</b>.
+                        В случае, если токен ошибочен, Вы получите ошибку status = fail и сообщение с ошибкой</p>
+                </div>
+                <div v-if="currentModel">
+                    <h2 class="text-center">{{ currentModel.name }}</h2>
+                    <div class="text-center" v-if="currentModel.description">{{ currentModel.description }}</div>
+                    <h3 class="text-center" v-if="currentModel.fields.length > 0">Поля</h3>
+                    <div v-if="currentModel.fields.length > 0">
+                        <table>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Тип</th>
+                                    <th>Описание</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="field in currentModel.fields">
+                                    <td>{{ field.name }}</td>
+                                    <td>
+                                        {{ field.type === 'int' ? 'Целое число' : '' }}
+                                        {{ field.type === 'string' ? 'Текстовое поле' : '' }}
+                                        {{ field.type === 'array' ? 'Массив' : '' }}
+                                        {{ field.type === 'UNIX_TIMESTAMP' ? 'UNIX TIMESTAMP' : '' }}
+                                        {{ field.type === 'DATE' ? 'DATE (dd.mm.yy)' : '' }}
+                                    </td>
+                                    <td>{{ field.description }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </div>
+                </div>
+                <div v-if="currentMethod">
+                    <h2 class="text-center">{{ currentMethod.name }}</h2>
+                    <div class="text-center" v-if="currentMethod.description">{{ currentMethod.description }}</div>
+                    <h3 class="text-center" v-if="currentMethod.parameters.length > 0 || currentMethod.secured">
+                        Параметры</h3>
+                    <div v-if="currentMethod.parameters.length > 0 || currentMethod.secured">
+                        <div v-if="currentMethod.secured">
+                            <p>Требуется передача токена в заголовке запроса</p>
+                        </div>
+                        <table class="table table-bordered" v-if="currentMethod.parameters.length > 0">
+                            <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Тип</th>
+                                <th>Описание</th>
+                                <th>Обязательный</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="parameter in currentMethod.parameters">
+                                <td>{{ parameter.name }}</td>
+                                <td>
+                                    {{ parameter.type === 'file' ? 'Файл' : '' }}
+                                    {{ parameter.type === 'text' ? 'Строка' : '' }}
+                                    {{ parameter.type === 'DATE(dd.mm.yy)' ? 'DATE(dd.mm.yy)' : '' }}
+                                </td>
+                                <td>{{ parameter.description }}</td>
+                                <td>{{ parameter.required ? 'Да' : 'Нет' }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p v-if="currentMethod.name === 'messages.send'">В данном методе необходимо передать параметр text
+                        или image на выбор. Нельзя передать или опустить оба параметра в запросе.</p>
+                    <h3 class="text-center" v-if="currentMethod.resultDescription">Результат выполнения</h3>
+                    <div v-if="currentMethod.resultDescription" v-html="currentMethod.resultDescription"></div>
+                    <h3 class="text-center" v-if="currentMethod.errorCodes.length > 0">Коды ошибок</h3>
+                    <div v-if="currentMethod.errorCodes.length > 0">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Код</th>
+                                <th>Значение</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="code in currentMethod.errorCodes">
+                                <td>{{ code.code }}</td>
+                                <td>{{ code.message }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="jumbotron">
+                        <h1 class="display-4">Тест метода</h1>
+                        <hr class="my-4">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <form id="test-form" v-bind:method="currentMethod.httpMethod"
+                                      v-on:submit.prevent="sendForm">
+                                    <div class="form-row" v-if="currentMethod.secured">
+                                        <div class="form-group">
+                                            <label for="form_token">token</label>
+                                            <input id="form_token" class="form-control" type="text" name="token"
+                                                   v-bind:value="authToken"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-row" v-for="parameter in currentMethod.parameters">
+                                        <div v-if="parameter.type === 'text'" class="form-group">
+                                            <label v-bind:for="'form_' + parameter.name">{{ parameter.name }}</label>
+                                            <input v-bind:id="'form_' + parameter.name" class="form-control" type="text"
+                                                   v-bind:name="parameter.name" value=""/>
+                                        </div>
+                                        <div v-if="parameter.type === 'DATE(dd.mm.yy)'" class="form-group">
+                                            <label v-bind:for="'form_' + parameter.name">{{ parameter.name }}</label>
+                                            <input v-bind:id="'form_' + parameter.name" class="form-control" type="text"
+                                                   v-bind:name="parameter.name" value=""/>
+                                        </div>
+                                        <div v-if="parameter.type === 'file'" class="form-group">
+                                            <label>
+                                                {{ parameter.name }}
+                                                <input type="file" v-bind:name="parameter.name"/>
+                                            </label>
+                                        </div>
+                                        <div v-if="parameter.type === 'checkbox'" class="form-group">
+                                            <label>
+                                                {{ parameter.name }}&nbsp;&nbsp;
+                                                <input type="checkbox" v-bind:name="parameter.name"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-primary" value="Выполнить"/>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="method" v-bind:value="currentMethod.name"/>
+                                </form>
+                            </div>
+                            <div class="col-sm-8" >
+                                <code>
+                                    {{ response | json }}
+                                </code>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    'use strict';
+    let methods = [];
+    let models = [
+        {
+            "name": "User",
+            "description": "Сущность пользователя",
+            "fields": [
+                {
+                "name": "id",
+                "description": "ID пользователя в системе",
+                "type": "int"
+                },
+                {
+                    "name": "email",
+                    "description": "E-mail пользователя",
+                    "type": "string"
+                },{
+                    "name": "created_at",
+                    "description": "Дата регистрации",
+                    "type": "UNIX_TIMESTAMP"
+                },/*{
+                    "name": "status",
+                    "description": "Статус, -1 = Заблокирован, 0 - Активен, > 0 = ожидает активации",
+                    "type": "string"
+                },*/{
+                    "name": "name",
+                    "description": "ФИО",
+                    "type": "string"
+                },{
+                    "name": "phone",
+                    "description": "Номер телефона",
+                    "type": "string"
+                },{
+                    "name": "sex",
+                    "description": "Пол 0/1 муж./жен.",
+                    "type": "string"
+                },{
+                    "name": "birthday",
+                    "description": "Дата рождения",
+                    "type": "DATE"
+                },{
+                    "name": "photo",
+                    "description": "Изображение",
+                    "type": "string"
+                },{
+                    "name": "language",
+                    "description": "Язык, доступные значения: 2 символа языка (ru/en/...)",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "Cards",
+            "description": "Сущность карты",
+            "fields": [
+                {
+                    "name": "id",
+                    "description": "ID карты",
+                    "type": "int"
+                },{
+                    "name":"name",
+                    "description": "Тип карты",
+                    "type": "string"
+                },{
+                    "name":"photo",
+                    "description": "Изображение",
+                    "type": "string"
+                },{
+                    "name":"support_phone",
+                    "description": "Номер телефона поддержки",
+                    "type": "string"
+                },
+                {
+                    "name": "valid",
+                    "description": "Дата до которой активна карта",
+                    "type": "UNIX_TIMESTAMP"
+                },{
+                    "name": "number",
+                    "description": "Номер карты",
+                    "type": "string"
+                },{
+                    "name": "activated",
+                    "description": "Дата активации",
+                    "type": "UNIX_TIMESTAMP"
+                },
+            ]
+        },
+        {
+            "name": "Card Types",
+            "description": "Сущность типа карты",
+            "fields": [
+                {
+                    "name": "id",
+                    "description": "ID типа карты",
+                    "type": "int"
+                },
+                {
+                    "name":"name",
+                    "description": "Название типа карты",
+                    "type": "string"
+                },{
+                    "name":"description",
+                    "description": "Описание типа карты",
+                    "type": "string"
+                },{
+                    "name":"photo",
+                    "description": "Изображение",
+                    "type": "string"
+                },{
+                    "name":"support_phone",
+                    "description": "Номер телефона службы поддержки",
+                    "type": "string"
+                },{
+                    "name":"price",
+                    "description": "Стоимость/руб.",
+                    "type": "string"
+                },{
+                    "name":"validity",
+                    "description": "Срок действия (дней)",
+                    "type": "string"
+                },
+            ]
+        },
+        {
+            "name": "Certs",
+            "description": "Сущность сертификата",
+            "fields": [
+                {
+                    "name": "id",
+                    "description": "ID сертификата",
+                    "type": "int"
+                },
+                {
+                    "name": "value",
+                    "description": "Номинал сертификата",
+                    "type": "string"
+                },
+                {
+                    "name": "created_at",
+                    "description": "Дата покупки",
+                    "type": "UNIX_TIMESTAMP"
+                },
+                {
+                    "name": "number",
+                    "description": "Номер сертификата",
+                    "type": "string"
+                },
+                {
+                    "name": "partner_id",
+                    "description": "ID заведения",
+                    "type": "string"
+                },
+                {
+                    "name": "name",
+                    "description": "Название заведения",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "Partners",
+            "description": "Сущность заведения",
+            "fields": [
+                {
+                "name": "id",
+                "description": "ID заведения",
+                "type": "int"
+                }, {
+                "name": "category_id",
+                "description": "список ID категорий заведений",
+                "type": "int"
+                },{
+                "name": "can_buy_ur",
+                "description": "Возможность приорберсти карту UR 0/1 нет/да",
+                "type": "int"
+                },{
+                "name": "can_accept_cert",
+                "description": "Возможность расчета сертификатом 0/1 нет/да",
+                "type": "int"
+                },{
+                "name": "name",
+                "description": "Название заведения",
+                "type": "string"
+                },{
+                "name": "description",
+                "description": "Описание заведения",
+                "type": "string"
+                },{
+                "name": "website",
+                "description": "Ссылка на сайт заведения",
+                "type": "string"
+                },{
+                "name": "instagram",
+                "description": "Ссылка на instagram заведения",
+                "type": "string"
+                },{
+                "name": "token",
+                "description": "Токен заведения",
+                "type": "string"
+                },{
+                "name": "logo",
+                "description": "Логотип заведения",
+                "type": "string"
+                },{
+                "name": "header_photo",
+                "description": "Фото в шапку заведения",
+                "type": "string"
+                },{
+                "name": "addresses",
+                "description": "Адресы заведений, телефоны,  координаты находятся в полях lat/long",
+                "type": "array"
+                },{
+                "name": "work_time",
+                "description": "Время работы заведений",
+                "type": "array"
+                },{
+                "name": "photos",
+                "description": "Галерея заведения",
+                "type": "array"
+                },{
+                "name": "category",
+                "description": "Список данных категорий заведения",
+                "type": "array"
+                },{
+                "name": "favorite",
+                "description": "Избранное 0 - нет, 1 - да",
+                "type": "int"
+                },{
+                "name": "avg_invoice",
+                "description": "Средний чек",
+                "type": "int"
+                },{
+                "name": "stocks",
+                "description": "Скидки по заведению, массив ответов Stocks",
+                "type": "array"
+                },
+            ]
+        },
+        {
+            "name": "Partners category",
+            "description": "Сущность категории заведения",
+            "fields": [
+                {
+                    "name": "id",
+                    "description": "ID категории",
+                    "type": "int"
+                },{
+                    "name": "name",
+                    "description": "Название категории",
+                    "type": "string"
+                },{
+                    "name": "icon",
+                    "description": "Иконка",
+                    "type": "string"
+                },{
+                    "name": "child",
+                    "description": "Дочерние категории (массив PartnerCategory)",
+                    "type": "array"
+                },
+            ]
+        },
+        {
+            "name": "Stocks",
+            "description": "Сущность акции",
+            "fields": [
+                {
+                "name": "id",
+                "description": "ID акции",
+                "type": "int"
+                },{
+                "name": "card_type_id",
+                "description": "ID типа карты",
+                "type": "int"
+                },{
+                "name": "discount",
+                "description": "Скидка по акции (без указания знака %)",
+                "type": "string"
+                },{
+                "name": "description",
+                "description": "Описание акции",
+                "type": "string"
+                },{
+                "name": "hot",
+                "description": "Акция 0 - нет, 1 - да",
+                "type": "string"
+                },{
+                "name": "description",
+                "description": "Описание",
+                "type": "string"
+                },/*{
+                "name": "category",
+                "description": "Категории где скидка активна",
+                "type": "array"
+                },{
+                "name": "partner",
+                "description": "Заведения где скидка активна",
+                "type": "array"
+                },*/
+
+            ]
+        },
+        {
+            "name": "Sales",
+            "description": "Ответ история скидок",
+            "fields": [
+                {
+                "name": "amount",
+                "description": "Общая сумма c учетом скидки",
+                "type": "string"
+                },{
+                "name": "saved",
+                "description": "Сколько сэкономлено",
+                "type": "string"
+                },{
+                "name": "partner",
+                "description": "Заведение и категории заведения, name = Название заведеиня, categories = Категории заведения",
+                "type": "array"
+                },{
+                "name": "date",
+                "description": "Дата операции",
+                "type": "DATE"
+                },
+
+            ]
+        },
+    ];
+    let method;
+    methods.push({
+        name: '/user/login',
+        description: 'Авторизация пользователя',
+        resultDescription: 'В случае успеха возвращает token зарегистрированного пользователя',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [
+            {
+                name: 'email',
+                description: 'Email пользователя',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'pass',
+                description: 'Пароль пользователя',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'device',
+                description: 'Устройство.  Доступные значения: desktop, android, iphone',
+                required: false,
+                type: 'text'
+            },{
+                name: 'code',
+                description: 'Код активации',
+                required: false,
+                type: 'text'
+            },
+        ],
+        errorCodes: [
+            {
+                code: 'INVALID_EMAIL_OR_PASS',
+                message: 'Некорретный логин или пароль'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },
+            {
+                code: 'EMAIL_IS_EMPTY',
+                message: 'Параметр email не передан или пуст'
+            },
+            {
+                code: 'PASS_IS_EMPTY',
+                message: 'Параметр pass не передан или пуст'
+            },{
+                code: 'USER_NOT_FOUND',
+                message: 'Пользователь с таким email не найден'
+            },{
+                code: 'MUST_BE_EMAIL',
+                message: 'Email должен быть валидным емейлом'
+            },{
+                code: 'PASS_MUST_BE_PASSWORD',
+                message: 'Пароль должен быть валидным'
+            },{
+                code: 'DEVICE_MUST_BE_STRING',
+                message: 'Device должен быть строкой'
+            },{
+                code: 'DEVICE_MUST_BE_FROM_RANGE',
+                message: 'Значение не соответсвует достпуным (desktop,android,ios)'
+            },{
+                code: 'INCORRECT_INT_LONG_MIN_9',
+                message: 'Некоретная длинна значения минимум 9'
+            },{
+                code: 'INCORRECT_INT_LONG_MIN_9',
+                message: 'Некоретная длинна значения максимум 9'
+            },{
+                code: 'BANNED_BY_ADMIN',
+                message: 'Пользователь забанен админом'
+            },{
+                code: 'INVALID_CODE',
+                message: 'Неверный код активации'
+            },
+
+        ]
+    });
+    methods.push({
+        name: '/user/push-token',
+        description: 'Добавление PUSH TOKEN',
+        resultDescription: 'В случае успеха возвращает пустой ответ',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'push_token',
+                description: 'Токен аутентификации',
+                required: true,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'TOKEN_NOT_SET',
+                message: 'Не передан параметр token'
+            },
+            {
+                code: 'PUSH_TOKEN_NOT_SET',
+                message: 'Не передан параметр push_token'
+            },
+            {
+                code: 'AUTH_NOT_FOUND',
+                message: 'Запись Auth не найдена'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            }, {
+                code: 'PUSH_TOKEN_IS_EMPTY',
+                message: 'PUSH_TOKEN не передан или пуст'
+            },{
+                code: 'PUSH_TOKEN_MUST_BE_A_STRING',
+                message: 'PUSH_TOKEN должен быть строкой'
+            },
+        ]
+    });
+    methods.push({
+        name: '/user/registration',
+        description: 'Регистрация пользователя',
+        resultDescription: 'В ходе успешного выполнения будет возвращена ответ User.',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [
+            {
+                name: 'email',
+                description: 'Email пользователя',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'password',
+                description: 'Пароль пользователя',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'name',
+                description: 'ФИО пользователя',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'phone',
+                description: 'Номер телефона пользователя',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'sex',
+                description: 'Пол 0/1 муж./жен.',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'birthday',
+                description: 'Дата рождения',
+                required: false,
+                type: 'DATE(dd.mm.yy)'
+            },
+            {
+                name: 'photo',
+                description: 'Изображение',
+                required: false,
+                type: 'file'
+            },
+            {
+                name: 'language',
+                description: 'Язык, доступные значения: 2 символа языка (ru/en/...)' ,
+                required: false,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'EXCEPTION',
+                message: 'Исключительная ошибка (содержание передается в поле message)'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            }, {
+                code: 'EMAIL_IS_EMPTY',
+                message: 'Email не передан или пуст'
+            },{
+                code: 'PASSWORD_IS_EMPTY',
+                message: 'Пароль не передан или пуст'
+            },{
+                code: 'NAME_IS_EMPTY',
+                message: 'Name не передан или пуст'
+            },{
+                code: 'INVALID_EMAIL',
+                message: 'Email должен быть валидным емейлом'
+            },{
+                code: 'NOT_UNIQUE_EMAIL',
+                message: 'Email уже занят кем-то другим'
+            },{
+                code: 'NOT_IN_RANGE_0_OR_1',
+                message: 'Неккоретное значение доступны для выбора или 0 или 1'
+            },{
+                code: 'MUST_BE_INTEGER',
+                message: 'Должно быть целым числом'
+            },{
+                code: 'INVALID_FORMAT_D.M.Y',
+                message: 'Формат даты должен соответствовать php:d.m.y или 12.04.91'
+            },{
+                code: 'INCORRECT_STRING_LONG_MIN_4',
+                message: 'Минимальная длинна значения 4 символов'
+            },{
+                code: 'INCORRECT_STRING_LONG_MIN_6',
+                message: 'Минимальная длинна значения 6 символов'
+            },{
+                code: 'INCORRECT_STRING_LONG_MAX_20',
+                message: 'Максимальная длинна значения 20 символов'
+            },{
+                code: 'LANGUAGE_MUST_BE_2_CHAR',
+                message: 'Значение должно быть из 2 знаков'
+            },
+
+        ]
+    });
+    methods.push({
+        name: '/user/logout',
+        description: 'Завершение текущей сессии',
+        resultDescription: 'В случае успеха возвращает пустой результат',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [],
+        errorCodes: [
+            {
+                code: 'INVALID_TOKEN',
+                message: 'Передан неверный токен авторизации'
+            },
+            {
+                code: 'TOKEN_NOT_SET',
+                message: 'Параметр token не передан'
+            },
+        ]
+    });
+    methods.push({
+        name: '/user/profile',
+        description: 'Полученние данных профиля пользователя',
+        resultDescription: 'В случае успеха вовращает ответ User',
+        httpMethod: 'GET',
+        secured: true,
+        parameters: [
+
+        ],
+        errorCodes: [
+            {
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь не авторизован, отсутствует токен'
+            },
+        ]
+    });
+    methods.push({
+        name: '/user/profile/edit',
+        description: 'Редактирование данных профиля пользователя',
+        resultDescription: 'В случае успеха вовращает обновленную ответ User',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'pass',
+                description: 'Пароль',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'name',
+                description: 'ФИО пользователя',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'phone',
+                description: 'Номер телефона пользователя',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'sex',
+                description: 'Пол 0/1 муж./жен.',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'birthday',
+                description: 'Дата рождения',
+                required: false,
+                type: 'DATE(dd.mm.yy)'
+            },
+            {
+                name: 'photo',
+                description: 'Изображение',
+                required: false,
+                type: 'file'
+            },
+            {
+                name: 'delPhoto',
+                description: 'Удаляем фото? (1 - да, 0 - нет)',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'language',
+                description: 'Язык, доступные значения: 2 символа языка (ru/en/...)' ,
+                required: false,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь не авторизован, отсутствует токен'
+            },{
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },
+            {
+                code: 'NAME_IS_EMPTY',
+                message: 'Name не передан или пуст'
+            },{
+                code: 'INVALID_EMAIL',
+                message: 'Email должен быть валидным емейлом'
+            },{
+                code: 'NOT_UNIQUE_EMAIL',
+                message: 'Email уже занят кем-то другим'
+            },{
+                code: 'NOT_IN_RANGE_0_OR_1',
+                message: 'Неккоретное значение доступны для выбора или 0 или 1'
+            },{
+                code: 'MUST_BE_INTEGER',
+                message: 'Должно быть целым числом'
+            },{
+                code: 'INVALID_FORMAT_D.M.Y',
+                message: 'Формат даты должен соответствовать php:d.m.y или 12.04.91'
+            },{
+                code: 'INCORRECT_STRING_LONG_MIN_4',
+                message: 'Минимальная длинна значения 4 символов'
+            },{
+                code: 'INCORRECT_STRING_LONG_MIN_6',
+                message: 'Минимальная длинна значения 6 символов'
+            },{
+                code: 'INCORRECT_STRING_LONG_MAX_20',
+                message: 'Максимальная длинна значения 20 символов'
+            },{
+                code: 'LANGUAGE_MUST_BE_2_CHAR',
+                message: 'Значение должно быть из 2 знаков'
+            },
+
+        ]
+    });
+
+    methods.push({
+        name: '/user/reset/request',
+        description: 'Запрос на сброс пароля',
+        resultDescription: 'В случае успеха возвращает пустой результат',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [
+            {
+                name: 'email',
+                description: 'Почта пользователя',
+                required: true,
+                type: 'text'
+            },
+
+        ],
+        errorCodes: [
+            {
+                code: 'EXCEPTION',
+                message: 'Исключительная ошибка (содержание передается в поле message)'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },{
+                code: 'EMAIL_IS_EMPTY',
+                message: 'Email не передан или пуст'
+            },{
+                code: 'EMAIL_MUST_BE_VALID_EMAIL',
+                message: 'Email должен быть валидным емейлом'
+            },{
+                code: 'USER_NOT_FOUND',
+                message: 'Пользователь с таким email не найден'
+            }
+        ]
+    });
+    methods.push({
+        name: '/user/reset/confirm',
+        description: 'Подтверждение пароля',
+        resultDescription: 'В случае успеха возвращает пустой результат',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [
+            {
+                name: 'token',
+                description: 'Токен сброса пароля',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'pass',
+                description: 'Новый пароль',
+                required: true,
+                type: 'text'
+            },
+        ],
+        errorCodes: [
+            {
+                code: 'EXCEPTION',
+                message: 'Исключительная ошибка (содержание передается в поле message)'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            }, {
+                code: 'TOKEN_IS_EMPTY',
+                message: 'Token не передан или пуст'
+            },{
+                code: 'PASS_IS_EMPTY',
+                message: 'Пароль не передан или пуст'
+            },{
+                code: 'INVALID_RESET_TOKEN',
+                message: 'Некоректный токен сброса пароля'
+            },
+        ]
+    });
+    methods.push({
+        name: '/user/buy/cert',
+        description: 'Покупка сертификата',
+        resultDescription: 'В случае успеха возвращает ответ Certs',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'nominal',
+                description: 'Номинал сертификата',
+                required: true,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь на авторизован'
+            },
+            {
+                code: 'NOMINAL_NOT_IN_RANGE',
+                message: 'Номинал сертификата меньше минимального'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            }, {
+                code: 'CERT_ID_IS_EMPTY',
+                message: 'CERT_ID не передан или пуст'
+            },{
+                code: 'CERT_ID_MUST_BE_A_INTEGER',
+                message: 'CERT_ID должен быть целым числом'
+            },
+        ]
+    });
+    methods.push({
+        name: '/user/buy/card',
+        description: 'Покупка карты',
+        resultDescription: 'В случае успеха возвращает номер карты',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'card_type_id',
+                description: 'ID типа карты',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'name',
+                description: 'ФИО',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'phone',
+                description: 'Телефон',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'address',
+                description: 'Адрес',
+                required: false,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'NO_FREE_CARDS',
+                message: 'Свободных карт данного типа не осталось'
+            },{
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь не авторизован'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },{
+                code: 'CARD_TYPE_ID_IS_EMPTY',
+                message: 'CARD_TYPE_ID не передан или пуст'
+            },{
+                code: 'CARD_TYPE_ID_MUST_BE_A_INTEGER',
+                message: 'CARD_TYPE_ID должен быть целым числом'
+            },
+        ]
+    });
+    methods.push({
+        name: '/user/favorites/add',
+        description: 'Добавление в избранное',
+        resultDescription: 'В случае успеха возвращает пустой ответ',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'partner_id',
+                description: 'ID заведения',
+                required: true,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'PARTNER_NOT_FOUND',
+                message: 'Заведение с таким id не найдено'
+            }, {
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь не авторизован'
+            },{
+                code: 'ALREADY_IN',
+                message: 'Заведение уже добавленно в избранное'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },{
+                code: 'ID_IS_EMPTY',
+                message: 'partner_id не передан или пуст'
+            },{
+                code: 'ID_MUST_BE_INTEGER',
+                message: 'partner_id должен быть целым числом'
+            },
+
+        ]
+    });
+    methods.push({
+        name: '/user/favorites/remove',
+        description: 'Удаление из избранного',
+        resultDescription: 'В случае успеха возвращает пустой ответ',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'partner_id',
+                description: 'ID заведения',
+                required: true,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь не авторизован'
+            },{
+                code: 'NOT_IN_YOUR_FAVORITES',
+                message: 'Данного заведения нет в избранном'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },{
+                code: 'ID_IS_EMPTY',
+                message: 'partner_id не передан или пуст'
+            },{
+                code: 'ID_MUST_BE_INTEGER',
+                message: 'partner_id должен быть целым числом'
+            },
+
+        ]
+    });
+
+    methods.push({
+        name: '/cert/list',
+        description: 'Список сертификатов',
+        resultDescription: 'В случае успеха возвращает массив ответов Certs',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [],
+        errorCodes: [
+            {
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь на авторизован'
+            },
+        ]
+    });
+    methods.push({
+        name: '/cert/value',
+        description: 'Номиналы сертификатов',
+        resultDescription: 'В случае успеха возвращает массив ответов Certs',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [],
+        errorCodes: [
+        ]
+    });
+
+    methods.push({
+        name: '/card/activate',
+        description: 'Активация карты',
+        resultDescription: 'В случае успеха возвращает пустой ответ',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'number',
+                description: 'Номер карты',
+                required: true,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+          {
+                code: 'CARD_ALREADY_ACTIVATED',
+                message: 'Карта уже активирована'
+            },{
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь не авторизован'
+            },{
+                code: 'CARD_EXPIRED',
+                message: 'Карта была деактивирована'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },{
+                code: 'NUMBER_IS_EMPTY',
+                message: 'Параметр не передан или пуст'
+            },{
+                code: 'CARD_NOT_FOUND',
+                message: 'Карта не найдена'
+            }
+        ]
+    });
+    methods.push({
+        name: '/card/deactivate',
+        description: 'Деактивация карты',
+        resultDescription: 'В случае успеха возвращает пустой ответ',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'number',
+                description: 'Номер карты',
+                required: true,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'CARD_NUMBER_NOT_SET',
+                message: 'Параметр number не передан'
+            },{
+                code: 'CARD_NOT_FOUND',
+                message: 'Карта с таким номером не найдена'
+            },{
+                code: 'CARD_ALREADY_DEACTIVATED',
+                message: 'Карта уже деактивирована'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },
+            {
+                code: 'CARD_NOT_FOUND',
+                message: 'Карта не найдена'
+            }
+        ]
+    });
+    methods.push({
+        name: '/card/discounts',
+        description: 'Скидки по карте',
+        resultDescription: 'В случае успеха возвращает список скидок с пагинацией(items - массив ответов Sales, totalCount - всего итемов по этому запросу)',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'offset',
+                description: 'Cмещение относительно первого найденного item для выборки определенного подмножества.',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'count',
+                description: 'количество возвращаемых item.',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'number',
+                description: 'Номер карты',
+                required: true,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'CARD_NUMBER_NOT_SET',
+                message: 'Параметр number не передан'
+            },{
+                code: 'CARD_NOT_FOUND',
+                message: 'Карта с таким номером не найдена'
+            }
+        ]
+    });
+    methods.push({
+        name: '/card/list',
+        description: 'Список карт пользователя',
+        resultDescription: 'В случае успеха возвращает массив ответов Cards',
+        httpMethod: 'GET',
+        secured: true,
+        parameters: [],
+        errorCodes: [
+            {
+                code: 'NOT_LOGGED_IN',
+                message: 'Пользователь не авторизован'
+            },
+        ]
+    });
+    methods.push({
+        name: '/card/types',
+        description: 'Список типов карт',
+        resultDescription: 'В случае успеха будет возвращен массив ответов Card Types',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [],
+        errorCodes: []
+    });
+
+    methods.push({
+        name: '/partner/sale/register',
+        description: 'Фиксация скидки по карте',
+        resultDescription: 'В случае успеха будет возвращен ответ Sales',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [
+            {
+                name: 'token',
+                description: 'Токен заведения',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'card_number',
+                description: 'Номер карты',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'amount',
+                description: 'Сумма с учетом скидки',
+                required: false,
+                type: 'text'
+            }
+        ],
+        errorCodes: [
+            {
+                code: 'NON_ACTIVATED_CARD',
+                message: 'Попытка оформления скидки с неактивированной картой'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },
+            {
+                code: 'PARTNER_NOT_FOUND_BY_THIS_TOKEN',
+                message: 'По данному токену заведение не найдено'
+            },{
+                code: 'CARD_NUMBER_IS_EMPTY',
+                message: 'Параметр не установлен или пуст'
+            },{
+                code: 'CARD_NOT_FOUNT_BY_THIS_NUMBER',
+                message: 'По данному номеру карта не найдена'
+            },{
+                code: 'TOKEN_IS_EMPTY',
+                message: 'Параметр не установлен или пуст'
+            },{
+                code: 'MUST_BE_INTEGER',
+                message: 'Параметр должен быть целым числом'
+            }
+
+        ]
+    });
+    methods.push({
+        name: '/partner/sale/use-cert',
+        description: 'Погашение сертификата',
+        resultDescription: 'В случае успеха будет возвращен ответ Sales',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [
+            {
+                name: 'token',
+                description: 'Токен заведения',
+                required: true,
+                type: 'text'
+            },
+            {
+                name: 'cert_num',
+                description: 'Код сертификата',
+                required: false,
+                type: 'text'
+            },
+        ],
+        errorCodes: [
+            {
+                code: 'PARTNER_NOT_FOUND_BY_THIS_TOKEN',
+                message: 'По данному токену заведение не найдено'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            }, {
+                code: 'TOKEN_IS_EMPTY',
+                message: 'Параметр не установлен или пуст'
+            },{
+                code: 'CERT_IS_NOT_FOUND',
+                message: 'Сертификат не найден'
+            },{
+                code: 'USED_CERT',
+                message: 'Сертификат уже использован'
+            },
+
+        ]
+    });
+    methods.push({
+        name: '/partner/list',
+        description: 'Список заведений с фильтрацией',
+        resultDescription: 'В случае успеха будет возвращен список с пагинацией (items - массив ответов Partners, totalCount = всего итемов по этому запросу)',
+        httpMethod: 'POST',
+        secured: true,
+        parameters: [
+            {
+                name: 'offset',
+                description: 'Cмещение относительно первого найденного item для выборки определенного подмножества.',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'count',
+                description: 'количество возвращаемых item.',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'name',
+                description: 'Название заведения',
+                required: false,
+                type: 'text'
+            },{
+                name: 'categories',
+                description: 'ID категорий (разделитель запятая)',
+                required: false,
+                type: 'text'
+            },{
+                name: 'cardTypes',
+                description: 'ID типов карт(разделитель запятая)',
+                required: false,
+                type: 'text'
+            },{
+                name: 'favorites',
+                description: 'Избранное 0/1 нет/да, обязательна авторизация пользователя заголовком',
+                required: false,
+                type: 'text'
+            },{
+                name: 'can_buy_ur',
+                description: 'Возможность приобрести карту UR 0/1 нет/да',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'x1',
+                description: 'Lat левого верхнего угла',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'x2',
+                description: 'Lat правого нижнего угла',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'y1',
+                description: 'Long левого верхнего угла',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'y2',
+                description: 'Long правого нижнего угла',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'action',
+                description: 'Только с акциями 0/1 нет/да',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'action_from',
+                description: 'Размер скидки от',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'action_to',
+                description: 'Размер скидки до',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'certificats',
+                description: 'Только с приемом сертификатов 0/1 нет/да',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'avg_invoice_from',
+                description: 'Средний чек от',
+                required: false,
+                type: 'text'
+            },
+            {
+                name: 'avg_invoice_to',
+                description: 'Средний чек до',
+                required: false,
+                type: 'text'
+            }
+
+
+        ],
+        errorCodes: []
+    });
+    methods.push({
+        name: '/partner/view',
+        description: 'Данные по заведению',
+        resultDescription: 'В случае успеха будет возвращен ответ Partner',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [
+            {
+                name: 'id',
+                description: 'ID заведения',
+                required: true,
+                type: 'text'
+            }
+
+        ],
+        errorCodes: [
+            {
+                code: 'PARTNER_NOT_FOUND',
+                message: 'Заведение не найдено'
+            },
+            {
+                code: 'INVALID_INPUT',
+                message: 'Ошибка валидации данных в ответе содержит errors, ошибки будут описаны ниже'
+            },{
+                code: 'ID_IS_EMPTY',
+                message: 'Параметр пуст или не передан'
+            },{
+                code: 'ID_MUST_BE_INTEGER',
+                message: 'Параметр должен быть целым числом'
+            },
+        ]
+    });
+    methods.push({
+        name: '/partner/categories/list',
+        description: 'Список категорий заведений',
+        resultDescription: 'В случае успеха будет возвращен массив ответов PartnerCategory',
+        httpMethod: 'POST',
+        secured: false,
+        parameters: [],
+        errorCodes: []
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
+</html>
