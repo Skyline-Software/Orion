@@ -53,9 +53,12 @@ $this->title = 'Редактирование профиля';
                         ]
                     ],
                     [
+                        'title' => 'Роль',
                         'name'  => 'role',
-                        'type' => 'hiddenInput',
-                        'defaultValue' => \core\entities\user\User::ROLE_AGENCY_ADMIN
+                        'type' => \kartik\select2\Select2::class,
+                        'options' => [
+                            'data' => \core\helpers\user\UserHelper::roleList()
+                        ]
                     ],
                     [
                         'name'  => 'created_at',

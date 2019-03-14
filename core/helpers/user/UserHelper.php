@@ -18,7 +18,7 @@ class UserHelper
     public static function roleList(): array
     {
         return [
-            User::ROLE_ADMIN => 'глобал админ',
+            User::ROLE_ADMIN => 'Администратор',
             User::ROLE_CUSTOMER => 'Пользователь',
             User::ROLE_AGENCY_ADMIN => 'Администратор агентства',
             User::ROLE_AGENT => 'Агент',
