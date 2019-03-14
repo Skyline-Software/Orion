@@ -74,7 +74,6 @@ class AgencyAdminController extends Controller
     }
 
     public function actionEdit($id){
-
         try{
             $user = $this->loadUser($id);
         }catch (NotFoundExeption $e){
@@ -101,6 +100,7 @@ class AgencyAdminController extends Controller
     }
 
     public function actionDelete($id){
+
         try{
             $this->customerService->delete($id);
             \Yii::$app->session->setFlash('success','Пользователь успешно удален');
@@ -113,6 +113,7 @@ class AgencyAdminController extends Controller
     }
 
     public function actionView($id){
+
         try{
             $customer = $this->loadUser($id);
         }catch (NotFoundExeption $e){
@@ -126,6 +127,9 @@ class AgencyAdminController extends Controller
 
     public function loadUser($id):?User
     {
+        if(array_search($id,Yii::$app->user->getIdentity()->getUserAllowIDs()) === false){
+            throw new Exception('Нет прав',400);
+        }
         if(!$user = User::findOne(['id'=>$id])){
             throw new NotFoundExeption('Пользователь не найден');
         }

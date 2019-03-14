@@ -384,4 +384,19 @@ class User extends ActiveRecord implements IdentityInterface
         return false;
 
     }
+
+
+
+    public function getUserAllowIDs():array
+    {
+        $ids = [];
+        foreach ($this->agencies as $agency){
+            /* @var Agency $agency*/
+            $agencyIds = array_map(function($user){
+                return $user->id;
+            }, $agency->users);
+            $ids += $agencyIds;
+        }
+        return $ids;
+    }
 }

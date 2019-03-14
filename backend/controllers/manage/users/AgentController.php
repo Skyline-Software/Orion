@@ -17,6 +17,7 @@ use core\forms\manage\user\CustomerForm;
 use core\repositories\NotFoundExeption;
 use core\useCase\user\AdminAgencyService;
 use Yii;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -126,6 +127,9 @@ class AgentController extends Controller
 
     public function loadUser($id):?User
     {
+        if(array_search($id,Yii::$app->user->getIdentity()->getUserAllowIDs()) === false){
+            throw new Exception('Нет прав',400);
+        }
         if(!$user = User::findOne(['id'=>$id])){
             throw new NotFoundExeption('Пользователь не найден');
         }
