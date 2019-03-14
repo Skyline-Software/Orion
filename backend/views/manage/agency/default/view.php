@@ -14,6 +14,7 @@ $this->title = 'Детальная карточка агентства';
                     <div class="col-md-8 ">
                         <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
                             <?= Html::a('К списку', ['index'], ['class' => 'btn btn-primary']) ?>
+                            <?php if(Yii::$app->user->getIdentity()->isAdmin()){ ?>
                             <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
                             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
@@ -22,9 +23,11 @@ $this->title = 'Детальная карточка агентства';
                                     'method' => 'post',
                                 ],
                             ]) ?>
+                            <?php } ?>
                         </div>
                         <div class="btn-group btn-group-sm hidden-lg btn-group btn-group-justified hidden-md hidden-sm" role="group">
                             <?= Html::a('К списку', ['index'], ['class' => 'btn btn-info']) ?>
+                            <?php if(Yii::$app->user->getIdentity()->isAdmin()){ ?>
                             <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
                             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
@@ -33,6 +36,7 @@ $this->title = 'Детальная карточка агентства';
                                     'method' => 'post',
                                 ],
                             ]) ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
