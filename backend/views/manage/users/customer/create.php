@@ -26,7 +26,7 @@ select[0].disabled = true;
                 0 => 'Активен',
                 -1 => 'Заблокирован',
 
-            ],['prompt'=>'Ожидает активации'])->label('Статус'); ?>
+            ])->label('Статус'); ?>
             <?= $form->field($model->profile,'birthday')->widget(\kartik\widgets\DatePicker::class,[
                 'pluginOptions' => [
                     'autoclose'=>true,
