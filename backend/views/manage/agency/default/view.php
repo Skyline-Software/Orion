@@ -54,7 +54,15 @@ $this->title = 'Детальная карточка агентства';
                             return date(Yii::$app->params['dateFormat']." H:i",(int)$model->created_at);
                         }
                     ],
-                    'status:boolean',
+                    [
+                        'label' => 'Статус',
+                        'value' => function($model){
+                            if($model->status){
+                                return 'Вкл.';
+                            }
+                            return 'Выкл.';
+                        }
+                    ],
                 ],
             ]) ?>
 
@@ -62,20 +70,18 @@ $this->title = 'Детальная карточка агентства';
     </div>
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Пользователи и роли</h3>
+            <h3 class="box-title">Администраторы агентства</h3>
         </div>
         <div class="box-body">
             <table class="table-condensed table">
                 <thead>
                 <th>Пользователь</th>
-                <th>Роль</th>
                 <th>Время назначения</th>
                 </thead>
                 <tbody>
                 <?php foreach ($model->getUserAssn()->andFilterWhere(['role'=>\core\entities\user\User::ROLE_AGENCY_ADMIN])->all() as $assn){ ?>
                     <tr>
                         <td><?= $assn->user->name; ?></td>
-                        <td><?= \core\helpers\user\UserHelper::roleName($assn->role); ?></td>
                         <td><?= date(Yii::$app->params['dateFormat']." H:i",(int)$assn->created_at); ?></td>
                     </tr>
                 <?php } ?>
