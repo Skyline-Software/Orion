@@ -12,8 +12,6 @@ $this->title = 'Детальная карточка клиента';
                     </div>
                     <div class="col-md-8 ">
                         <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
-                            <?= Html::a('Карты клиента', ['/manage/card/card/index','CardSearch[client_id]'=>$model->id], ['class' => 'btn btn-primary']) ?>
-                            <?= Html::a('Полученные скидки', ['/site/sale-history','SaleSearch[user_id]'=>$model->id], ['class' => 'btn btn-primary']) ?>
                             <?= Html::a('К списку', ['index'], ['class' => 'btn btn-primary']) ?>
                             <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
                             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
@@ -83,6 +81,30 @@ $this->title = 'Детальная карточка клиента';
                     ],
                 ],
             ]) ?>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Агентства и роли</h3>
+        </div>
+        <div class="box-body">
+            <table class="table-condensed table">
+                <thead>
+                <th>Агентство</th>
+                <th>Роль</th>
+                <th>Время назначения</th>
+                </thead>
+                <tbody>
+                <?php foreach ($model->agencyAssn as $assn){ ?>
+                    <tr>
+                        <td><?= $assn->agency->name; ?></td>
+                        <td><?= \core\helpers\user\UserHelper::roleName($assn->role); ?></td>
+                        <td><?= date(Yii::$app->params['dateFormat']." H:i",(int)$assn->created_at); ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
