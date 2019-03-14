@@ -387,8 +387,13 @@ class User extends ActiveRecord implements IdentityInterface
 
 
 
-    public function getUserAllowIDs():array
+    public function getUserAllowIDs()
     {
+        if($this->isAdmin()){
+            return array_map(function ($user){
+                return $user['id'];
+            },User::find()->select(['id'])->asArray()->all());
+        }
         $ids = [];
         foreach ($this->agencies as $agency){
             /* @var Agency $agency*/

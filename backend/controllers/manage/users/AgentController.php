@@ -83,6 +83,9 @@ class AgentController extends Controller
             \Yii::$app->errorHandler->logException($e);
             return $this->redirect('index');
         }
+        if(!Yii::$app->user->getIdentity()->isUserHasAdminRights()){
+                throw new Exception('Нет прав',400);
+        }
 
         $form = new AgencyAdminForm($user);
         if($form->load(\Yii::$app->request->post()) && $form->validate()){
@@ -102,6 +105,9 @@ class AgentController extends Controller
     }
 
     public function actionDelete($id){
+        if(!Yii::$app->user->getIdentity()->isUserHasAdminRights()){
+            throw new Exception('Нет прав',400);
+        }
         try{
             $this->customerService->delete($id);
             \Yii::$app->session->setFlash('success','Пользователь успешно удален');
@@ -114,6 +120,9 @@ class AgentController extends Controller
     }
 
     public function actionView($id){
+        if(!Yii::$app->user->getIdentity()->isUserHasAdminRights()){
+            throw new Exception('Нет прав',400);
+        }
         try{
             $customer = $this->loadUser($id);
         }catch (NotFoundExeption $e){
