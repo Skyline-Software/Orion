@@ -18,6 +18,11 @@ $this->title = 'Создание нового администратора';
                 0 => 'Мужской',
                 1 => 'Женский',
             ]); ?>
+            <?= $form->field($model,'status')->dropDownList([
+                0 => 'Активен',
+                -1 => 'Заблокирован',
+
+            ])->label('Статус'); ?>
             <?= $form->field($model->profile,'birthday')->widget(\kartik\widgets\DatePicker::class,[
                 'pluginOptions' => [
                     'autoclose'=>true,

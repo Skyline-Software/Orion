@@ -54,7 +54,8 @@ class AgencyAdminForm extends CompositeForm
     {
         if(!$this->_user){
             return [
-                [['email','password'],'safe'],
+                [['email','password','status'],'safe'],
+                [['status'],'default','value' => "0"],
                 ['email', 'email'],
                 ['email', 'string', 'max' => 255],
                 [['email'], 'unique', 'targetClass' => User::class, 'message' => 'Этот E-mail уже занят.']

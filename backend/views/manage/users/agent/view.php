@@ -54,6 +54,13 @@ $this->title = 'Детальная карточка агента';
                     'email:email',
                     'name',
                     'phone',
+                    [
+                        'label'=>'Статус',
+                        'format'=>'raw',
+                        'value' =>function($model){
+                            return \core\helpers\user\UserHelper::statusLabel($model->status);
+                        }
+                    ],
                 ],
             ]) ?>
         </div>
