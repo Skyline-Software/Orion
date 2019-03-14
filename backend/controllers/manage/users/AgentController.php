@@ -34,7 +34,7 @@ class AgentController extends Controller
     {
         $searchModel = new AgentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        Yii::$app->getUser()->setReturnUrl(['/manage/users/agent/index']);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

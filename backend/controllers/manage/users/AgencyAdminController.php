@@ -33,7 +33,7 @@ class AgencyAdminController extends Controller
     {
         $searchModel = new AgencyAdminSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        Yii::$app->getUser()->setReturnUrl(['/manage/users/agency-admin/index']);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
