@@ -38,6 +38,8 @@ class CustomerService
             ),
             $form->status
         );
+
+        $admin->agencyAssn = $form->agencies->config;
         $this->userRepository->save($admin);
         return $admin;
     }
@@ -52,7 +54,8 @@ class CustomerService
                 $form->birthday,
                 $form->language,
                 ArrayHelper::getValue($post,'photo')
-            )
+            ),
+            $form->status
         );
 
         $customer->save();
@@ -73,6 +76,7 @@ class CustomerService
             ),
             $form->status
         );
+        $admin->agencyAssn = $form->agencies->config;
         $this->userRepository->save($admin);
         return $admin;
     }

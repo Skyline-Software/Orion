@@ -88,7 +88,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user->photo = $profile->photo;
 
         $user->created_at = time();
-        if($status){
+        if(is_string($status)){
             $user->status = $status;
         }else{
             $user->status = rand(100000000,999999999);
