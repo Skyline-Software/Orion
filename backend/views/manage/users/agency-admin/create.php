@@ -45,7 +45,7 @@ $this->title = 'Создание нового администратора';
             <?= $form->field($model->agencies, 'config')->widget(\unclead\multipleinput\MultipleInput::className(), [
                 'addButtonPosition' => \unclead\multipleinput\MultipleInput::POS_FOOTER,
                 'sortable' => false,
-                'min'=>1,
+                'min'=>0,
                 'columnClass' => \common\widgets\mapPickerMulti\MultipleInputColumn::class,
                 'columns' => [
                     [
