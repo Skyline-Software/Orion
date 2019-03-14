@@ -56,6 +56,7 @@ $this->title = 'Создание нового администратора';
                         'title' => 'Роль',
                         'name'  => 'role',
                          'type' => \kartik\select2\Select2::class,
+                        'defaultValue'=>\core\entities\user\User::ROLE_AGENCY_ADMIN,
                         'options' => [
                             'data' => \core\helpers\user\UserHelper::agencyRoleList()
                         ]

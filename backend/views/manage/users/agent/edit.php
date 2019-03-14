@@ -56,6 +56,7 @@ $this->title = 'Редактирование профиля';
                         'title' => 'Роль',
                         'name'  => 'role',
                         'type' => \kartik\select2\Select2::class,
+                        'defaultValue'=>\core\entities\user\User::ROLE_AGENT,
                         'options' => [
                             'data' => \core\helpers\user\UserHelper::agencyRoleList()
                         ]
