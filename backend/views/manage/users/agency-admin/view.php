@@ -61,12 +61,12 @@ $this->title = 'Детальная карточка администратора
 
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Агенства и роли</h3>
+            <h3 class="box-title">Агентства и роли</h3>
         </div>
         <div class="box-body">
             <table class="table-condensed table">
                 <thead>
-                <th>Агенство</th>
+                <th>Агентство</th>
                 <th>Роль</th>
                 <th>Время назначения</th>
                 </thead>

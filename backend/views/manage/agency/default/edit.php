@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use kartik\widgets\Select2;
 use yii\web\JsExpression;
-$this->title = 'Редактирование агенства';
+$this->title = 'Редактирование агентства';
 ?>
 <div class="user-create">
     <div class="box">

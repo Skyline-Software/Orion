@@ -3,7 +3,7 @@ use yii\bootstrap\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 /* @var $model \core\entities\agency\Agency */
-$this->title = 'Детальная карточка агенства';
+$this->title = 'Детальная карточка агентства';
 ?>
 <div class="user-view">
     <div class="box ">
@@ -18,7 +18,7 @@ $this->title = 'Детальная карточка агенства';
                             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить агенство?',
+                                    'confirm' => 'Вы уверены что хотите удалить агентство?',
                                     'method' => 'post',
                                 ],
                             ]) ?>
@@ -29,7 +29,7 @@ $this->title = 'Детальная карточка агенства';
                             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить агенство?',
+                                    'confirm' => 'Вы уверены что хотите удалить агентство?',
                                     'method' => 'post',
                                 ],
                             ]) ?>
@@ -40,7 +40,7 @@ $this->title = 'Детальная карточка агенства';
 
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">О агенстве</h3>
+            <h3 class="box-title">О агентстве</h3>
         </div>
         <div class="box-body">
             <?= DetailView::widget([

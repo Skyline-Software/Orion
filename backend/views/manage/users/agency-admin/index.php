@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\forms\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Администраторы агенств';
+$this->title = 'Администраторы агентств';
 ?>
 <div class="orders-index">
     <div class="box">
@@ -17,10 +17,10 @@ $this->title = 'Администраторы агенств';
             </div>
             <div class="col-md-8 ">
                 <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
-                    <?= Html::a('Добавить администратора агенства', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Добавить администратора агентства', ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
                 <div class="btn-group btn-group-sm hidden-lg btn-group btn-group-justified hidden-md hidden-sm" role="group">
-                    <?= Html::a('Добавить администратора агенства', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Добавить администратора агентства', ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
             </div>
         </div>

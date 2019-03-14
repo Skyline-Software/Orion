@@ -45,7 +45,7 @@ $this->title = 'Редактирование профиля';
                 'columns' => [
                     [
                         'name'  => 'agency_id',
-                        'title' => 'Агенство',
+                        'title' => 'Агентство',
                         'enableError' => true,
                         'type' => \kartik\select2\Select2::class,
                         'options' => [
@@ -63,7 +63,7 @@ $this->title = 'Редактирование профиля';
                         'defaultValue' => time()
                     ]
                 ]
-            ])->label('Агенства'); ?>
+            ])->label('Агентства'); ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Сохранить',['class'=>'btn btn-primary']); ?>

@@ -41,7 +41,7 @@ class DefaultController extends Controller
                     $form->status
                 );
                 $agency->save();
-                \Yii::$app->session->setFlash('success','Агенство успешно создано');
+                \Yii::$app->session->setFlash('success','Агентство успешно создано');
                 return $this->redirect(['view','id'=>$agency->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -74,7 +74,7 @@ class DefaultController extends Controller
                 );
                 $model->save();
 
-                \Yii::$app->session->setFlash('success','Агенство отредактировано');
+                \Yii::$app->session->setFlash('success','Агентство отредактировано');
                 return $this->redirect(['view','id'=>$model->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -91,7 +91,7 @@ class DefaultController extends Controller
         try{
             $model = $this->load($id);
             $model->delete();
-            \Yii::$app->session->setFlash('success','Агенство успешно удалено');
+            \Yii::$app->session->setFlash('success','Агентство успешно удалено');
         }catch (\RuntimeException | NotFoundExeption $e){
             \Yii::$app->session->setFlash('error',$e->getMessage());
             \Yii::$app->errorHandler->logException($e);
@@ -115,7 +115,7 @@ class DefaultController extends Controller
     public function load($id):? Agency
     {
         if(!$model = Agency::findOne(['id'=>$id])){
-            throw new NotFoundExeption('Агенство не найдено');
+            throw new NotFoundExeption('Агентство не найдено');
         }
 
         return $model;

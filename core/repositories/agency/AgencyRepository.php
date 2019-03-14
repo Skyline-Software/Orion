@@ -17,7 +17,7 @@ class AgencyRepository
     public function get($id):Agency
     {
         if(!$user =  Agency::findOne(['id'=>$id])){
-            throw new NotFoundExeption('Агенство не найдено');
+            throw new NotFoundExeption('Агентство не найдено');
         }
         return $user;
     }
