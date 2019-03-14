@@ -10,6 +10,7 @@ namespace core\forms;
 
 
 use core\entities\Rows;
+use core\helpers\AgencyHelper;
 use yii\base\Model;
 
 /**
@@ -42,8 +43,17 @@ class MultipleInputForm extends Model
     public function rules()
     {
         return [
-            [['config'],'safe']
+            [['config'],'safe'],
+            ['config', 'checkIsAllow'],
         ];
+    }
+
+    public function checkIsAllow($attr,$param){
+        foreach ($this->config as $row){
+            if(array_search($row['agency_id'],AgencyHelper::getAllowedAgenciesIds()) === false){
+                $this->addError('config', "У вас нет прав для данного действия");
+            }
+        }
     }
 
     public function getId():int

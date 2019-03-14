@@ -30,4 +30,20 @@ class AgencyHelper
                 ->all(),'id','name'
         );
     }
+
+    public static function getAllowedAgenciesIds():array
+    {
+        $user = \Yii::$app->user->getIdentity();
+        if(!$user->isAdmin()){
+            $agencies = array_map(function ($item){
+                return $item['id'];
+            },$user->getAgencies()->select('id')->asArray()->all());
+            return $agencies;
+        }
+
+        return \yii\helpers\ArrayHelper::map(
+            \core\entities\agency\Agency::find()
+                ->all(),'id','name'
+        );
+    }
 }

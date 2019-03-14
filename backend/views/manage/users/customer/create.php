@@ -49,7 +49,7 @@ select[0].disabled = true;
             <?= $form->field($model->agencies, 'config')->widget(\unclead\multipleinput\MultipleInput::className(), [
                 'addButtonPosition' => \unclead\multipleinput\MultipleInput::POS_FOOTER,
                 'sortable' => false,
-                'min'=>0,
+                'min'=>1,
                 'columnClass' => \common\widgets\mapPickerMulti\MultipleInputColumn::class,
                 'columns' => [
                     [
