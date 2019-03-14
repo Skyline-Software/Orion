@@ -30,6 +30,7 @@ class UserHelper
         return [
             User::ROLE_AGENCY_ADMIN => 'Администратор агентства',
             User::ROLE_AGENT => 'Агент',
+            User::ROLE_CUSTOMER => 'Пользователь'
         ];
     }
 
