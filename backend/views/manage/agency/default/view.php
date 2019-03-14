@@ -72,7 +72,7 @@ $this->title = 'Детальная карточка агентства';
                 <th>Время назначения</th>
                 </thead>
                 <tbody>
-                <?php foreach ($model->userAssn as $assn){ ?>
+                <?php foreach ($model->getUserAssn()->andFilterWhere(['role'=>\core\entities\user\User::ROLE_AGENCY_ADMIN])->all() as $assn){ ?>
                     <tr>
                         <td><?= $assn->user->name; ?></td>
                         <td><?= \core\helpers\user\UserHelper::roleName($assn->role); ?></td>
