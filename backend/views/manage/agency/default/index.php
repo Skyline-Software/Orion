@@ -86,6 +86,9 @@ $this->title = 'Агентства';
                         'template' => '{activate}{view}{edit}{delete}',
                         'buttons' => [
                             'activate' => function ($url, $model, $key) {
+                                if(!Yii::$app->user->getIdentity()->isAdmin()){
+                                    return '';
+                                }
                                 if($model->status === \core\entities\agency\Agency::STATUS_INACTIVE){
                                     return Html::a('<i class="fa fa-play"></i>',['/manage/agency/change/activate','id'=>$model->id],['class'=>'btn']);
                                 }
@@ -95,9 +98,15 @@ $this->title = 'Агентства';
                                 return Html::a('<i class="fa fa-eye" title="Детальная информация"></i>',$url,['class'=>'btn']);
                             },
                             'edit' => function ($url, $model, $key) {
+                                if(!Yii::$app->user->getIdentity()->isAdmin()){
+                                    return '';
+                                }
                                 return Html::a('<i class="fa fa-edit" title="Редактирование"></i>',$url,['class'=>'btn']);
                             },
                             'delete' => function ($url, $model, $key) {
+                                if(!Yii::$app->user->getIdentity()->isAdmin()){
+                                    return '';
+                                }
                                 return Html::a('<i class="fa fa-trash" title="Удаление"></i>',$url,['class'=>'btn','data' => [
                                     'confirm' => 'Вы уверены что хотите удалить компанию?',
                                     'method' => 'post',
