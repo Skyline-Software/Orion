@@ -57,7 +57,7 @@ $this->title = 'Редактирование профиля';
                         'name'  => 'role',
                         'type' => \kartik\select2\Select2::class,
                         'options' => [
-                            'data' => \core\helpers\user\UserHelper::roleList()
+                            'data' => \core\helpers\user\UserHelper::agencyRoleList()
                         ]
                     ],
                     [

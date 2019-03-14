@@ -25,6 +25,14 @@ class UserHelper
         ];
     }
 
+    public static function agencyRoleList(): array
+    {
+        return [
+            User::ROLE_AGENCY_ADMIN => 'Администратор агентства',
+            User::ROLE_AGENT => 'Агент',
+        ];
+    }
+
     public static function roleName($status): string
     {
         return ArrayHelper::getValue(self::roleList(), $status);
