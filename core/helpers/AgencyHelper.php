@@ -9,6 +9,8 @@
 namespace core\helpers;
 
 
+use core\entities\agency\Agency;
+
 class AgencyHelper
 {
     public static function getAllowedAgencies():array
@@ -41,9 +43,9 @@ class AgencyHelper
             return $agencies;
         }
 
-        return \yii\helpers\ArrayHelper::map(
-            \core\entities\agency\Agency::find()
-                ->all(),'id','name'
-        );
+        $agencies = array_map(function ($item){
+            return $item['id'];
+        },Agency::find()->select(['id'])->asArray()->all());
+        return $agencies;
     }
 }
