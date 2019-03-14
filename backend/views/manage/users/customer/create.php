@@ -64,6 +64,7 @@ select[0].disabled = true;
                     [
                         'title' => 'Роль',
                         'name'  => 'role',
+                        'defaultValue'=>\core\entities\user\User::ROLE_CUSTOMER,
                         'type' => \kartik\select2\Select2::class,
                         'options' => [
                             'data' => \core\helpers\user\UserHelper::agencyRoleList()
