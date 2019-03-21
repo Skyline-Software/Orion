@@ -40,6 +40,9 @@ class AdminAgencyService
             $form->status
         );
         $admin->agencyAssn = $form->agencies->config;
+        $admin->coordinates = $form->coordinates;
+        $admin->working_status = $form->working_status;
+        $admin->price = $form->price;
         $this->userRepository->save($admin);
         return $admin;
     }
@@ -59,6 +62,9 @@ class AdminAgencyService
             $form->status
         );
         $admin->agencyAssn = $form->agencies->config;
+        $admin->coordinates = $form->coordinates;
+        $admin->working_status = $form->working_status;
+        $admin->price = $form->price;
         $this->userRepository->save($admin);
 
         return $admin;

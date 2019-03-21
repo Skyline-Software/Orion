@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a9b8b64efef2cc7140b2b3ae32e8022",
+    "content-hash": "c8b82ea1ffc9fe13ab1660fa983486c2",
     "packages": [
         {
             "name": "2amigos/yii2-editable-widget",
@@ -479,12 +479,12 @@
             "version": "4.x-dev",
             "source": {
                 "type": "git",
-                "url": "git@github.com:ivaynberg/select2.git",
+                "url": "https://github.com/select2/select2.git",
                 "reference": "14a059d7eedfd97fc530ac63852c0ee22324df48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/14a059d7eedfd97fc530ac63852c0ee22324df48",
+                "url": "https://api.github.com/repos/select2/select2/zipball/14a059d7eedfd97fc530ac63852c0ee22324df48",
                 "reference": "14a059d7eedfd97fc530ac63852c0ee22324df48",
                 "shasum": null
             },
@@ -5435,6 +5435,48 @@
                 "xunit"
             ],
             "time": "2018-09-08T15:14:29+00:00"
+        },
+        {
+            "name": "pigochu/yii2-jquery-locationpicker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pigochu/yii2-jquery-locationpicker.git",
+                "reference": "7fdc1567eb17d0993ebe0850958530f6fddfdca0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pigochu/yii2-jquery-locationpicker/zipball/7fdc1567eb17d0993ebe0850958530f6fddfdca0",
+                "reference": "7fdc1567eb17d0993ebe0850958530f6fddfdca0",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery-locationpicker-plugin": ">=0.1.15"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "pigolab\\locationpicker\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pigo Chu",
+                    "email": "pigochu@gmail.com"
+                }
+            ],
+            "description": "jquery location picker widget for yii2",
+            "homepage": "https://github.com/pigochu/yii2-jquery-locationpicker",
+            "keywords": [
+                "extension",
+                "locationpicker",
+                "yii2"
+            ],
+            "time": "2018-06-27T02:16:39+00:00"
         },
         {
             "name": "psr/http-message",

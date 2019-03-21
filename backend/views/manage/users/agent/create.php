@@ -3,6 +3,7 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 $this->title = 'Создание нового агента';
 ?>
 <div class="user-create">
@@ -11,6 +12,7 @@ $this->title = 'Создание нового агента';
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->field($model,'email')->textInput(['maxLength'=>'255']); ?>
             <?= $form->field($model,'password')->passwordInput(['maxLength'=>'255']); ?>
+            <?= $form->field($model,'price')->textInput(['maxLength'=>'255']); ?>
 
             <?= $form->field($model->profile,'name')->textInput(['maxLength'=>'255']); ?>
             <?= $form->field($model->profile,'phone')->widget(\yii\widgets\MaskedInput::class,['mask'=>'+9(999) 999 99 99']); ?>
@@ -41,6 +43,38 @@ $this->title = 'Создание нового агента';
                 'ru' => 'Ru',
                 'en' => 'En',
             ]); ?>
+
+            <?= $form->field($model,'working_status')->dropDownList(\core\helpers\user\AgentHelper::roleList()); ?>
+
+            <?=
+            $form->field($model, 'coordinates')->widget('\pigolab\locationpicker\CoordinatesPicker' , [
+                'key' => 'AIzaSyATAHGMoZ0B9U2akKcrFESRwETYlWC_4s0' ,	// require , Put your google map api key
+                'valueTemplate' => '{latitude},{longitude}' , // Optional , this is default result format
+                'options' => [
+                    'style' => 'width: 100%; height: 400px',  // map canvas width and height
+                ] ,
+                'enableSearchBox' => true , // Optional , default is true
+                'searchBoxOptions' => [ // searchBox html attributes
+                    'style' => 'width: 300px;', // Optional , default width and height defined in css coordinates-picker.css
+                ],
+                'searchBoxPosition' => new JsExpression('google.maps.ControlPosition.TOP_LEFT'), // optional , default is TOP_LEFT
+                'mapOptions' => [
+                    // google map options
+                    // visit https://developers.google.com/maps/documentation/javascript/controls for other options
+                    'mapTypeControl' => true, // Enable Map Type Control
+                    'mapTypeControlOptions' => [
+                        'style'    => new JsExpression('google.maps.MapTypeControlStyle.HORIZONTAL_BAR'),
+                        'position' => new JsExpression('google.maps.ControlPosition.TOP_LEFT'),
+                    ],
+                    'streetViewControl' => false, // Enable Street View Control
+                ],
+                'clientOptions' => [
+                    // jquery-location-picker options
+                    #'radius'    => 300,
+                    'addressFormat' => 'street_number',
+                ]
+            ]);
+            ?>
 
             <?= $form->field($model->agencies, 'config')->widget(\unclead\multipleinput\MultipleInput::className(), [
                 'addButtonPosition' => \unclead\multipleinput\MultipleInput::POS_FOOTER,

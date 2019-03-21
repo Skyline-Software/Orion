@@ -1,5 +1,6 @@
 <?php
 use yii\bootstrap\Html;
+use yii\web\JsExpression;
 use yii\widgets\DetailView;
 /* @var $model \core\entities\user\User */
 $this->title = 'Детальная карточка агента';
@@ -54,6 +55,15 @@ $this->title = 'Детальная карточка агента';
                     'email:email',
                     'name',
                     'phone',
+                    'price',
+                    'coordinates',
+                    [
+                        'label'=>'Рабочий статус',
+                        'format'=>'raw',
+                        'value' =>function($model){
+                            return \core\helpers\user\AgentHelper::statusLabel($model->working_status);
+                        }
+                    ],
                     [
                         'label'=>'Статус',
                         'format'=>'raw',
@@ -63,6 +73,23 @@ $this->title = 'Детальная карточка агента';
                     ],
                 ],
             ]) ?>
+            <?php
+            $coords = explode(',',$model->coordinates);
+            echo \pigolab\locationpicker\LocationPickerWidget::widget([
+                'key' => 'AIzaSyATAHGMoZ0B9U2akKcrFESRwETYlWC_4s0',	// require , Put your google map api key
+                'options' => [
+                    'style' => 'width: 100%; height: 400px', // map canvas width and height
+                ] ,
+                'clientOptions' => [
+                    'location' => [
+                        'latitude'  => \yii\helpers\ArrayHelper::getValue($coords,0) ,
+                        'longitude' => \yii\helpers\ArrayHelper::getValue($coords,1) ,
+                    ],
+                    'radius'    => 300,
+                    'addressFormat' => 'street_number',
+                ]
+            ]);
+            ?>
         </div>
     </div>
 

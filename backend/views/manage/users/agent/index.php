@@ -44,6 +44,14 @@ $this->title = 'Агенты';
                         'filter' => \yii\widgets\MaskedInput::widget(['name'=>'AdminSearch[phone]','mask'=>'+9(999) 999 99 99'])
                     ],
                     [
+                        'label' => 'Рабочий статус',
+                        'attribute' => 'working_status',
+                        'content' => function($model){
+                            return \core\helpers\user\AgentHelper::statusLabel($model->working_status);
+                        },
+                        'filter' => \core\helpers\user\AgentHelper::roleList()
+                    ],
+                    [
                         'label' => 'Статус',
                         'attribute' => 'status',
                         'content' => function($model){

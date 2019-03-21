@@ -28,6 +28,9 @@ class AgencyAdminForm extends CompositeForm
     public $email;
     public $password;
     public $status;
+    public $working_status;
+    public $price;
+    public $coordinates;
 
     private $_user;
 
@@ -54,7 +57,7 @@ class AgencyAdminForm extends CompositeForm
     {
         if(!$this->_user){
             return [
-                [['email','password','status'],'safe'],
+                [['email','password','status','working_status','price','coordinates'],'safe'],
                 [['status'],'default','value' => "0"],
                 ['email', 'email'],
                 ['email', 'string', 'max' => 255],
@@ -63,7 +66,7 @@ class AgencyAdminForm extends CompositeForm
         }
 
         return [
-            [['email','password','status'],'safe'],
+            [['email','password','status','working_status','price','coordinates'],'safe'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             [['email'], 'unique', 'targetClass' => User::class, 'filter' => ['<>', 'id', $this->_user->id], 'message' => 'Этот E-mail уже занят.']
@@ -75,6 +78,9 @@ class AgencyAdminForm extends CompositeForm
         return [
             'email' => 'E-mail',
             'password' => 'Пароль',
+            'coordinates' => 'Координаты',
+            'working_status' => 'Рабочий статус',
+            'price' => 'Цена',
         ];
     }
 

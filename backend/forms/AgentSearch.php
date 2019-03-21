@@ -17,6 +17,8 @@ class AgentSearch extends Model
     public $email;
     public $name;
     public $phone;
+    public $working_status;
+    public $price;
 
     /**
      * {@inheritdoc}
@@ -25,7 +27,7 @@ class AgentSearch extends Model
     {
         return [
             [['id'], 'integer'],
-            [['email','name','phone'], 'safe'],
+            [['email','name','phone','working_status','price'], 'safe'],
         ];
     }
 
@@ -59,6 +61,8 @@ class AgentSearch extends Model
             return $dataProvider;
         }
         // grid filtering conditions
+        $query->andFilterWhere(['working_status'=>$this->working_status]);
+        $query->andFilterWhere(['price'=>$this->price]);
         $query->andFilterWhere(['like', 'email', $this->email]);
         $query->andFilterWhere(['like', 'name', $this->name]);
         $query->andFilterWhere(['like', 'phone', $this->phone]);

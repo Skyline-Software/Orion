@@ -54,6 +54,11 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_AGENCY_ADMIN = 3;
     const ROLE_AGENT = 4;
 
+    const WORKING_STATUS_READY = 1;
+    const WORKING_STATUS_IN_PROCESS = 2;
+    const WORKING_STATUS_REST = 3;
+    const WORKING_STATUS_BANNED = 4;
+
 
     public static function createAdmin(Auth $auth, Profile $profile): self
     {
@@ -298,6 +303,9 @@ class User extends ActiveRecord implements IdentityInterface
             'sex' => 'Пол',
             'birthday' => 'Дата рождения',
             'language' => 'Язык',
+            'coordinates' => 'Координаты',
+            'working_status' => 'Рабочий статус',
+            'price' => 'Цена',
 
         ];
     }
