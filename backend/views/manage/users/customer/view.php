@@ -14,6 +14,7 @@ $this->title = 'Детальная карточка клиента';
                         <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
                             <?= Html::a('К списку', ['index'], ['class' => 'btn btn-primary']) ?>
                             <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+                            <?= Html::a('Заказы клиента', ['/manage/agency/orders/index', 'OrdersSearch[user_id]' => $model->id], ['class' => 'btn btn-success']) ?>
                             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
@@ -25,6 +26,7 @@ $this->title = 'Детальная карточка клиента';
                         <div class="btn-group btn-group-sm hidden-lg btn-group btn-group-justified hidden-md hidden-sm" role="group">
                             <?= Html::a('К списку', ['index'], ['class' => 'btn btn-info']) ?>
                             <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+                            <?= Html::a('Заказы', ['/manage/agency/orders/index', 'OrdersSearch[user_id]' => $model->id], ['class' => 'btn btn-success']) ?>
                             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
