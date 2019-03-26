@@ -12,6 +12,7 @@ namespace backend\forms\agency;
 use core\entities\agency\Agency;
 use core\entities\agency\Order;
 use core\entities\user\User;
+use core\helpers\AgencyHelper;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -41,11 +42,7 @@ class OrdersSearch extends Model
     {
         $query = Order::find();
         if(!\Yii::$app->user->getIdentity()->isAdmin()){
-            $query->joinWith('userAssn as user_assn');
-            $query->andFilterWhere([
-                'user_assn.user_id'=>\Yii::$app->user->id,
-                'user_assn.role'=>User::ROLE_AGENCY_ADMIN
-            ]);
+            $query->andFilterWhere(['in','orders.agency_id',AgencyHelper::getAllowedAgenciesIds()]);
         }
 
         // add conditions that should always apply here
