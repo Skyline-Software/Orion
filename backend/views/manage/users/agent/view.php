@@ -88,7 +88,7 @@ $this->title = 'Детальная карточка агента';
                     ],
                     'radius'    => 300,
                     'addressFormat' => 'street_number',
-                ]
+                ],
             ]);
             ?>
         </div>
