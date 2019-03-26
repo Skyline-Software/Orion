@@ -69,7 +69,7 @@ class Order extends ActiveRecord
     public function edit($agency_id,$agent_id,$user_id,$start_coords,$end_coords,$price,$start_time,$status):void
     {
         $this->agency_id = $agency_id;
-        $this->agency_id = $agent_id;
+        $this->agent_id = $agent_id;
         $this->user_id = $user_id;
         $this->start_coordinates = $start_coords;
         $this->end_coordinates = $end_coords;
