@@ -41,7 +41,7 @@ $this->title = 'Заказы';
                 'filterModel' => $searchModel,
                 'columns' => [
                     [
-                        'label'=>'Агенство',
+                        'label'=>'Агентство',
                         'attribute'=>'agency_id',
                         'value' => function($model){
                             if($model->agency){
@@ -90,11 +90,6 @@ $this->title = 'Заказы';
                         ]),
                     ],
                     'price',
-                    [
-                        'label'=>'Рейтинг',
-                        'attribute'=>'rating',
-                        'filter' => range(1,5)
-                    ],
                     [
                         'label'=>'Дата регистрации',
                         'attribute'=>'created_at',

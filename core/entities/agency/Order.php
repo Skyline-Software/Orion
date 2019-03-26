@@ -96,7 +96,7 @@ class Order extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'agency_id'=>'Агенство',
+            'agency_id'=>'Агентство',
             'agent_id'=>'Агент',
             'user_id'=>'Клиент',
             'start_coordinates'=>'Исходная локация',

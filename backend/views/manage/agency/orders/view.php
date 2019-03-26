@@ -51,28 +51,31 @@ $this->title = 'Детальная карточка заказа';
                 'model' => $model,
                 'attributes' => [
                     [
-                        'label' => 'Агенство',
+                        'format'=>'raw',
+                        'label' => 'Агентство',
                         'value' => function($model){
                             if($model->agency){
-                                return $model->agency->name;
+                                return Html::a($model->agency->name,['/manage/agency/default/view','id'=>$model->agency->id]);
                             }
                             return '';
                         }
                     ],
                     [
+                        'format'=>'raw',
                         'label' => 'Агент',
                         'value' => function($model){
                             if($model->agent){
-                                return $model->agent->name;
+                                return Html::a($model->agent->name,['/manage/users/agent/view','id'=>$model->agent->id]);
                             }
                             return '';
                         }
                     ],
                     [
+                        'format'=>'raw',
                         'label' => 'Клиент',
                         'value' => function($model){
                             if($model->user){
-                                return $model->user->name;
+                                return Html::a($model->user->name,['/manage/users/customer/view','id'=>$model->user->id]);
                             }
                             return '';
                         }
