@@ -10,6 +10,8 @@ namespace core\helpers;
 
 
 use core\entities\agency\Agency;
+use core\entities\user\User;
+use yii\helpers\ArrayHelper;
 
 class AgencyHelper
 {
@@ -31,6 +33,31 @@ class AgencyHelper
             \core\entities\agency\Agency::find()
                 ->all(),'id','name'
         );
+    }
+
+    public static function getAllowedAgents($agency_id):array
+    {
+        $data =  array_map(function ($user){
+            return ['id'=>$user->id,'name'=>$user->name];
+        },User::find()
+            ->joinWith('agencyAssn assn')
+            ->where(['assn.agency_id'=>$agency_id,'assn.role'=>User::ROLE_AGENT])
+            ->all()
+        );
+
+        return ArrayHelper::map($data,'id','name');
+    }
+
+    public static function getAllowedUsers($agency_id):array
+    {
+        $data = array_map(function ($user){
+            return ['id'=>$user->id,'name'=>$user->name];
+        },User::find()
+            ->joinWith('agencyAssn assn')
+            ->where(['assn.agency_id'=>$agency_id,'assn.role'=>User::ROLE_CUSTOMER])
+            ->all()
+        );
+        return ArrayHelper::map($data,'id','name');
     }
 
     public static function getAllowedAgenciesIds():array

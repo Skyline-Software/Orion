@@ -2,12 +2,14 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel \backend\forms\agency\AgencySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 use kartik\widgets\Select2;
 use yii\web\JsExpression;
+use yii\widgets\Pjax;
+
 $this->title = 'Заказы';
 ?>
 <div class="orders-index">
@@ -32,6 +34,7 @@ $this->title = 'Заказы';
     <div class="box">
         <div class="box-body">
             <div class="table-responsive">
+            <?php Pjax::begin(['id' => 'orders','timeout' => 50000]) ?>
             <?= GridView::widget([
                 'layout' => "{items}\n{pager}",
                 'dataProvider' => $dataProvider,
@@ -46,7 +49,42 @@ $this->title = 'Заказы';
                             }
                             return '';
                         },
-                        'filter' => \core\helpers\AgencyHelper::getAllowedAgencies()
+                        'filter' => Select2::widget([
+                            'name' =>'OrdersSearch[agency_id]',
+                            'data'=>\core\helpers\AgencyHelper::getAllowedAgencies(),
+                            'options' => ['placeholder' => 'Выберите компанию']
+                        ]),
+
+                    ],
+                    [
+                        'label'=>'Агент',
+                        'attribute'=>'agent_id',
+                        'value' => function($model){
+                            if($model->agent){
+                                return $model->agent->name;
+                            }
+                            return '';
+                        },
+                        'filter' => Select2::widget([
+                            'name' =>'OrdersSearch[agency_id]',
+                            'data'=> \core\helpers\AgencyHelper::getAllowedAgents($searchModel->agency_id),
+                            'options' => ['placeholder' => 'Выберите агента']
+                        ]),
+                    ],
+                    [
+                        'label'=>'Клиент',
+                        'attribute'=>'user_id',
+                        'value' => function($model){
+                            if($model->user){
+                                return $model->user->name;
+                            }
+                            return '';
+                        },
+                        'filter' => Select2::widget([
+                            'name' =>'OrdersSearch[agency_id]',
+                            'data'=> \core\helpers\AgencyHelper::getAllowedUsers($searchModel->agency_id),
+                            'options' => ['placeholder' => 'Выберите клиента']
+                        ]),
                     ],
                     'price',
                     [
@@ -111,6 +149,7 @@ $this->title = 'Заказы';
                     ],
                 ],
             ]); ?>
+            <?php Pjax::end() ?>
             </div>
         </div>
     </div>
