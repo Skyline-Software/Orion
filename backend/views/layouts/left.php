@@ -9,6 +9,7 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Агентства', 'icon' => 'building', 'url' => ['/manage/agency/default']],
+                    ['label' => 'Заказы', 'icon' => 'folder-open', 'url' => ['/manage/agency/orders']],
                     [
                         'label' => 'Пользователи',
                         'icon' => 'users',

@@ -49,7 +49,8 @@
         "leandrogehlen/yii2-treegrid": "*",
         "delikates-nsk/yii2-tree-dropdown": "@dev",
         "kartik-v/yii2-widget-select2": "@dev",
-        "pigochu/yii2-jquery-locationpicker": ">=0.2.0"
+        "pigochu/yii2-jquery-locationpicker": ">=0.2.0",
+        "kartik-v/yii2-widget-depdrop": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -3,6 +3,7 @@ return [
 
     'adminEmail' => 'admin@example.com',
     'datepickerFormat' => 'dd.mm.yy',
+    'datepickerFormatWithTime' => 'dd.mm.yy H:i:s',
     'dateFormat' => 'd.m.y',
     'resize' => [
         'AgencyForm' => [

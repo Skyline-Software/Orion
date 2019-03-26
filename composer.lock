@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8b82ea1ffc9fe13ab1660fa983486c2",
+    "content-hash": "d7ce12eb92027a8293ecb28fda92f1f6",
     "packages": [
         {
             "name": "2amigos/yii2-editable-widget",
@@ -8461,7 +8461,8 @@
         "yiisoft/yii2-httpclient": 20,
         "flow/jsonpath": 20,
         "delikates-nsk/yii2-tree-dropdown": 20,
-        "kartik-v/yii2-widget-select2": 20
+        "kartik-v/yii2-widget-select2": 20,
+        "kartik-v/yii2-widget-depdrop": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
