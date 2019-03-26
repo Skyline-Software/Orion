@@ -66,7 +66,7 @@ $this->title = 'Заказы';
                             return '';
                         },
                         'filter' => Select2::widget([
-                            'name' =>'OrdersSearch[agency_id]',
+                            'name' =>'OrdersSearch[agent_id]',
                             'data'=> \core\helpers\AgencyHelper::getAllowedAgents($searchModel->agency_id),
                             'options' => ['placeholder' => 'Выберите агента']
                         ]),
@@ -81,7 +81,7 @@ $this->title = 'Заказы';
                             return '';
                         },
                         'filter' => Select2::widget([
-                            'name' =>'OrdersSearch[agency_id]',
+                            'name' =>'OrdersSearch[user_id]',
                             'data'=> \core\helpers\AgencyHelper::getAllowedUsers($searchModel->agency_id),
                             'options' => ['placeholder' => 'Выберите клиента']
                         ]),
