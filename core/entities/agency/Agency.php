@@ -32,6 +32,11 @@ class Agency extends ActiveRecord
     CONST STATUS_ACTIVE = 1;
     CONST STATUS_INACTIVE = 0;
 
+    CONST AGENCY_METRIK_LIST = [
+        1 => 'В час',
+        2 => 'За километр'
+    ];
+
     public static function tableName()
     {
         return 'agency';
@@ -58,6 +63,12 @@ class Agency extends ActiveRecord
         $this->status = $status;
         $this->payed_for = $payed_for;
         #$this->created_at = time();
+    }
+
+    public function setupAgentPrice($agent_price,$agent_metrik):void
+    {
+        $this->agent_price = $agent_price;
+        $this->agent_metrik = $agent_metrik;
     }
 
     public function activate():void

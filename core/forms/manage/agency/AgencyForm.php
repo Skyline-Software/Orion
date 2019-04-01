@@ -27,6 +27,8 @@ class AgencyForm extends CompositeForm
     public $name;
     public $web_site;
     public $status;
+    public $agent_price;
+    public $agent_metrik;
 
     public function __construct(Agency $agency = null, array $config = [])
     {
@@ -34,6 +36,8 @@ class AgencyForm extends CompositeForm
             $this->name = $agency->name;
             $this->web_site = $agency->web_site;
             $this->status = $agency->status;
+            $this->agent_price = $agency->agent_price;
+            $this->agent_metrik = $agency->agent_metrik;
             $this->logo = new ImageForm('LogoForm',new Image($agency->logo));
         }else{
             $this->logo = new ImageForm('LogoForm');
@@ -45,7 +49,8 @@ class AgencyForm extends CompositeForm
     {
         return [
             [['name','web_site'],'string'],
-            [['status'],'integer']
+            [['status'],'integer'],
+            [['agent_metrik','agent_price'],'safe']
         ];
     }
 

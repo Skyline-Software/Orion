@@ -13,6 +13,17 @@ $this->title = 'Редактирование агентства';
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->field($model,'name')->textInput(); ?>
             <?= $form->field($model,'web_site')->textInput(); ?>
+            <div class="row">
+                <div class="col-md-2">
+                    <?= $form->field($model,'agent_price')->textInput()->label(false); ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model,'agent_metrik')->dropDownList([
+                        1 => 'В час',
+                        2 => 'За километр'
+                    ],['prompt'=>'Выберите метрику'])->label(false); ?>
+                </div>
+            </div>
             <?= $form->field($model->logo, 'config')->widget(\core\forms\CUpload::className(),
                 [
                     'url' => ['/file-storage/upload','type'=>'AgencyForm.LogoForm'],

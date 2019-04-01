@@ -61,6 +61,7 @@ class DefaultController extends Controller
                     $form->web_site,
                     $form->status
                 );
+                $agency->setupAgentPrice($form->agent_price,$form->agent_metrik);
                 $agency->save();
                 \Yii::$app->session->setFlash('success','Агентство успешно создано');
                 return $this->redirect(['view','id'=>$agency->id]);
@@ -93,6 +94,7 @@ class DefaultController extends Controller
                     $form->web_site,
                     $form->status
                 );
+                $model->setupAgentPrice($form->agent_price,$form->agent_metrik);
                 $model->save();
 
                 \Yii::$app->session->setFlash('success','Агентство отредактировано');
