@@ -61,7 +61,7 @@ $this->title = 'Детальная карточка агентства';
                     [
                         'label' => 'Цена агента',
                         'value' => function($model){
-                            if($model->agent_metrik){
+                            if($model->agent_price){
                                 return $model->agent_price.'/'.\core\entities\agency\Agency::AGENCY_METRIK_LIST[$model->agent_metrik];
                             }
                             return 'Агент может назначать свою цену';

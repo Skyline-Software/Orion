@@ -15,7 +15,7 @@ $this->title = 'Создание нового агентства';
             <?= $form->field($model,'web_site')->textInput(); ?>
             <div class="row">
                 <div class="col-md-12">
-                    <label class="control-label">Цена агента: </label>
+                    <label class="control-label">Ценообразование: </label>
                 </div>
             </div>
             <div class="row">
@@ -24,9 +24,9 @@ $this->title = 'Создание нового агентства';
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model,'agent_metrik')->dropDownList([
-                        1 => 'В час',
-                        2 => 'За километр'
-                    ],['prompt'=>'Выберите метрику'])->label(false); ?>
+                        2 => 'За километр',
+                        1 => 'В час'
+                    ])->label(false); ?>
                 </div>
             </div>
 

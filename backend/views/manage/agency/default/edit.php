@@ -19,9 +19,9 @@ $this->title = 'Редактирование агентства';
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model,'agent_metrik')->dropDownList([
-                        1 => 'В час',
-                        2 => 'За километр'
-                    ],['prompt'=>'Выберите метрику'])->label(false); ?>
+                        2 => 'За километр',
+                        1 => 'В час'
+                    ])->label(false); ?>
                 </div>
             </div>
             <?= $form->field($model->logo, 'config')->widget(\core\forms\CUpload::className(),
