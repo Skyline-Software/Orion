@@ -22,7 +22,7 @@ $this->title = 'Создание нового агентства';
                 <div class="col-md-2">
                     <?= $form->field($model,'agent_price')->textInput()->label(false); ?>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <?= $form->field($model,'agent_metrik')->dropDownList([
                         2 => 'За километр',
                         1 => 'В час'
