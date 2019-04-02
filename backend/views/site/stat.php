@@ -21,7 +21,7 @@ $this->title = 'Статистика';
         <div class="col-md-2">
             <?=
             \kartik\widgets\Select2::widget([
-                    'data'=>\core\helpers\AgencyHelper::getAllowedAgencies(),
+                    'data'=> array_merge([0=>'Все компании'], \core\helpers\AgencyHelper::getAllowedAgencies()),
                     'name' => 'agency_id',
                     'value' => ArrayHelper::getValue($_GET,'agency_id'),
             ]);

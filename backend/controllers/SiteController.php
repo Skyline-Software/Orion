@@ -69,10 +69,10 @@ class SiteController extends Controller
         }
 
 
-        if($agency_id === 0){
+        if($agency_id == 0){
             $agents = User::find()
                 ->joinWith('agencyAssn aAssn')
-                ->where(['aAssn.role'=>User::ROLE_AGENT])
+                ->andFilterWhere(['aAssn.role'=>User::ROLE_AGENT])
                 ->andFilterWhere(['in','aAssn.agency_id',AgencyHelper::getAllowedAgenciesIds()])
                 ->andFilterWhere(['>=', 'users.created_at', $from ? $from->getTimestamp() : null])
                 ->andFilterWhere(['<=', 'users.created_at', $to ? $to->getTimestamp() : null])
@@ -91,7 +91,7 @@ class SiteController extends Controller
         }else{
             $agents = User::find()
                 ->joinWith('agencyAssn aAssn')
-                ->where(['aAssn.role'=>User::ROLE_AGENT])
+                ->where(['aAssn.agency_id'=>$agency_id,'aAssn.role'=>User::ROLE_AGENT])
                 ->andFilterWhere(['>=', 'users.created_at', $from ? $from->getTimestamp() : null])
                 ->andFilterWhere(['<=', 'users.created_at', $to ? $to->getTimestamp() : null])
                 ->all();
