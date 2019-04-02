@@ -60,7 +60,7 @@ class Order extends ActiveRecord
         $order->end_coordinates = $end_coords;
         $order->price = $price;
         $order->start_time = $start_time;
-        $order->status = self::STATUS_NOT_PAYED;
+        $order->status = $status;
         $order->created_at = time();
 
         return $order;

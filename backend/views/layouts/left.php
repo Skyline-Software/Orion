@@ -8,6 +8,7 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
+                    ['label' => 'Статистика', 'icon' => 'book', 'url' => ['/site/statistics']],
                     ['label' => 'Агентства', 'icon' => 'building', 'url' => ['/manage/agency/default']],
                     ['label' => 'Заказы', 'icon' => 'folder-open', 'url' => ['/manage/agency/orders']],
                     [

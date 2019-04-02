@@ -50,7 +50,8 @@
         "delikates-nsk/yii2-tree-dropdown": "@dev",
         "kartik-v/yii2-widget-select2": "@dev",
         "pigochu/yii2-jquery-locationpicker": ">=0.2.0",
-        "kartik-v/yii2-widget-depdrop": "@dev"
+        "kartik-v/yii2-widget-depdrop": "@dev",
+        "2amigos/yii2-chartjs-widget": "~2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

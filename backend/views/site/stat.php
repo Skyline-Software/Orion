@@ -4,15 +4,10 @@
  * User: Mopkau
  * Date: 11.12.2018
  * Time: 15:42
- * @var $users \core\entities\user\User[]
- * @var $usingAndroid \core\entities\user\UserAuth[]
- * @var $usingIOS \core\entities\user\UserAuth[]
- * @var $usingWeb \core\entities\user\UserAuth[]
- * @var $cardTypes \core\entities\card\CardType[]
- * @var $partners \core\entities\partner\Partner[]
- * @var $salesByCategory \core\entities\sales\Sales[]
- * @var $certs \core\entities\buy\Buy[]
- * @var $activatedCerts \core\entities\cert\UserCert[]
+ * @var $agents \core\entities\user\User[]
+ * @var $clients \core\entities\user\User[]
+ * @var $orders \core\entities\agency\Order[]
+ * @var $summ int
  * @var $from string
  * @var $to string
  */
@@ -65,81 +60,82 @@ $this->title = 'Статистика';
             </thead>
             <tbody>
             <tr>
-                <td>Число регистраций</td>
-                <td><?= count($users); ?></td>
+                <td>Агентов</td>
+                <td><?= count($agents); ?></td>
             </tr>
             <tr>
-                <td>Число активированных карт по типам</td>
-                <td>
-                    <table class="table">
-                        <thead>
-                        <th>Категория</th>
-                        <th>Кол-во</th>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($cardTypes as $type){?>
-                            <?php
-                            $cards = $type
-                                ->getCards()
-                                ->andWhere(['not', ['activated' => null]])
-                                ->andFilterWhere(['>=', 'activated', $from ? $from->getTimestamp() : null])
-                                ->andFilterWhere(['<=', 'activated', $to ? $to->getTimestamp() : null])
-
-                            ?>
-                            <tr>
-                                <td><?= $type->name; ?></td>
-                                <td><?= $cards->count(); ?></td>
-                            </tr>
-                        <?php } ?>
-                        </tbody>
-                    </table>
-                </td>
+                <td>Клиентов</td>
+                <td><?= count($clients); ?></td>
             </tr>
             <tr>
-                <td>Число новых партнеров</td>
-                <td><?= count($partners); ?></td>
-            </tr>
-            <tr>
-                <td>Число проданных сертификатов</td>
-                <td><?= count($certs); ?></td>
-            </tr>
-            <tr>
-                <td>Число использованных сертификатов</td>
-                <td><?= count($activatedCerts); ?></td>
-            </tr>
-            <tr>
-                <td>Число использований приложений Android</td>
-                <td><?= count($usingAndroid); ?></td>
-            </tr>
-            <tr>
-                <td>Число использований приложений iOS</td>
-                <td><?= count($usingIOS); ?></td>
-            </tr>
-            <tr>
-                <td>Число использований приложений Web</td>
-                <td><?= count($usingWeb); ?></td>
-            </tr>
-            <tr>
-                <td>Число получений скидок по категориям</td>
-                <td>
-                    <table class="table">
-                        <thead>
-                            <th>Категория</th>
-                            <th>Кол-во</th>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($salesByCategory as $category=>$array){?>
-                                <tr>
-                                    <td><?= $category; ?></td>
-                                    <td><?= count($array); ?></td>
-                                </tr>
-                        <?php } ?>
-                        </tbody>
-                    </table>
-                </td>
+                <td>Заказов</td>
+                <td><?= count($orders); ?></td>
             </tr>
             </tbody>
         </table>
+        <div class="row">
+            <div class="col-md-12">
+                <?= \dosamigos\chartjs\ChartJs::widget([
+                    'type' => 'line',
+                    'options' => [
+                        'height' => 400,
+                        'width' => 400
+                    ],
+                    'data' => [
+                        'labels' => $dates,
+                        'datasets' => [
+                            [
+                                'label' => "Orders",
+                                'backgroundColor' => "rgba(179,181,198,0.2)",
+                                'borderColor' => "rgba(179,181,198,1)",
+                                'pointBackgroundColor' => "rgba(179,181,198,1)",
+                                'pointBorderColor' => "#fff",
+                                'pointHoverBackgroundColor' => "#fff",
+                                'pointHoverBorderColor' => "rgba(179,181,198,1)",
+                                'data' => $ordersByDates
+                            ],
+                        ]
+                    ]
+                ]);
+                ?>
+            </div>
+        </div>
+        <table class="table table-striped table-condensed table-pointer">
+            <tbody>
+            <tr>
+                <td>Общая стоимость</td>
+                <td><?= $summ ?></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <?= \dosamigos\chartjs\ChartJs::widget([
+                    'type' => 'line',
+                    'options' => [
+                        'height' => 400,
+                        'width' => 400
+                    ],
+                    'data' => [
+                        'labels' => $dates,
+                        'datasets' => [
+                            [
+                                'label' => "Orders",
+                                'backgroundColor' => "rgba(179,181,198,0.2)",
+                                'borderColor' => "rgba(179,181,198,1)",
+                                'pointBackgroundColor' => "rgba(179,181,198,1)",
+                                'pointBorderColor' => "#fff",
+                                'pointHoverBackgroundColor' => "#fff",
+                                'pointHoverBorderColor' => "rgba(179,181,198,1)",
+                                'data' => $summByDates
+                            ],
+                        ]
+                    ]
+                ]);
+                ?>
+            </div>
+        </div>
+
 
     </div>
 </div>

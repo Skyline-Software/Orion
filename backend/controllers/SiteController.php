@@ -2,30 +2,17 @@
 namespace backend\controllers;
 
 use backend\forms\SaleSearch;
-use core\entities\buy\Buy;
-use core\entities\card\Card;
-use core\entities\card\CardType;
-use core\entities\cert\Cert;
-use core\entities\cert\UserCert;
-use core\entities\contractor\Contractor;
-use core\entities\contractor\ContractorRequisites;
-use core\entities\contractor\vo\Address;
-use core\entities\contractor\vo\Addresses;
+use core\entities\agency\Order;
 use core\entities\marketing\RecipientList;
 use core\entities\partner\Partner;
-use core\entities\sales\Sales;
 use core\entities\user\User;
-use core\entities\user\UserAuth;
+use core\helpers\AgencyHelper;
 use paragraph1\phpFCM\Recipient\Device;
 use Yii;
-use yii\db\Expression;
-use yii\db\JsonExpression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use core\forms\auth\LoginForm;
+
 /**
  * Site controller
  */
@@ -44,89 +31,97 @@ class SiteController extends Controller
     }
     public function actionStatistics()
     {
-        $from = ArrayHelper::getValue($_GET,'from');
+        $agency_id = ArrayHelper::getValue($_GET,'agency_id',0);
+        $from = ArrayHelper::getValue($_GET,'from',(new \DateTime())->modify('-1 month')->format('d.m.y'));
         if(!is_null($from)){
             $from = date_create_from_format('d.m.y',$from);
             $from->setTime(0,0,0);
         }
 
-        $to = ArrayHelper::getValue($_GET,'to');
+        $to = ArrayHelper::getValue($_GET,'to',(new \DateTime())->format('d.m.y'));
         if(!is_null($to)){
             $to = date_create_from_format('d.m.y',$to);
-            $to->setTime(0,0,0);
+            $to->setTime(23,59,59);
+        }
+        $period = new \DatePeriod(
+            $from,
+            new \DateInterval('P1D'),
+            $to,
+            0
+        );
+        $dates = [];
+        $ordersByDates = [];
+        $summByDates = [];
+        foreach ($period as $key => $value) {
+           array_push($dates,$value->format('d.m'));
+        }
+        foreach ($period as $key => $value) {
+            $orders = Order::find()
+                ->andFilterWhere(['in','agency_id',AgencyHelper::getAllowedAgenciesIds()])
+                ->andFilterWhere(['status'=>Order::STATUS_PAYED])
+                ->andFilterWhere(['>=', 'created_at', $value->getTimestamp()])
+                ->andFilterWhere(['<=', 'created_at', $value->setTime(23,59,59)->getTimestamp()])
+                ->all();
+            array_push($ordersByDates,count($orders));
+            array_push($summByDates,$summ = array_sum(array_map(function ($item){
+                return $item->price;
+            },$orders)));
         }
 
-        $users = User::find()
-            ->andFilterWhere(['>=', 'created_at', $from ? $from->getTimestamp() : null])
-            ->andFilterWhere(['<=', 'created_at', $to ? $to->getTimestamp() : null])
-            ->all();
-        $usingAndroid = UserAuth::find()
-            ->where(['device'=>'android'])
-            ->andFilterWhere(['>=', 'lastact', $from ? $from->getTimestamp() : null])
-            ->andFilterWhere(['<=', 'lastact', $to ? $to->getTimestamp() : null])
-            ->all();
-        $usingIOS = UserAuth::find()
-            ->where(['device'=>'iphone'])
-            ->andFilterWhere(['>=', 'lastact', $from ? $from->getTimestamp() : null])
-            ->andFilterWhere(['<=', 'lastact', $to ? $to->getTimestamp() : null])
-            ->all();
-        $usingWeb = UserAuth::find()
-            ->where(['device'=>'desktop'])
-            ->andFilterWhere(['>=', 'lastact', $from ? $from->getTimestamp() : null])
-            ->andFilterWhere(['<=', 'lastact', $to ? $to->getTimestamp() : null])
-            ->all();
 
-        $cardTypes = CardType::find()
-
-
-            ->all();
-
-
-
-        $partners = Partner::find()
-            ->andFilterWhere(['>=', 'created_at', $from ? $from->getTimestamp() : null])
-            ->andFilterWhere(['<=', 'created_at', $to ? $to->getTimestamp() : null])
-            ->all();
-        $salesByCategory = Sales::find()
-            ->andFilterWhere(['>=', 'created_at', $from ? $from->getTimestamp() : null])
-            ->andFilterWhere(['<=', 'created_at', $to ? $to->getTimestamp() : null])
-            ->all();
-        $certs = Cert::find()
-            ->andFilterWhere(['>=', 'created_at', $from ? $from->getTimestamp() : null])
-            ->andFilterWhere(['<=', 'created_at', $to ? $to->getTimestamp() : null])
-            ->all();
-        $activatedCerts = Cert::find()
-            ->andWhere(['not', ['used' => null]])
-            ->andFilterWhere(['>=', 'created_at', $from ? $from->getTimestamp() : null])
-            ->andFilterWhere(['<=', 'created_at', $to ? $to->getTimestamp() : null])
-            ->all();
-
-        $cats = [];
-        foreach ($salesByCategory as $sale){
-            if(!empty($sale->partner->category)){
-                foreach ($sale->partner->category as $category){
-                    if($category->parent){
-                        $cats[$category->parent->name.'/'.$category->name][] = 1;
-                    }else{
-                        $cats[$category->name][] = 1;
-                    }
-                }
-            }
-
-
+        if($agency_id === 0){
+            $agents = User::find()
+                ->joinWith('agencyAssn aAssn')
+                ->where(['aAssn.role'=>User::ROLE_AGENT])
+                ->andFilterWhere(['in','aAssn.agency_id',AgencyHelper::getAllowedAgenciesIds()])
+                ->andFilterWhere(['>=', 'users.created_at', $from ? $from->getTimestamp() : null])
+                ->andFilterWhere(['<=', 'users.created_at', $to ? $to->getTimestamp() : null])
+                ->all();
+            $clients = User::find()
+                ->joinWith('agencyAssn aAssn')
+                ->where(['aAssn.role'=>User::ROLE_CUSTOMER])
+                ->andFilterWhere(['in','aAssn.agency_id',AgencyHelper::getAllowedAgenciesIds()])
+                ->andFilterWhere(['>=', 'users.created_at', $from ? $from->getTimestamp() : null])
+                ->andFilterWhere(['<=', 'users.created_at', $to ? $to->getTimestamp() : null])
+                ->all();
+            $orders = Order::find()
+                ->andFilterWhere(['in','agency_id',AgencyHelper::getAllowedAgenciesIds()])
+                ->andFilterWhere(['status'=>Order::STATUS_PAYED])
+                ->all();
+        }else{
+            $agents = User::find()
+                ->joinWith('agencyAssn aAssn')
+                ->where(['aAssn.role'=>User::ROLE_AGENT])
+                ->andFilterWhere(['>=', 'users.created_at', $from ? $from->getTimestamp() : null])
+                ->andFilterWhere(['<=', 'users.created_at', $to ? $to->getTimestamp() : null])
+                ->all();
+            $clients = User::find()
+                ->joinWith('agencyAssn aAssn')
+                ->where(['aAssn.agency_id'=>$agency_id,'aAssn.role'=>User::ROLE_CUSTOMER])
+                ->andFilterWhere(['>=', 'users.created_at', $from ? $from->getTimestamp() : null])
+                ->andFilterWhere(['<=', 'users.created_at', $to ? $to->getTimestamp() : null])
+                ->all();
+            $orders = Order::find()
+                ->andFilterWhere(['agency_id'=>$agency_id])
+                ->andFilterWhere(['status'=>Order::STATUS_PAYED])
+                ->all();
         }
+
+        $summ = array_sum(array_map(function ($item){
+            return $item->price;
+        },$orders));
+
+
         return $this->render('stat',[
-            'users'=>$users,
-            'usingAndroid'=>$usingAndroid,
-            'usingIOS'=>$usingIOS,
-            'usingWeb'=>$usingWeb,
-            'cardTypes'=>$cardTypes,
-            'partners'=>$partners,
-            'certs'=>$certs,
-            'salesByCategory'=>$cats,
-            'activatedCerts' => $activatedCerts,
+            'agents'=>$agents,
+            'clients'=>$clients,
+            'orders'=>$orders,
+            'summ'=>$summ,
             'from'=>$from,
-            'to' => $to
+            'to' => $to,
+            'dates'=>$dates,
+            'ordersByDates'=>$ordersByDates,
+            'summByDates'=>$summByDates
         ]);
     }
 
