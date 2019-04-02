@@ -33,21 +33,27 @@ class SiteController extends Controller
     {
         $agency_id = ArrayHelper::getValue($_GET,'agency_id',0);
         $from = ArrayHelper::getValue($_GET,'from',(new \DateTime())->modify('-1 month')->format('d.m.y'));
-        if(!is_null($from)){
+        if(!is_null($from) && !empty($from)){
             $from = date_create_from_format('d.m.y',$from);
+            $from->setTime(0,0,0);
+        }elseif (empty($from)){
+            $from = (new \DateTime())->modify('-1 month');
             $from->setTime(0,0,0);
         }
 
+
         $to = ArrayHelper::getValue($_GET,'to',(new \DateTime())->format('d.m.y'));
-        if(!is_null($to)){
+        if(!is_null($to) && !empty($to)){
             $to = date_create_from_format('d.m.y',$to);
+            $to->setTime(23,59,59);
+        }elseif (empty($to)){
+            $to = new \DateTime();
             $to->setTime(23,59,59);
         }
         $period = new \DatePeriod(
             $from,
             new \DateInterval('P1D'),
-            $to,
-            0
+            $to
         );
         $dates = [];
         $ordersByDates = [];
