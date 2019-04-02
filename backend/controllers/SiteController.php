@@ -56,12 +56,21 @@ class SiteController extends Controller
            array_push($dates,$value->format('d.m'));
         }
         foreach ($period as $key => $value) {
-            $orders = Order::find()
-                ->andFilterWhere(['in','agency_id',AgencyHelper::getAllowedAgenciesIds()])
-                ->andFilterWhere(['status'=>Order::STATUS_PAYED])
-                ->andFilterWhere(['>=', 'created_at', $value->getTimestamp()])
-                ->andFilterWhere(['<=', 'created_at', $value->setTime(23,59,59)->getTimestamp()])
-                ->all();
+            if($agency_id == 0) {
+                $orders = Order::find()
+                    ->andFilterWhere(['in', 'agency_id', AgencyHelper::getAllowedAgenciesIds()])
+                    ->andFilterWhere(['status' => Order::STATUS_PAYED])
+                    ->andFilterWhere(['>=', 'created_at', $value->getTimestamp()])
+                    ->andFilterWhere(['<=', 'created_at', $value->setTime(23, 59, 59)->getTimestamp()])
+                    ->all();
+            }else{
+                $orders = Order::find()
+                    ->andFilterWhere(['agency_id'=>$agency_id])
+                    ->andFilterWhere(['status' => Order::STATUS_PAYED])
+                    ->andFilterWhere(['>=', 'created_at', $value->getTimestamp()])
+                    ->andFilterWhere(['<=', 'created_at', $value->setTime(23, 59, 59)->getTimestamp()])
+                    ->all();
+            }
             array_push($ordersByDates,count($orders));
             array_push($summByDates,$summ = array_sum(array_map(function ($item){
                 return $item->price;
