@@ -13,7 +13,7 @@
  */
 
 use yii\helpers\ArrayHelper;
-$this->title = 'Статистика';
+$this->title = Yii::t('backend','Статистика');
 
 ?>
 <div class="row">
@@ -21,7 +21,7 @@ $this->title = 'Статистика';
         <div class="col-md-2">
             <?=
             \kartik\widgets\Select2::widget([
-                    'data'=> array_merge([0=>'Все агентства'], \core\helpers\AgencyHelper::getAllowedAgencies()),
+                    'data'=> array_merge([0=>Yii::t('backend','Все агентства')], \core\helpers\AgencyHelper::getAllowedAgencies()),
                     'name' => 'agency_id',
                     'value' => ArrayHelper::getValue($_GET,'agency_id'),
             ]);
@@ -32,7 +32,7 @@ $this->title = 'Статистика';
                 'name' => 'from',
                 'language'=>'ru',
                 'value' => $from->format('d.m.y'),
-                'options' => ['placeholder' => 'Выберите дату'],
+                'options' => ['placeholder' => Yii::t('backend','Выберите дату')],
                 'pluginOptions' => [
                     'format' => Yii::$app->params['datepickerFormat'],
                     'todayHighlight' => true
@@ -44,7 +44,7 @@ $this->title = 'Статистика';
             <?= \kartik\widgets\DatePicker::widget([
                 'name' => 'to',
                 'value' => $to->format('d.m.y'),
-                'options' => ['placeholder' => 'Выберите дату'],
+                'options' => ['placeholder' => Yii::t('backend','Выберите дату')],
                 'pluginOptions' => [
                     'format' => Yii::$app->params['datepickerFormat'],
                     'todayHighlight' => true
@@ -53,7 +53,7 @@ $this->title = 'Статистика';
             ?>
         </div>
         <div class="col-md-6">
-            <input type="submit" class="btn btn-success" value="Отфильтровать">
+            <input type="submit" class="btn btn-success" value="<?= Yii::t('backend','Отфильтровать'); ?>">
         </div>
 
     </form>
@@ -62,20 +62,20 @@ $this->title = 'Статистика';
     <div class="col-md-8">
         <table class="table table-striped table-condensed table-pointer">
             <thead>
-            <th>Наименование</th>
-            <th>Значение</th>
+            <th><?= Yii::t('backend','Наименование'); ?></th>
+            <th><?= Yii::t('backend','Значение'); ?></th>
             </thead>
             <tbody>
             <tr>
-                <td>Агентов</td>
+                <td><?= Yii::t('backend','Агентов'); ?></td>
                 <td><?= count($agents); ?></td>
             </tr>
             <tr>
-                <td>Клиентов</td>
+                <td><?= Yii::t('backend','Клиентов'); ?></td>
                 <td><?= count($clients); ?></td>
             </tr>
             <tr>
-                <td>Заказов</td>
+                <td><?= Yii::t('backend','Заказов'); ?></td>
                 <td><?= \yii\helpers\Html::a(count($orders),['/manage/agency/orders','OrdersSearch[status]'=>\core\entities\agency\Order::STATUS_PAYED,'OrdersSearch[agency_id]'=>ArrayHelper::getValue($_GET,'agency_id')]); ?></td>
             </tr>
             </tbody>
@@ -91,7 +91,7 @@ $this->title = 'Статистика';
                         'labels' => $dates,
                         'datasets' => [
                             [
-                                'label' => "Orders",
+                                'label' => Yii::t('backend',"Orders"),
                                 'backgroundColor' => "rgba(179,181,198,0.2)",
                                 'borderColor' => "rgba(179,181,198,1)",
                                 'pointBackgroundColor' => "rgba(179,181,198,1)",
@@ -109,7 +109,7 @@ $this->title = 'Статистика';
         <table class="table table-striped table-condensed table-pointer">
             <tbody>
             <tr>
-                <td>Общая стоимость</td>
+                <td><?= Yii::t('backend','Общая стоимость'); ?></td>
                 <td><?= \yii\helpers\Html::a($summ,['/manage/agency/orders','OrdersSearch[status]'=>\core\entities\agency\Order::STATUS_PAYED,'OrdersSearch[agency_id]'=>ArrayHelper::getValue($_GET,'agency_id')]); ?></td>
             </tr>
             </tbody>
@@ -125,7 +125,7 @@ $this->title = 'Статистика';
                         'labels' => $dates,
                         'datasets' => [
                             [
-                                'label' => "Summary",
+                                'label' => Yii::t('backend',"Summary"),
                                 'backgroundColor' => "rgba(179,181,198,0.2)",
                                 'borderColor' => "rgba(179,181,198,1)",
                                 'pointBackgroundColor' => "rgba(179,181,198,1)",

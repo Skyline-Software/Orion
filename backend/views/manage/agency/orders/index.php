@@ -10,7 +10,7 @@ use kartik\widgets\Select2;
 use yii\web\JsExpression;
 use yii\widgets\Pjax;
 
-$this->title = 'Заказы';
+$this->title = Yii::t('backend','Заказы');
 ?>
 <div class="orders-index">
     <div class="box">
@@ -21,11 +21,11 @@ $this->title = 'Заказы';
             <div class="col-md-8 ">
 
                 <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
-                    <?= Html::a('Добавить заказ', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('backend','Добавить заказ'), ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
 
                 <div class="btn-group btn-group-sm hidden-lg btn-group btn-group-justified hidden-md hidden-sm" role="group">
-                    <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('backend','Добавить'), ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
 
             </div>
@@ -41,7 +41,7 @@ $this->title = 'Заказы';
                 'filterModel' => $searchModel,
                 'columns' => [
                     [
-                        'label'=>'Агентство',
+                        'label'=>Yii::t('backend','Агентство'),
                         'attribute'=>'agency_id',
                         'value' => function($model){
                             if($model->agency){
@@ -52,13 +52,13 @@ $this->title = 'Заказы';
                         'filter' => Select2::widget([
                             'name' =>'OrdersSearch[agency_id]',
                             'data'=>\core\helpers\AgencyHelper::getAllowedAgencies(),
-                            'options' => ['placeholder' => 'Выберите компанию','value'=>$searchModel->agency_id],
+                            'options' => ['placeholder' => Yii::t('backend','Выберите компанию'),'value'=>$searchModel->agency_id],
                             'value'=>$searchModel->agency_id
                         ]),
 
                     ],
                     [
-                        'label'=>'Агент',
+                        'label'=>Yii::t('backend','Агент'),
                         'attribute'=>'agent_id',
                         'value' => function($model){
                             if($model->agent){
@@ -69,12 +69,12 @@ $this->title = 'Заказы';
                         'filter' => Select2::widget([
                             'name' =>'OrdersSearch[agent_id]',
                             'data'=> \core\helpers\AgencyHelper::getAllowedAgents($searchModel->agency_id),
-                            'options' => ['placeholder' => 'Выберите агента'],
+                            'options' => ['placeholder' => Yii::t('backend','Выберите агента')],
                             'value'=>$searchModel->agent_id
                         ]),
                     ],
                     [
-                        'label'=>'Клиент',
+                        'label'=>Yii::t('backend','Клиент'),
                         'attribute'=>'user_id',
                         'value' => function($model){
                             if($model->user){
@@ -85,13 +85,13 @@ $this->title = 'Заказы';
                         'filter' => Select2::widget([
                             'name' =>'OrdersSearch[user_id]',
                             'data'=> \core\helpers\AgencyHelper::getAllowedUsers($searchModel->agency_id),
-                            'options' => ['placeholder' => 'Выберите клиента'],
+                            'options' => ['placeholder' => Yii::t('backend','Выберите клиента')],
                             'value'=>$searchModel->user_id
                         ]),
                     ],
                     'price',
                     [
-                        'label'=>'Дата регистрации',
+                        'label'=>Yii::t('backend','Дата регистрации'),
                         'attribute'=>'created_at',
                         'filter' => \kartik\widgets\DatePicker::widget([
                             'model' => $searchModel,
@@ -113,10 +113,10 @@ $this->title = 'Заказы';
                         }
                     ],
                     [
-                        'label'=>'Статус',
+                        'label'=>Yii::t('backend','Статус'),
                         'attribute'=>'status',
                         'content' => function($model){
-                            return $model::STATUS_LIST[$model->status];
+                            return Yii::t('backend',$model::STATUS_LIST[$model->status]);
                         },
                         'filter' => \core\entities\agency\Order::STATUS_LIST
 
@@ -126,20 +126,20 @@ $this->title = 'Заказы';
                         'template' => '{view}{edit}{delete}',
                         'buttons' => [
                             'view' => function ($url, $model, $key) {
-                                return Html::a('<i class="fa fa-eye" title="Детальная информация"></i>',$url,['class'=>'btn']);
+                                return Html::a('<i class="fa fa-eye" title="'.Yii::t('backend','Детальная информация').'"></i>',$url,['class'=>'btn']);
                             },
                             'edit' => function ($url, $model, $key) {
                                 if(!Yii::$app->user->getIdentity()->isAdmin()){
                                     return '';
                                 }
-                                return Html::a('<i class="fa fa-edit" title="Редактирование"></i>',$url,['class'=>'btn']);
+                                return Html::a('<i class="fa fa-edit" title="'.Yii::t('backend','Редактирование').'"></i>',$url,['class'=>'btn']);
                             },
                             'delete' => function ($url, $model, $key) {
                                 if(!Yii::$app->user->getIdentity()->isAdmin()){
                                     return '';
                                 }
-                                return Html::a('<i class="fa fa-trash" title="Удаление"></i>',$url,['class'=>'btn','data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить заявку?',
+                                return Html::a('<i class="fa fa-trash" title="'.Yii::t('backend','Удаление').'"></i>',$url,['class'=>'btn','data' => [
+                                    'confirm' => Yii::t('backend','Вы уверены что хотите удалить заявку?'),
                                     'method' => 'post',
                                 ]]);
                             },

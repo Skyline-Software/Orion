@@ -10,6 +10,7 @@ namespace core\forms\manage\user;
 
 
 use core\entities\user\vo\Profile;
+use Yii;
 use yii\base\Model;
 
 class ProfileForm extends Model
@@ -54,12 +55,12 @@ class ProfileForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'ФИО',
-            'type' => 'Тип',
-            'phone' => 'Номер телефона',
-            'sex' => 'Пол',
-            'birthday' => 'Дата рождения',
-            'language' => 'Язык',
+            'name' => Yii::t('backend','ФИО'),
+            'type' => Yii::t('backend','Тип'),
+            'phone' => Yii::t('backend','Номер телефона'),
+            'sex' => Yii::t('backend','Пол'),
+            'birthday' => Yii::t('backend','Дата рождения'),
+            'language' => Yii::t('backend','Язык'),
         ];
     }
 }

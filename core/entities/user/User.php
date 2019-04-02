@@ -294,18 +294,18 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'created_at' =>'Создан',
-            'email' =>'E-mail',
-            'status' =>'Статус',
-            'name' => 'ФИО',
-            'type' => 'Тип',
-            'phone' => 'Номер телефона',
-            'sex' => 'Пол',
-            'birthday' => 'Дата рождения',
-            'language' => 'Язык',
-            'coordinates' => 'Координаты',
-            'working_status' => 'Рабочий статус',
-            'price' => 'Цена',
+            'created_at' =>Yii::t('backend','Создан'),
+            'email' =>Yii::t('backend','E-mail'),
+            'status' =>Yii::t('backend','Статус'),
+            'name' => Yii::t('backend','ФИО'),
+            'type' => Yii::t('backend','Тип'),
+            'phone' => Yii::t('backend','Номер телефона'),
+            'sex' => Yii::t('backend','Пол'),
+            'birthday' => Yii::t('backend','Дата рождения'),
+            'language' => Yii::t('backend','Язык'),
+            'coordinates' => Yii::t('backend','Координаты'),
+            'working_status' => Yii::t('backend','Рабочий статус'),
+            'price' => Yii::t('backend','Цена'),
 
         ];
     }
@@ -411,5 +411,12 @@ class User extends ActiveRecord implements IdentityInterface
             $ids += $agencyIds;
         }
         return $ids;
+    }
+
+    public function getLang(){
+        if($this->language = 'ru'){
+            return 'ru-RU';
+        }
+        return 'en-EN';
     }
 }

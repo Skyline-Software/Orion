@@ -10,6 +10,7 @@ namespace core\entities\agency;
 
 
 use core\entities\user\User;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -96,17 +97,17 @@ class Order extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'agency_id'=>'Агентство',
-            'agent_id'=>'Агент',
-            'user_id'=>'Клиент',
-            'start_coordinates'=>'Исходная локация',
-            'end_coordinates'=>'конечная локация',
-            'start_time'=>'Время начала выполнения',
-            'end_time'=>'Время окончания выполнения',
-            'price'=>'Стоимость заказа',
-            'rating'=>'Оценка заказа клиентом',
-            'comment'=>'Комментарий заказчика',
-            'status'=>'Статус',
+            'agency_id'=>Yii::t('backend','Агентство'),
+            'agent_id'=>Yii::t('backend','Агент'),
+            'user_id'=>Yii::t('backend','Клиент'),
+            'start_coordinates'=>Yii::t('backend','Исходная локация'),
+            'end_coordinates'=>Yii::t('backend','конечная локация'),
+            'start_time'=>Yii::t('backend','Время начала выполнения'),
+            'end_time'=>Yii::t('backend','Время окончания выполнения'),
+            'price'=>Yii::t('backend','Стоимость заказа'),
+            'rating'=>Yii::t('backend','Оценка заказа клиентом'),
+            'comment'=>Yii::t('backend','Комментарий заказчика'),
+            'status'=>Yii::t('backend','Статус'),
         ];
     }
 

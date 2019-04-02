@@ -6,12 +6,12 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Профиль';
+$this->title = Yii::t('backend','Профиль');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">
 
-    <p>Пожалуйста заполните поля представленные ниже:</p>
+    <p><?= Yii::t('backend','Пожалуйста заполните поля представленные ниже:'); ?> </p>
 
     <div class="row">
         <div class="col-lg-5">

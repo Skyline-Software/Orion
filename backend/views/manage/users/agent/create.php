@@ -5,7 +5,7 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\web\JsExpression;
-$this->title = 'Создание нового агента';
+$this->title = Yii::t('backend','Создание нового агента');
 ?>
 <div class="user-create">
     <div class="box">
@@ -18,14 +18,14 @@ $this->title = 'Создание нового агента';
             <?= $form->field($model->profile,'name')->textInput(['maxLength'=>'255']); ?>
             <?= $form->field($model->profile,'phone')->widget(\yii\widgets\MaskedInput::class,['mask'=>'+9(999) 999 99 99']); ?>
             <?= $form->field($model->profile,'sex')->dropDownList([
-                0 => 'Мужской',
-                1 => 'Женский',
+                0 => Yii::t('backend','Мужской'),
+                1 => Yii::t('backend','Женский'),
             ]); ?>
             <?= $form->field($model,'status')->dropDownList([
-                0 => 'Активен',
-                -1 => 'Заблокирован',
+                0 => Yii::t('backend','Активен'),
+                -1 => Yii::t('backend','Заблокирован'),
 
-            ])->label('Статус'); ?>
+            ])->label(Yii::t('backend','Статус')); ?>
             <?= $form->field($model->profile,'birthday')->widget(\kartik\widgets\DatePicker::class,[
                 'pluginOptions' => [
                     'autoclose'=>true,
@@ -38,11 +38,11 @@ $this->title = 'Создание нового агента';
                     'url' => ['/file-storage/upload','type'=>'AdminForm.PhotoForm'],
                     'maxFileSize' => 5000000,
                 ]
-            )->label('Фото'); ?>
+            )->label(Yii::t('backend','Фото')); ?>
 
             <?= $form->field($model->profile,'language')->dropDownList([
-                'ru' => 'Ru',
-                'en' => 'En',
+                'ru' => Yii::t('backend','Ru'),
+                'en' => Yii::t('backend','En'),
             ]); ?>
 
             <?= $form->field($model,'working_status')->dropDownList(\core\helpers\user\AgentHelper::roleList()); ?>
@@ -85,7 +85,7 @@ $this->title = 'Создание нового агента';
                 'columns' => [
                     [
                         'name'  => 'agency_id',
-                        'title' => 'Агентство',
+                        'title' => Yii::t('backend','Агентство'),
                         'enableError' => true,
                         'type' => \kartik\select2\Select2::class,
                         'options' => [
@@ -93,7 +93,7 @@ $this->title = 'Создание нового агента';
                         ]
                     ],
                     [
-                        'title' => 'Роль',
+                        'title' => Yii::t('backend','Роль'),
                         'name'  => 'role',
                         'type' => \kartik\select2\Select2::class,
                         'defaultValue'=>\core\entities\user\User::ROLE_AGENT,
@@ -102,7 +102,7 @@ $this->title = 'Создание нового агента';
                         ]
                     ],
                     [
-                        'title' => 'Ценообразование',
+                        'title' => Yii::t('backend','Ценообразование'),
                         'name'  => 'agent_price',
                     ],
                     [
@@ -112,8 +112,8 @@ $this->title = 'Создание нового агента';
                         'defaultValue'=>2,
                         'options' => [
                             'data' => [
-                                2 => 'За километр',
-                                1 => 'В час'
+                                2 => Yii::t('backend','За километр'),
+                                1 => Yii::t('backend','В час')
                             ]
                         ]
                     ],
@@ -123,10 +123,10 @@ $this->title = 'Создание нового агента';
                         'defaultValue' => time()
                     ]
                 ]
-            ])->label('Агентства'); ?>
+            ])->label(Yii::t('backend','Агентства')); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Сохранить',['class'=>'btn btn-primary']); ?>
+                <?= Html::submitButton(Yii::t('backend','Сохранить'),['class'=>'btn btn-primary']); ?>
             </div>
 
             <?php ActiveForm::end(); ?>

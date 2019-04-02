@@ -9,6 +9,7 @@
 namespace core\forms\auth;
 
 
+use Yii;
 use yii\base\Model;
 
 class RequestKeyForm extends Model
@@ -25,7 +26,7 @@ class RequestKeyForm extends Model
     public function attributeLabels()
     {
         return [
-            'phone' => 'Номер телефона'
+            'phone' => Yii::t('backend','Номер телефона')
         ];
     }
 }

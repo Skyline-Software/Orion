@@ -8,23 +8,23 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-                    ['label' => 'Статистика', 'icon' => 'book', 'url' => ['/site/statistics']],
-                    ['label' => 'Агентства', 'icon' => 'building', 'url' => ['/manage/agency/default']],
-                    ['label' => 'Заказы', 'icon' => 'folder-open', 'url' => ['/manage/agency/orders']],
+                    ['label' => Yii::t('backend','Статистика'), 'icon' => 'book', 'url' => ['/site/statistics']],
+                    ['label' => Yii::t('backend','Агентства'), 'icon' => 'building', 'url' => ['/manage/agency/default']],
+                    ['label' => Yii::t('backend','Заказы'), 'icon' => 'folder-open', 'url' => ['/manage/agency/orders']],
                     [
-                        'label' => 'Пользователи',
+                        'label' => Yii::t('backend','Пользователи'),
                         'icon' => 'users',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Администраторы', 'icon' => 'book', 'url' => ['/manage/users/admin/index'],'visible'=>Yii::$app->user->getIdentity()->isAdmin()],
-                            ['label' => 'Администраторы агентств', 'icon' => 'book', 'url' => ['/manage/users/agency-admin/index'],'visible'=>Yii::$app->user->getIdentity()->isUserHasAdminRights()],
-                            ['label' => 'Агенты', 'icon' => 'book', 'url' => ['/manage/users/agent/index'],'visible'=>Yii::$app->user->getIdentity()->isUserHasAdminRights()],
-                            ['label' => 'Клиенты', 'icon' => 'book', 'url' => ['/manage/users/customer/index'],'visible'=>Yii::$app->user->getIdentity()->isUserHasAdminRights()],
+                            ['label' => Yii::t('backend','Администраторы'), 'icon' => 'book', 'url' => ['/manage/users/admin/index'],'visible'=>Yii::$app->user->getIdentity()->isAdmin()],
+                            ['label' => Yii::t('backend','Администраторы агентств'), 'icon' => 'book', 'url' => ['/manage/users/agency-admin/index'],'visible'=>Yii::$app->user->getIdentity()->isUserHasAdminRights()],
+                            ['label' => Yii::t('backend','Агенты'), 'icon' => 'book', 'url' => ['/manage/users/agent/index'],'visible'=>Yii::$app->user->getIdentity()->isUserHasAdminRights()],
+                            ['label' => Yii::t('backend','Клиенты'), 'icon' => 'book', 'url' => ['/manage/users/customer/index'],'visible'=>Yii::$app->user->getIdentity()->isUserHasAdminRights()],
                         ],
                     ],
                     #['label' => 'Дебаг панель', 'icon' => 'dashboard', 'url' => ['/debug']],
-                    ['label' => 'Профиль', 'icon' => 'user', 'url' => ['cabinet/default/profile']],
-                    ['label' => 'Выйти', 'url' => ['/logout'], 'visible' => !Yii::$app->user->isGuest],
+                    ['label' => Yii::t('backend','Профиль'), 'icon' => 'user', 'url' => ['cabinet/default/profile']],
+                    ['label' => Yii::t('backend','Выйти'), 'url' => ['/logout'], 'visible' => !Yii::$app->user->isGuest],
                 ],
             ]
         ) ?>

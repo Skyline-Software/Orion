@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\forms\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Клиенты';
+$this->title = Yii::t('backend','Клиенты');
 ?>
 <div class="orders-index">
     <div class="box">
@@ -17,10 +17,10 @@ $this->title = 'Клиенты';
             </div>
             <div class="col-md-8 ">
                 <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
-                    <?= Html::a('Добавить клиента', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('backend','Добавить клиента'), ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
                 <div class="btn-group btn-group-sm hidden-lg btn-group btn-group-justified hidden-md hidden-sm" role="group">
-                    <?= Html::a('Добавить клиента', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('backend','Добавить клиента'), ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@ $this->title = 'Клиенты';
                     'email',
                     'name',
                     [
-                        'label' => 'Телефон',
+                        'label' => Yii::t('backend','Телефон'),
                         'attribute' => 'phone',
                         'content' => function($model){
                             return $model->phone;
@@ -44,7 +44,7 @@ $this->title = 'Клиенты';
                         'filter' => \yii\widgets\MaskedInput::widget(['name'=>'AdminSearch[phone]','mask'=>'+9(999) 999 99 99'])
                     ],
                     [
-                        'label' => 'Статус',
+                        'label' => Yii::t('backend','Статус'),
                         'attribute' => 'status',
                         'content' => function($model){
                             return \core\helpers\user\UserHelper::statusLabel($model->status);
@@ -65,11 +65,11 @@ $this->title = 'Клиенты';
                                 return Html::a('<i class="fa fa-eye"></i>',$url,['class'=>'btn']);
                             },
                             'edit' => function ($url, $model, $key) {
-                                return Html::a('<i class="fa fa-edit" title="Редактирование"></i>',$url,['class'=>'btn']);
+                                return Html::a('<i class="fa fa-edit" title="'.Yii::t('backend','Редактирование').'"></i>',$url,['class'=>'btn']);
                             },
                             'delete' => function ($url, $model, $key) {
-                                return Html::a('<i class="fa fa-trash" title="Удаление"></i>',$url,['class'=>'btn','data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить пользователя?',
+                                return Html::a('<i class="fa fa-trash" title="'.Yii::t('backend','Удаление').'"></i>',$url,['class'=>'btn','data' => [
+                                    'confirm' => Yii::t('backend','Вы уверены что хотите удалить пользователя?'),
                                     'method' => 'post',
                                 ],]);
                             },

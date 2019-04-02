@@ -9,7 +9,8 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
-    'name' => 'Cards',
+    'name' => 'Orion',
+    'language' => 'en',
     'controllerNamespace' => 'backend\controllers',
     'defaultRoute' => 'manage/users/admin/index',
     'bootstrap' => ['log'],
@@ -64,9 +65,13 @@ return [
         'backendUrlManager' => require __DIR__ . '/urlManager.php',
         'urlManager' => function(){
             return Yii::$app->get('backendUrlManager');
-        }
+        },
+
     ],
     'params' => $params,
+    'on beforeAction' => function($event) {
+        Yii::$app->language = Yii::$app->user->identity->language;
+    } ,
     'as beforeRequest' => [
         'class' => 'yii\filters\AccessControl',
         'rules' => [

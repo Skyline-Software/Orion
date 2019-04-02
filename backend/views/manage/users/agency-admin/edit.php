@@ -3,7 +3,7 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-$this->title = 'Редактирование профиля';
+$this->title = Yii::t('backend','Редактирование профиля');
 ?>
 <div class="user-create">
     <div class="box">
@@ -15,8 +15,8 @@ $this->title = 'Редактирование профиля';
             <?= $form->field($model->profile,'name')->textInput(['maxLength'=>'255']); ?>
             <?= $form->field($model->profile,'phone')->widget(\yii\widgets\MaskedInput::class,['mask'=>'+9(999) 999 99 99']); ?>
             <?= $form->field($model->profile,'sex')->dropDownList([
-                0 => 'Мужской',
-                1 => 'Женский',
+                0 => Yii::t('backend','Мужской'),
+                1 => Yii::t('backend','Женский'),
             ]); ?>
             <?= $form->field($model->profile,'birthday')->widget(\kartik\widgets\DatePicker::class,[
                 'pluginOptions' => [
@@ -33,8 +33,8 @@ $this->title = 'Редактирование профиля';
             )->label('Фото'); ?>
 
             <?= $form->field($model->profile,'language')->dropDownList([
-                'ru' => 'Ru',
-                'en' => 'En',
+                'ru' => Yii::t('backend','Ru'),
+                'en' => Yii::t('backend','En'),
             ]); ?>
 
             <?= $form->field($model->agencies, 'config')->widget(\unclead\multipleinput\MultipleInput::className(), [
@@ -45,7 +45,7 @@ $this->title = 'Редактирование профиля';
                 'columns' => [
                     [
                         'name'  => 'agency_id',
-                        'title' => 'Агентство',
+                        'title' => Yii::t('backend','Агентство'),
                         'enableError' => true,
                         'type' => \kartik\select2\Select2::class,
                         'options' => [
@@ -53,7 +53,7 @@ $this->title = 'Редактирование профиля';
                         ]
                     ],
                     [
-                        'title' => 'Роль',
+                        'title' => Yii::t('backend','Роль'),
                         'name'  => 'role',
                         'type' => \kartik\select2\Select2::class,
                         'defaultValue'=>\core\entities\user\User::ROLE_AGENCY_ADMIN,
@@ -67,10 +67,10 @@ $this->title = 'Редактирование профиля';
                         'defaultValue' => time()
                     ]
                 ]
-            ])->label('Агентства'); ?>
+            ])->label(Yii::t('backend','Агентства')); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Сохранить',['class'=>'btn btn-primary']); ?>
+                <?= Html::submitButton(Yii::t('backend','Сохранить'),['class'=>'btn btn-primary']); ?>
             </div>
 
             <?php ActiveForm::end(); ?>

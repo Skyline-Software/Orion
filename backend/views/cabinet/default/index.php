@@ -9,7 +9,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Личный кабинет';
+$this->title = Yii::t('backend','Личный кабинет');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cabinet-index">

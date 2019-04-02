@@ -15,6 +15,7 @@ use core\entities\user\User;
 use core\forms\ImageForm;
 use core\forms\MultipleInputForm;
 use elisdn\compositeForm\CompositeForm;
+use Yii;
 
 /**
  * Class ManagerForm
@@ -61,7 +62,7 @@ class AgencyAdminForm extends CompositeForm
                 [['status'],'default','value' => "0"],
                 ['email', 'email'],
                 ['email', 'string', 'max' => 255],
-                [['email'], 'unique', 'targetClass' => User::class, 'message' => 'Этот E-mail уже занят.']
+                [['email'], 'unique', 'targetClass' => User::class, 'message' => Yii::t('backend','Этот E-mail уже занят.')]
             ];
         }
 
@@ -69,18 +70,18 @@ class AgencyAdminForm extends CompositeForm
             [['email','password','status','working_status','price','coordinates'],'safe'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            [['email'], 'unique', 'targetClass' => User::class, 'filter' => ['<>', 'id', $this->_user->id], 'message' => 'Этот E-mail уже занят.']
+            [['email'], 'unique', 'targetClass' => User::class, 'filter' => ['<>', 'id', $this->_user->id], 'message' => Yii::t('backend','Этот E-mail уже занят.')]
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'email' => 'E-mail',
-            'password' => 'Пароль',
-            'coordinates' => 'Координаты',
-            'working_status' => 'Рабочий статус',
-            'price' => 'Цена',
+            'email' => Yii::t('backend','E-mail'),
+            'password' => Yii::t('backend','Пароль'),
+            'coordinates' => Yii::t('backend','Координаты'),
+            'working_status' => Yii::t('backend','Рабочий статус'),
+            'price' => Yii::t('backend','Цена'),
         ];
     }
 

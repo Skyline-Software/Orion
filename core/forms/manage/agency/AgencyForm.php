@@ -13,6 +13,7 @@ use core\entities\agency\Agency;
 use core\entities\Image;
 use core\forms\ImageForm;
 use elisdn\compositeForm\CompositeForm;
+use Yii;
 
 /**
  * Class AgencyForm
@@ -57,10 +58,10 @@ class AgencyForm extends CompositeForm
     public function attributeLabels()
     {
         return [
-            'name'=>'Название',
-            'logo'=>'Логотип',
-            'web_site'=>'Веб-сайт',
-            'status'=>'Статус',
+            'name'=>Yii::t('backend','Название'),
+            'logo'=>Yii::t('backend','Логотип'),
+            'web_site'=>Yii::t('backend','Веб-сайт'),
+            'status'=>Yii::t('backend','Статус'),
         ];
     }
 

@@ -10,6 +10,7 @@ namespace core\forms\manage\user\customer;
 
 
 use core\entities\user\customer\Profile;
+use Yii;
 use yii\base\Model;
 
 class ProfileForm extends Model
@@ -45,9 +46,9 @@ class ProfileForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'ФИО',
-            'phone' => 'Номер телефона',
-            'address' => 'Адрес',
+            'name' =>Yii::t('backend', 'ФИО'),
+            'phone' => Yii::t('backend','Номер телефона'),
+            'address' => Yii::t('backend','Адрес'),
         ];
     }
 }

@@ -12,6 +12,7 @@ namespace backend\controllers\cabinet;
 use core\forms\manage\user\AccountForm;
 use core\forms\manage\user\AdminForm;
 use core\useCase\user\AdminService;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -52,7 +53,8 @@ class DefaultController extends Controller
         {
             try{
                 $this->adminService->edit(\Yii::$app->user->id, $form);
-                \Yii::$app->session->setFlash('success','Данные успешно сохранены');
+                Yii::$app->language = $form->profile->language;
+                \Yii::$app->session->setFlash('success',Yii::t('backend','Данные успешно сохранены'));
                 return $this->refresh();
             }catch (\DomainException | \RuntimeException $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());

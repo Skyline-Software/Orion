@@ -1,6 +1,7 @@
 <?php
 namespace core\forms\auth;
 
+use Yii;
 use yii\base\Model;
 
 /**
@@ -21,7 +22,7 @@ class ResetPasswordForm extends Model
     public function attributeLabels()
     {
         return [
-          'password' => 'Новый пароль'
+          'password' => Yii::t('backend','Новый пароль')
         ];
     }
 }

@@ -49,7 +49,7 @@ class OrdersController extends Controller
                 $order->setupRating($form->rating);
 
                 $order->save();
-                \Yii::$app->session->setFlash('success','Заказ создан');
+                \Yii::$app->session->setFlash('success',Yii::t('backend','Заказ создан'));
                 return $this->redirect(['view','id'=>$order->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -89,7 +89,8 @@ class OrdersController extends Controller
                 $order->setupRating($form->rating);
                 $order->save();
 
-                \Yii::$app->session->setFlash('success','Заказ изменен');
+                \Yii::$app->session->setFlash('success',
+                    Yii::t('backend','Заказ изменен'));
                 return $this->redirect(['view','id'=>$order->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -106,7 +107,8 @@ class OrdersController extends Controller
         try{
             $model = $this->load($id);
             $model->delete();
-            \Yii::$app->session->setFlash('success','Заказ удален');
+            \Yii::$app->session->setFlash('success',
+                Yii::t('backend','Заказ удален'));
         }catch (\RuntimeException | NotFoundExeption $e){
             \Yii::$app->session->setFlash('error',$e->getMessage());
             \Yii::$app->errorHandler->logException($e);
@@ -130,7 +132,7 @@ class OrdersController extends Controller
     public function load($id):? Order
     {
         if(!$model = Order::findOne(['id'=>$id])){
-            throw new NotFoundExeption('Заказ не найден');
+            throw new NotFoundExeption(Yii::t('backend','Заказ не найден'));
         }
 
         return $model;

@@ -3,36 +3,36 @@ use yii\bootstrap\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 /* @var $model \core\entities\agency\Agency */
-$this->title = 'Детальная карточка заказа';
+$this->title = Yii::t('backend','Детальная карточка заказа');
 ?>
 <div class="user-view">
     <div class="box ">
                 <div class="box-body">
                     <div class="col-md-4">
-                        <p class="lead">Управление:</p>
+                        <p class="lead"><?= Yii::t('backend','Управление:') ?></p>
                     </div>
                     <div class="col-md-8 ">
                         <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
-                            <?= Html::a('К списку', ['index'], ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a(Yii::t('backend','К списку'), ['index'], ['class' => 'btn btn-primary']) ?>
                             <?php if(Yii::$app->user->getIdentity()->isAdmin()){ ?>
-                            <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
-                            <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+                            <?= Html::a(Yii::t('backend','Редактировать'), ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+                            <?= Html::a(Yii::t('backend','Удалить'), ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить заказ?',
+                                    'confirm' => Yii::t('backend','Вы уверены что хотите удалить заказ?'),
                                     'method' => 'post',
                                 ],
                             ]) ?>
                             <?php } ?>
                         </div>
                         <div class="btn-group btn-group-sm hidden-lg btn-group btn-group-justified hidden-md hidden-sm" role="group">
-                            <?= Html::a('К списку', ['index'], ['class' => 'btn btn-info']) ?>
+                            <?= Html::a(Yii::t('backend','К списку'), ['index'], ['class' => 'btn btn-info']) ?>
                             <?php if(Yii::$app->user->getIdentity()->isAdmin()){ ?>
-                            <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
-                            <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+                            <?= Html::a(Yii::t('backend','Редактировать'), ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+                            <?= Html::a(Yii::t('backend','Удалить'), ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить заказ?',
+                                    'confirm' => Yii::t('backend','Вы уверены что хотите удалить заказ?'),
                                     'method' => 'post',
                                 ],
                             ]) ?>
@@ -44,7 +44,7 @@ $this->title = 'Детальная карточка заказа';
 
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">О заказе</h3>
+            <h3 class="box-title"><?= Yii::t('backend','О заказе') ?></h3>
         </div>
         <div class="box-body">
             <?= DetailView::widget([
@@ -52,7 +52,7 @@ $this->title = 'Детальная карточка заказа';
                 'attributes' => [
                     [
                         'format'=>'raw',
-                        'label' => 'Агентство',
+                        'label' => Yii::t('backend','Агентство'),
                         'value' => function($model){
                             if($model->agency){
                                 return Html::a($model->agency->name,['/manage/agency/default/view','id'=>$model->agency->id]);
@@ -62,7 +62,7 @@ $this->title = 'Детальная карточка заказа';
                     ],
                     [
                         'format'=>'raw',
-                        'label' => 'Агент',
+                        'label' => Yii::t('backend','Агент'),
                         'value' => function($model){
                             if($model->agent){
                                 return Html::a($model->agent->name,['/manage/users/agent/view','id'=>$model->agent->id]);
@@ -72,7 +72,7 @@ $this->title = 'Детальная карточка заказа';
                     ],
                     [
                         'format'=>'raw',
-                        'label' => 'Клиент',
+                        'label' => Yii::t('backend','Клиент'),
                         'value' => function($model){
                             if($model->user){
                                 return Html::a($model->user->name,['/manage/users/customer/view','id'=>$model->user->id]);
@@ -81,7 +81,7 @@ $this->title = 'Детальная карточка заказа';
                         }
                     ],
                     [
-                        'label' => 'Дата создания',
+                        'label' => Yii::t('backend','Дата создания'),
                         'value' => function($model){
                             return date(Yii::$app->params['dateFormat']." H:i",(int)$model->created_at);
                         }
@@ -90,21 +90,21 @@ $this->title = 'Детальная карточка заказа';
                     'start_time',
                     'end_time',
                     [
-                        'label' => 'Комментарий заказчика',
+                        'label' => Yii::t('backend','Комментарий заказчика'),
                         'value' => function($model){
                             return nl2br($model->comment);
                         }
                     ],
                     'rating',
                     [
-                        'label' => 'Статус',
+                        'label' => Yii::t('backend','Статус'),
                         'value' => function($model){
                             return \core\entities\agency\Order::STATUS_LIST[$model->status];
                         }
                     ],
                 ],
             ]) ?>
-            <h3>Начальное положение</h3>
+            <h3><?= Yii::t('backend','Начальное положение'); ?></h3>
             <?php
             $coords = explode(',',$model->start_coordinates);
             echo \pigolab\locationpicker\LocationPickerWidget::widget([
@@ -122,7 +122,7 @@ $this->title = 'Детальная карточка заказа';
                 ]
             ]);
             ?>
-            <h3>Конечное положение</h3>
+            <h3><?= Yii::t('backend','Конечное положение'); ?></h3>
             <?php
             $coords = explode(',',$model->end_coordinates);
             echo \pigolab\locationpicker\LocationPickerWidget::widget([

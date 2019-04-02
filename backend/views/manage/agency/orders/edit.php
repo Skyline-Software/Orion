@@ -15,7 +15,7 @@ $this->title = 'Редактирование заказа';
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->field($model,'agency_id')->widget(Select2::class,[
                 'data' => \core\helpers\AgencyHelper::getAllowedAgencies(),
-                'options' => ['placeholder' => 'Выберите компанию','id'=>'agency-id']
+                'options' => ['placeholder' => Yii::t('backend','Выберите агенство'),'id'=>'agency-id']
             ]);
             ?>
             <?= $form->field($model,'agent_id')
@@ -31,7 +31,7 @@ $this->title = 'Редактирование заказа';
                             ),
                     'pluginOptions'=>[
                         'depends'=>['agency-id'],
-                        'placeholder'=>'Выберите агента...',
+                        'placeholder'=>Yii::t('backend','Выберите агента...'),
                         'url'=>Url::to(['/manage/agency/orders/agents'])
                     ]
                 ]); ?>
@@ -49,7 +49,7 @@ $this->title = 'Редактирование заказа';
                     'pluginOptions'=>[
                         'depends'=>['agency-id'],
 
-                        'placeholder'=>'Выберите клиента...',
+                        'placeholder'=>Yii::t('backend','Выберите клиента...'),
                         'url'=>Url::to(['/manage/agency/orders/customers'])
                     ]
                 ]); ?>
@@ -127,11 +127,14 @@ $this->title = 'Редактирование заказа';
             <?= $form->field($model,'comment')->textarea(); ?>
             <?= $form->field($model,'rating')->dropDownList(range(0,5)); ?>
             <?= $form->field($model,'status')->dropDownList(
-                \core\entities\agency\Order::STATUS_LIST
+                [
+                    \core\entities\agency\Order::STATUS_NOT_PAYED => Yii::t('backend','Не оплачен'),
+                    \core\entities\agency\Order::STATUS_PAYED => Yii::t('backend','Оплачен'),
+                ]
             ); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Сохранить',['class'=>'btn btn-primary']); ?>
+                <?= Html::submitButton(Yii::t('backend','Сохранить'),['class'=>'btn btn-primary']); ?>
             </div>
 
             <?php ActiveForm::end(); ?>

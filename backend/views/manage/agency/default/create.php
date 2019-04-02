@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use kartik\widgets\Select2;
 use yii\web\JsExpression;
-$this->title = 'Создание нового агентства';
+$this->title = Yii::t('backend','Создание нового агентства');
 ?>
 <div class="user-create">
     <div class="box">
@@ -15,7 +15,7 @@ $this->title = 'Создание нового агентства';
             <?= $form->field($model,'web_site')->textInput(); ?>
             <div class="row">
                 <div class="col-md-12">
-                    <label class="control-label">Ценообразование: </label>
+                    <label class="control-label"><?= Yii::t('backend','Ценообразование:'); ?> </label>
                 </div>
             </div>
             <div class="row">
@@ -24,8 +24,8 @@ $this->title = 'Создание нового агентства';
                 </div>
                 <div class="col-md-2">
                     <?= $form->field($model,'agent_metrik')->dropDownList([
-                        2 => 'За километр',
-                        1 => 'В час'
+                        2 => Yii::t('backend','За километр'),
+                        1 => Yii::t('backend','В час')
                     ])->label(false); ?>
                 </div>
             </div>
@@ -38,13 +38,13 @@ $this->title = 'Создание нового агентства';
             )->label('Лого'); ?>
             <?= $form->field($model,'status')->dropDownList(
                 [
-                    1 => 'Вкл.',
-                    0 => 'Выкл.',
+                    1 => Yii::t('backend','Вкл.'),
+                    0 => Yii::t('backend','Выкл.'),
                 ]
             ); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Сохранить',['class'=>'btn btn-primary']); ?>
+                <?= Html::submitButton(Yii::t('backend','Сохранить'),['class'=>'btn btn-primary']); ?>
             </div>
 
             <?php ActiveForm::end(); ?>

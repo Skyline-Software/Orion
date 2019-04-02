@@ -8,7 +8,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Вход';
+$this->title = Yii::t('backend','Вход');
 $this->params['breadcrumbs'][] = $this->title;
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
@@ -26,17 +26,17 @@ $fieldOptions2 = [
     </div>
 
     <div class="login-box-body">
-        <p class="login-box-msg">Пожалуйста заполните данные чтобы войти в систему:</p>
+        <p class="login-box-msg"><?= Yii::t('backend','Пожалуйста заполните данные чтобы войти в систему:'); ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
         <?= $form->field($model, 'email', $fieldOptions1)->textInput(['autofocus' => true])->label('E-mail') ?>
 
-        <?= $form->field($model, 'password', $fieldOptions2)->passwordInput()->label('Пароль') ?>
+        <?= $form->field($model, 'password', $fieldOptions2)->passwordInput()->label(Yii::t('backend','Пароль')) ?>
 
         <div class="row">
             <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox(['label' => 'Запомнить меня']) ?>
+                <?= $form->field($model, 'rememberMe')->checkbox(['label' => Yii::t('backend','Запомнить меня')]) ?>
             </div>
             <!-- /.col -->
             <div class="col-xs-4">

@@ -62,7 +62,8 @@ class AgentController extends Controller
         if($form->load(\Yii::$app->request->post()) && $form->validate()){
             try{
                 $customer = $this->customerService->create($form);
-                \Yii::$app->session->setFlash('success','Пользователь успешно создан');
+                \Yii::$app->session->setFlash('success',
+                    Yii::t('backend','Пользователь успешно создан'));
                 return $this->redirect(['view','id'=>$customer->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -84,14 +85,15 @@ class AgentController extends Controller
             return $this->redirect('index');
         }
         if(!Yii::$app->user->getIdentity()->isUserHasAdminRights()){
-                throw new Exception('Нет прав',400);
+                throw new Exception(Yii::t('backend','Нет прав'),400);
         }
 
         $form = new AgencyAdminForm($user);
         if($form->load(\Yii::$app->request->post()) && $form->validate()){
             try{
                 $customer = $this->customerService->edit($id,$form);
-                \Yii::$app->session->setFlash('success','Пользователь успешно отредактирован');
+                \Yii::$app->session->setFlash('success',
+                    Yii::t('backend','Пользователь успешно отредактирован'));
                 return $this->redirect(['view','id'=>$customer->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -106,11 +108,12 @@ class AgentController extends Controller
 
     public function actionDelete($id){
         if(!Yii::$app->user->getIdentity()->isUserHasAdminRights()){
-            throw new Exception('Нет прав',400);
+            throw new Exception(Yii::t('backend','Нет прав'),400);
         }
         try{
             $this->customerService->delete($id);
-            \Yii::$app->session->setFlash('success','Пользователь успешно удален');
+            \Yii::$app->session->setFlash('success',
+                Yii::t('backend','Пользователь успешно удален'));
         }catch (\RuntimeException | NotFoundExeption $e){
             \Yii::$app->session->setFlash('error',$e->getMessage());
             \Yii::$app->errorHandler->logException($e);
@@ -121,7 +124,7 @@ class AgentController extends Controller
 
     public function actionView($id){
         if(!Yii::$app->user->getIdentity()->isUserHasAdminRights()){
-            throw new Exception('Нет прав',400);
+            throw new Exception(Yii::t('backend','Нет прав'),400);
         }
         try{
             $customer = $this->loadUser($id);
@@ -137,10 +140,10 @@ class AgentController extends Controller
     public function loadUser($id):?User
     {
         if(array_search($id,Yii::$app->user->getIdentity()->getUserAllowIDs()) === false){
-            throw new Exception('Нет прав',400);
+            throw new Exception(Yii::t('backend','Нет прав'),400);
         }
         if(!$user = User::findOne(['id'=>$id])){
-            throw new NotFoundExeption('Пользователь не найден');
+            throw new NotFoundExeption(Yii::t('backend','Пользователь не найден'));
         }
 
         return $user;

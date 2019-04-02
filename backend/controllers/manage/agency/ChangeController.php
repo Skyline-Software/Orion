@@ -29,12 +29,12 @@ class ChangeController extends Controller
     {
         if($action->id == 'active'){
             if(!Yii::$app->user->getIdentity()->isAdmin()){
-                throw new Exception('Нет прав', 400);
+                throw new Exception(Yii::t('backend','Нет прав'), 400);
             }
         }
         if($action->id == 'deactivate'){
             if(!Yii::$app->user->getIdentity()->isAdmin()){
-                throw new Exception('Нет прав', 400);
+                throw new Exception(Yii::t('backend','Нет прав'), 400);
             }
         }
 
@@ -44,7 +44,8 @@ class ChangeController extends Controller
     public function actionActivate($id){
         try{
             $this->changeService->activateAgency($id);
-            \Yii::$app->session->setFlash('success','Запись успешно активирована');
+            \Yii::$app->session->setFlash('success',
+                Yii::t('backend','Запись успешно активирована'));
         }catch (\RuntimeException | NotFoundExeption $e){
             \Yii::$app->session->setFlash('error',$e->getMessage());
             \Yii::$app->errorHandler->logException($e);
@@ -57,7 +58,8 @@ class ChangeController extends Controller
     public function actionDeactivate($id){
         try{
             $this->changeService->deactivateAgency($id);
-            \Yii::$app->session->setFlash('success','Запись успешно деактивирована');
+            \Yii::$app->session->setFlash('success',
+                Yii::t('backend','Запись успешно деактивирована'));
         }catch (\RuntimeException | NotFoundExeption $e){
             \Yii::$app->session->setFlash('error',$e->getMessage());
             \Yii::$app->errorHandler->logException($e);

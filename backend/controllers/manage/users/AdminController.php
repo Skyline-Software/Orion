@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function beforeAction($action)
     {
         if(!Yii::$app->user->getIdentity()->isAdmin()){
-            throw new Exception('Нет прав',400);
+            throw new Exception(Yii::t('backend','Нет прав'),400);
         }
         return parent::beforeAction($action);
 
@@ -54,7 +54,8 @@ class AdminController extends Controller
         if($form->load(\Yii::$app->request->post()) && $form->validate()){
             try{
                 $admin = $this->adminService->create($form);
-                \Yii::$app->session->setFlash('success','Администратор успешно создан');
+                \Yii::$app->session->setFlash('success',
+                Yii::t('backend','Администратор успешно создан'));
                 return $this->redirect(['view','id'=>$admin->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -80,7 +81,8 @@ class AdminController extends Controller
         if($form->load(\Yii::$app->request->post()) && $form->validate()){
             try{
                 $admin = $this->adminService->edit($id,$form);
-                \Yii::$app->session->setFlash('success','Администратор успешно отредактирован');
+                \Yii::$app->session->setFlash('success',
+                    Yii::t('backend','Администратор успешно отредактирован'));
                 return $this->redirect(['view','id'=>$admin->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -96,7 +98,8 @@ class AdminController extends Controller
     public function actionDelete($id){
         try{
             $this->adminService->delete($id);
-            \Yii::$app->session->setFlash('success','Администратор успешно удален');
+            \Yii::$app->session->setFlash('success',
+                Yii::t('backend','Администратор успешно удален'));
         }catch (\RuntimeException | NotFoundExeption $e){
             \Yii::$app->session->setFlash('error',$e->getMessage());
             \Yii::$app->errorHandler->logException($e);
@@ -120,7 +123,8 @@ class AdminController extends Controller
     public function loadUser($id):?User
     {
         if(!$user = User::findIdentity($id)){
-            throw new NotFoundExeption('Пользователь не найден, или не активирован');
+            throw new NotFoundExeption(
+                Yii::t('backend','Пользователь не найден, или не активирован'));
         }
 
         return $user;

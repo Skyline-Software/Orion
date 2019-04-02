@@ -10,6 +10,7 @@ namespace core\forms\manage\user;
 
 
 use core\entities\user\User;
+use Yii;
 use yii\base\Model;
 
 class AccountForm extends Model
@@ -39,8 +40,8 @@ class AccountForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => 'E-mail',
-            'password' => 'Пароль',
+            'email' => Yii::t('backend','E-mail'),
+            'password' => Yii::t('backend','Пароль'),
         ];
     }
 

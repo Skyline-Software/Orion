@@ -10,6 +10,7 @@ Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 Yii::setAlias('@core', dirname(dirname(__DIR__)) . '/core');
 Yii::setAlias('@storage', dirname(dirname(__DIR__)) . '/storage');
 Yii::setAlias('@api', dirname(dirname(__DIR__)) . '/api');
+Yii::setAlias('@base', realpath(__DIR__.'/../../'));
 
 Yii::setAlias('@storageUrl', \yii\helpers\ArrayHelper::getValue($params,'storageUrl'));
 

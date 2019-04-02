@@ -13,6 +13,7 @@ use core\entities\Image;
 use core\entities\user\User;
 use core\forms\ImageForm;
 use elisdn\compositeForm\CompositeForm;
+use Yii;
 
 /**
  * Class ManagerForm
@@ -65,8 +66,8 @@ class AdminForm extends CompositeForm
     public function attributeLabels()
     {
         return [
-            'email' => 'E-mail',
-            'password' => 'Пароль',
+            'email' => Yii::t('backend','E-mail'),
+            'password' =>Yii::t('backend', 'Пароль'),
         ];
     }
 

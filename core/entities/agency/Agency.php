@@ -11,6 +11,7 @@ namespace core\entities\agency;
 
 use core\entities\assn\UserAgencyAssn;
 use core\entities\user\User;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -84,12 +85,12 @@ class Agency extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name'=>'Название',
-            'logo'=>'Логотип',
-            'web_site'=>'Веб-сайт',
-            'status'=>'Статус',
-            'payed_for'=>'Дата окончания оплаченного периода',
-            'created_at'=>'Зарегистрирован',
+            'name'=>Yii::t('backend','Название'),
+            'logo'=>Yii::t('backend','Логотип'),
+            'web_site'=>Yii::t('backend','Веб-сайт'),
+            'status'=>Yii::t('backend','Статус'),
+            'payed_for'=>Yii::t('backend','Дата окончания оплаченного периода'),
+            'created_at'=>Yii::t('backend','Зарегистрирован'),
         ];
     }
 

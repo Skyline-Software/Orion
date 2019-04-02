@@ -11,6 +11,7 @@ namespace core\forms;
 
 use core\entities\Rows;
 use core\helpers\AgencyHelper;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -51,7 +52,7 @@ class MultipleInputForm extends Model
     public function checkIsAllow($attr,$param){
         foreach ($this->config as $row){
             if(array_search($row['agency_id'],AgencyHelper::getAllowedAgenciesIds()) === false){
-                $this->addError('config', "У вас нет прав для данного действия");
+                $this->addError('config', Yii::t('backend',"У вас нет прав для данного действия"));
             }
         }
     }

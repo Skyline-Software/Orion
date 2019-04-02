@@ -73,8 +73,8 @@ class CustomerForm extends CompositeForm
     public function attributeLabels()
     {
         return [
-            'email' => 'E-mail',
-            'password' => 'Пароль',
+            'email' => Yii::t('backend','E-mail'),
+            'password' => Yii::t('backend','Пароль'),
         ];
     }
 

@@ -36,7 +36,7 @@ class AuthController extends Controller
             try{
                 $user = $this->_authService->auth($form);
                 if(!$user->isUserHasAdminRights()){
-                    Yii::$app->session->setFlash('error','У вас нет прав');
+                    Yii::$app->session->setFlash('error',Yii::t('backend','У вас нет прав'));
                     return $this->goBack();
                 }
                 Yii::$app->user->login($user,$form->rememberMe ? 3600 * 24 * 30 : 0);

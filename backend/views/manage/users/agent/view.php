@@ -3,35 +3,35 @@ use yii\bootstrap\Html;
 use yii\web\JsExpression;
 use yii\widgets\DetailView;
 /* @var $model \core\entities\user\User */
-$this->title = 'Детальная карточка агента';
+$this->title = Yii::t('backend','Детальная карточка агента');
 ?>
 <div class="user-view">
     <div class="box ">
                 <div class="box-body">
                     <div class="col-md-4">
-                        <p class="lead">Управление:</p>
+                        <p class="lead"><?= Yii::t('backend','Управление:'); ?></p>
                     </div>
                     <div class="col-md-8 ">
                         <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
-                            <?= Html::a('К списку', ['index'], ['class' => 'btn btn-primary']) ?>
-                            <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
-                            <?= Html::a('Заказы агента', ['/manage/agency/orders/index', 'OrdersSearch[agent_id]' => $model->id], ['class' => 'btn btn-success']) ?>
-                            <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+                            <?= Html::a(Yii::t('backend','К списку'), ['index'], ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a(Yii::t('backend','Редактировать'), ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+                            <?= Html::a(Yii::t('backend','Заказы агента'), ['/manage/agency/orders/index', 'OrdersSearch[agent_id]' => $model->id], ['class' => 'btn btn-success']) ?>
+                            <?= Html::a(Yii::t('backend','Удалить'), ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить пользователя?',
+                                    'confirm' => Yii::t('backend','Вы уверены что хотите удалить пользователя?'),
                                     'method' => 'post',
                                 ],
                             ]) ?>
                         </div>
                         <div class="btn-group btn-group-sm hidden-lg btn-group btn-group-justified hidden-md hidden-sm" role="group">
-                            <?= Html::a('К списку', ['index'], ['class' => 'btn btn-info']) ?>
-                            <?= Html::a('Редактировать', ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
-                            <?= Html::a('Заказы', ['/manage/agency/orders/index', 'OrdersSearch[agent_id]' => $model->id], ['class' => 'btn btn-success']) ?>
-                            <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+                            <?= Html::a(Yii::t('backend','К списку'), ['index'], ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a(Yii::t('backend','Редактировать'), ['edit', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+                            <?= Html::a(Yii::t('backend','Заказы'), ['/manage/agency/orders/index', 'OrdersSearch[agent_id]' => $model->id], ['class' => 'btn btn-success']) ?>
+                            <?= Html::a(Yii::t('backend','Удалить'), ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить пользователя?',
+                                    'confirm' => Yii::t('backend','Вы уверены что хотите удалить пользователя?'),
                                     'method' => 'post',
                                 ],
                             ]) ?>
@@ -46,10 +46,10 @@ $this->title = 'Детальная карточка агента';
                 'model' => $model,
                 'attributes' => [
                     [
-                        'label' => 'Зарегистрирован',
+                        'label' => Yii::t('backend','Зарегистрирован'),
                         'value' => function($model){
                             if(is_null($model->created_at)){
-                                return 'Не зарегистрирован';
+                                return Yii::t('backend','Не зарегистрирован');
                             }
                             return date(Yii::$app->params['dateFormat']." H:i",(int)$model->created_at);
                         }
@@ -59,14 +59,14 @@ $this->title = 'Детальная карточка агента';
                     'phone',
                     'price',
                     [
-                        'label'=>'Рабочий статус',
+                        'label'=>Yii::t('backend','Рабочий статус'),
                         'format'=>'raw',
                         'value' =>function($model){
                             return \core\helpers\user\AgentHelper::statusLabel($model->working_status);
                         }
                     ],
                     [
-                        'label'=>'Статус',
+                        'label'=>Yii::t('backend','Статус'),
                         'format'=>'raw',
                         'value' =>function($model){
                             return \core\helpers\user\UserHelper::statusLabel($model->status);
@@ -96,15 +96,15 @@ $this->title = 'Детальная карточка агента';
 
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Агентства и роли</h3>
+            <h3 class="box-title"><?= Yii::t('backend','Агентства и роли') ?></h3>
         </div>
         <div class="box-body">
             <table class="table-condensed table">
                 <thead>
-                <th>Агентство</th>
-                <th>Роль</th>
-                <th>Время назначения</th>
-                <th>Ценообразование</th>
+                <th><?= Yii::t('backend','Агентство') ?></th>
+                <th><?= Yii::t('backend','Роль') ?></th>
+                <th><?= Yii::t('backend','Время назначения') ?></th>
+                <th><?= Yii::t('backend','Ценообразование') ?></th>
                 </thead>
                 <tbody>
                 <?php foreach ($model->agencyAssn as $assn){ ?>
@@ -114,9 +114,9 @@ $this->title = 'Детальная карточка агента';
                         <td><?= date(Yii::$app->params['dateFormat']." H:i",(int)$assn->created_at); ?></td>
                         <td><?php
                             if($assn->agency->agent_price){
-                                echo $assn->agency->agent_price.'/'.\core\entities\agency\Agency::AGENCY_METRIK_LIST[$assn->agency->agent_metrik];
+                                echo $assn->agency->agent_price.'/'.Yii::t('backend',\core\entities\agency\Agency::AGENCY_METRIK_LIST[$assn->agency->agent_metrik]);
                             }else{
-                                echo $assn->agent_price.'/'.\core\entities\agency\Agency::AGENCY_METRIK_LIST[$assn->agent_metrik];
+                                echo $assn->agent_price.'/'.Yii::t('backend',\core\entities\agency\Agency::AGENCY_METRIK_LIST[$assn->agent_metrik]);
                             }
                             ?></td>
                     </tr>

@@ -8,7 +8,6 @@ return [
     'bootstrap'=> [
         'common\bootstrap\SetUp'
     ],
-    'language' => 'ru-RU',
     'components' => [
         'glide' => [
             'class' => 'trntv\glide\components\Glide',
@@ -28,6 +27,18 @@ return [
             'class' => 'yii\swiftmailer\Mailer',
             #'viewPath' => '@common/mail',
             'useFileTransport' => false,
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages', // if advanced application, set @frontend/messages
+                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        //'main' => 'main.php',
+                    ],
+                ],
+            ],
         ],
     ],
 ];

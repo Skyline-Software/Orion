@@ -60,7 +60,8 @@ class CustomerController extends Controller
         if($form->load(\Yii::$app->request->post()) && $form->validate()){
             try{
                 $customer = $this->customerService->create($form);
-                \Yii::$app->session->setFlash('success','Клиент успешно создан');
+                \Yii::$app->session->setFlash('success',
+                    Yii::t('backend','Клиент успешно создан'));
                 return $this->redirect(['view','id'=>$customer->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -86,7 +87,8 @@ class CustomerController extends Controller
         if($form->load(\Yii::$app->request->post()) && $form->validate()){
             try{
                 $customer = $this->customerService->edit($id,$form);
-                \Yii::$app->session->setFlash('success','Клиент успешно отредактирован');
+                \Yii::$app->session->setFlash('success',
+                    Yii::t('backend','Клиент успешно отредактирован'));
                 return $this->redirect(['view','id'=>$customer->id]);
             }catch (\RuntimeException | NotFoundExeption $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
@@ -102,7 +104,8 @@ class CustomerController extends Controller
     public function actionDelete($id){
         try{
             $this->customerService->delete($id);
-            \Yii::$app->session->setFlash('success','Клиент успешно удален');
+            \Yii::$app->session->setFlash('success',
+                Yii::t('backend','Клиент успешно удален'));
         }catch (\RuntimeException | NotFoundExeption $e){
             \Yii::$app->session->setFlash('error',$e->getMessage());
             \Yii::$app->errorHandler->logException($e);
@@ -126,10 +129,10 @@ class CustomerController extends Controller
     public function loadUser($id):?User
     {
         if(array_search($id,Yii::$app->user->getIdentity()->getUserAllowIDs()) === false){
-            throw new Exception('Нет прав',400);
+            throw new Exception(Yii::t('backend','Нет прав'),400);
         }
         if(!$user = User::findOne(['id'=>$id])){
-            throw new NotFoundExeption('Пользователь не найден');
+            throw new NotFoundExeption(Yii::t('backend','Пользователь не найден'));
         }
 
         return $user;

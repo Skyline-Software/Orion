@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 use kartik\widgets\Select2;
 use yii\web\JsExpression;
-$this->title = 'Агентства';
+$this->title = Yii::t('backend','Агентства');
 ?>
 <div class="orders-index">
     <div class="box">
@@ -19,11 +19,11 @@ $this->title = 'Агентства';
             <div class="col-md-8 ">
 
                 <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
-                    <?= Html::a('Добавить агентство', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('backend','Добавить агентство'), ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
 
                 <div class="btn-group btn-group-sm hidden-lg btn-group btn-group-justified hidden-md hidden-sm" role="group">
-                    <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('backend','Добавить'), ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
 
             </div>
@@ -38,7 +38,7 @@ $this->title = 'Агентства';
                 'filterModel' => $searchModel,
                 'columns' => [
                     [
-                        'label'=>'Название',
+                        'label'=>Yii::t('backend','Название'),
                         'attribute'=>'name',
                         'format' => 'raw',
                         'value' => function($model, $key, $index, $column){
@@ -48,7 +48,7 @@ $this->title = 'Агентства';
 
                     ],
                     [
-                        'label'=>'Дата регистрации',
+                        'label'=>Yii::t('backend','Дата регистрации'),
                         'attribute'=>'created_at',
                         'filter' => \kartik\widgets\DatePicker::widget([
                             'model' => $searchModel,
@@ -70,14 +70,14 @@ $this->title = 'Агентства';
                         }
                     ],
                     [
-                        'label'=>'Статус',
+                        'label'=>Yii::t('backend','Статус'),
                         'attribute'=>'status',
                         'content' => function($model){
-                            return $model->status ? 'Вкл.' : 'Выкл';
+                            return $model->status ? Yii::t('backend','Вкл.') : Yii::t('backend','Выкл');
                         },
                         'filter' => [
-                                    1 => 'Вкл.',
-                                    0 => 'Выкл.',
+                                    1 => Yii::t('backend','Вкл.'),
+                                    0 => Yii::t('backend','Выкл.'),
                             ]
 
                     ],
@@ -95,20 +95,20 @@ $this->title = 'Агентства';
                                 return Html::a('<i class="fa fa-stop"></i>',['/manage/agency/change/deactivate','id'=>$model->id],['class'=>'btn']);
                             },
                             'view' => function ($url, $model, $key) {
-                                return Html::a('<i class="fa fa-eye" title="Детальная информация"></i>',$url,['class'=>'btn']);
+                                return Html::a('<i class="fa fa-eye" title="'.Yii::t('backend','Детальная информация').'"></i>',$url,['class'=>'btn']);
                             },
                             'edit' => function ($url, $model, $key) {
                                 if(!Yii::$app->user->getIdentity()->isAdmin()){
                                     return '';
                                 }
-                                return Html::a('<i class="fa fa-edit" title="Редактирование"></i>',$url,['class'=>'btn']);
+                                return Html::a('<i class="fa fa-edit" title="'.Yii::t('backend','Редактирование').'"></i>',$url,['class'=>'btn']);
                             },
                             'delete' => function ($url, $model, $key) {
                                 if(!Yii::$app->user->getIdentity()->isAdmin()){
                                     return '';
                                 }
                                 return Html::a('<i class="fa fa-trash" title="Удаление"></i>',$url,['class'=>'btn','data' => [
-                                    'confirm' => 'Вы уверены что хотите удалить компанию?',
+                                    'confirm' => Yii::t('backend','Вы уверены что хотите удалить агенство?'),
                                     'method' => 'post',
                                 ]]);
                             },
