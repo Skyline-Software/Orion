@@ -15,16 +15,23 @@
 use yii\helpers\ArrayHelper;
 $this->title = 'Статистика';
 
-
-
 ?>
 <div class="row">
     <form action="" method="GET">
-        <div class="col-md-4">
+        <div class="col-md-2">
+            <?=
+            \kartik\widgets\Select2::widget([
+                    'data'=>\core\helpers\AgencyHelper::getAllowedAgencies(),
+                    'name' => 'agency_id',
+                    'value' => ArrayHelper::getValue($_GET,'agency_id'),
+            ]);
+            ?>
+        </div>
+        <div class="col-md-2">
             <?= \kartik\widgets\DatePicker::widget([
                 'name' => 'from',
                 'language'=>'ru',
-                'value' => ArrayHelper::getValue($_GET,'from'),
+                'value' => $from->format('d.m.y'),
                 'options' => ['placeholder' => 'Выберите дату'],
                 'pluginOptions' => [
                     'format' => Yii::$app->params['datepickerFormat'],
@@ -33,10 +40,10 @@ $this->title = 'Статистика';
             ]);
             ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <?= \kartik\widgets\DatePicker::widget([
                 'name' => 'to',
-                'value' => ArrayHelper::getValue($_GET,'to'),
+                'value' => $to->format('d.m.y'),
                 'options' => ['placeholder' => 'Выберите дату'],
                 'pluginOptions' => [
                     'format' => Yii::$app->params['datepickerFormat'],
@@ -45,7 +52,7 @@ $this->title = 'Статистика';
             ]);
             ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <input type="submit" class="btn btn-success" value="Отфильтровать">
         </div>
 
@@ -69,7 +76,7 @@ $this->title = 'Статистика';
             </tr>
             <tr>
                 <td>Заказов</td>
-                <td><?= count($orders); ?></td>
+                <td><?= \yii\helpers\Html::a(count($orders),['/manage/agency/orders','OrdersSearch[status]'=>\core\entities\agency\Order::STATUS_PAYED,'OrdersSearch[agency_id]'=>ArrayHelper::getValue($_GET,'agency_id')]); ?></td>
             </tr>
             </tbody>
         </table>
@@ -104,7 +111,7 @@ $this->title = 'Статистика';
             <tbody>
             <tr>
                 <td>Общая стоимость</td>
-                <td><?= $summ ?></td>
+                <td><?= \yii\helpers\Html::a($summ,['/manage/agency/orders','OrdersSearch[status]'=>\core\entities\agency\Order::STATUS_PAYED,'OrdersSearch[agency_id]'=>ArrayHelper::getValue($_GET,'agency_id')]); ?></td>
             </tr>
             </tbody>
         </table>
