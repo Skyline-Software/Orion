@@ -85,7 +85,6 @@ $this->title = 'Статистика';
                 <?= \dosamigos\chartjs\ChartJs::widget([
                     'type' => 'line',
                     'options' => [
-                        'height' => 400,
                         'width' => 400
                     ],
                     'data' => [
@@ -120,7 +119,6 @@ $this->title = 'Статистика';
                 <?= \dosamigos\chartjs\ChartJs::widget([
                     'type' => 'line',
                     'options' => [
-                        'height' => 400,
                         'width' => 400
                     ],
                     'data' => [
