@@ -104,6 +104,7 @@ $this->title = 'Детальная карточка агента';
                 <th>Агентство</th>
                 <th>Роль</th>
                 <th>Время назначения</th>
+                <th>Ценообразование</th>
                 </thead>
                 <tbody>
                 <?php foreach ($model->agencyAssn as $assn){ ?>
@@ -111,6 +112,13 @@ $this->title = 'Детальная карточка агента';
                         <td><?= $assn->agency->name; ?></td>
                         <td><?= \core\helpers\user\UserHelper::roleName($assn->role); ?></td>
                         <td><?= date(Yii::$app->params['dateFormat']." H:i",(int)$assn->created_at); ?></td>
+                        <td><?php
+                            if($assn->agency->agent_price){
+                                echo $assn->agency->agent_price.'/'.\core\entities\agency\Agency::AGENCY_METRIK_LIST[$assn->agency->agent_metrik];
+                            }else{
+                                echo $assn->agent_price.'/'.\core\entities\agency\Agency::AGENCY_METRIK_LIST[$assn->agent_metrik];
+                            }
+                            ?></td>
                     </tr>
                 <?php } ?>
                 </tbody>

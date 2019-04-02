@@ -97,6 +97,22 @@ $this->title = 'Редактирование профиля';
                         ]
                     ],
                     [
+                        'title' => 'Ценообразование',
+                        'name'  => 'agent_price',
+                    ],
+                    [
+                        'title' => '',
+                        'name'  => 'agent_metrik',
+                        'type' => \kartik\select2\Select2::class,
+                        'defaultValue'=>2,
+                        'options' => [
+                            'data' => [
+                                2 => 'За километр',
+                                1 => 'В час'
+                            ]
+                        ]
+                    ],
+                    [
                         'name'  => 'created_at',
                         'type' => 'hiddenInput',
                         'defaultValue' => time()

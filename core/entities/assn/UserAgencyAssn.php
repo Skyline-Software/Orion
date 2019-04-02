@@ -32,13 +32,15 @@ class UserAgencyAssn extends ActiveRecord
         return 'user_agency_assn';
     }
 
-    public static function assign($user_id, $agency_id, $role = 0):self
+    public static function assign($user_id, $agency_id, $agent_price, $agent_metrik, $role = 0):self
     {
         $assn = new static();
         $assn->user_id = $user_id;
         $assn->agency_id = $agency_id;
         $assn->role = $role;
         $assn->created_at = time();
+        $assn->agent_price = $agent_price;
+        $assn->agent_metrik = $agent_metrik;
 
         return $assn;
     }
@@ -46,7 +48,7 @@ class UserAgencyAssn extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id','agency_id','role','created_at'],'safe']
+            [['user_id','agency_id','role','created_at','agent_price','agent_metrik'],'safe']
         ];
     }
 

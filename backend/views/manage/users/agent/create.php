@@ -1,5 +1,6 @@
 <?php
 /* @var $model \core\forms\manage\user\AgencyAdminForm */
+/* @var $this \yii\web\View */
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -88,7 +89,7 @@ $this->title = 'Создание нового агента';
                         'enableError' => true,
                         'type' => \kartik\select2\Select2::class,
                         'options' => [
-                                'data' => \core\helpers\AgencyHelper::getAllowedAgencies()
+                           'data' => \core\helpers\AgencyHelper::getAllowedAgencies()
                         ]
                     ],
                     [
@@ -98,6 +99,22 @@ $this->title = 'Создание нового агента';
                         'defaultValue'=>\core\entities\user\User::ROLE_AGENT,
                         'options' => [
                             'data' => \core\helpers\user\UserHelper::agencyRoleList()
+                        ]
+                    ],
+                    [
+                        'title' => 'Ценообразование',
+                        'name'  => 'agent_price',
+                    ],
+                    [
+                        'title' => '',
+                        'name'  => 'agent_metrik',
+                        'type' => \kartik\select2\Select2::class,
+                        'defaultValue'=>2,
+                        'options' => [
+                            'data' => [
+                                2 => 'За километр',
+                                1 => 'В час'
+                            ]
                         ]
                     ],
                     [
@@ -116,3 +133,4 @@ $this->title = 'Создание нового агента';
         </div>
     </div>
 </div>
+
