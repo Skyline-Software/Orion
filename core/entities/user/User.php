@@ -370,7 +370,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function isAgencyAdmin($agency_id)
     {
-        return $this->getAgencyAssn()->where(['agency_id'=>$agency_id,'role'=>self::ROLE_AGENCY_ADMIN])->one();
+        return $this->getAgencyAssn()->where(['user_agency_assn.agency_id'=>$agency_id,'user_agency_assn.role'=>self::ROLE_AGENCY_ADMIN])->one();
     }
 
     public function behaviors()
