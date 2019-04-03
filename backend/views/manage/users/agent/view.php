@@ -116,6 +116,7 @@ $this->title = Yii::t('backend','Детальная карточка агент�
                     $assns = $model->agencyAssn;
                     } ?>
                 <?php foreach ($assns as $assn){ ?>
+                    <?php if($assn->role == \core\entities\user\User::ROLE_AGENT){ ?>
                     <tr>
                         <td><?= $assn->agency->name; ?></td>
                         <td><?= \core\helpers\user\UserHelper::roleName($assn->role); ?></td>
@@ -128,6 +129,7 @@ $this->title = Yii::t('backend','Детальная карточка агент�
                             }
                             ?></td>
                     </tr>
+                    <?php } ?>
                 <?php } ?>
                 </tbody>
             </table>
