@@ -51,6 +51,13 @@ $this->title = Yii::t('backend','Детальная карточка агент�
                 'model' => $model,
                 'attributes' => [
                     'name',
+                    [
+                            'format'=>'raw',
+                        'label' => Yii::t('backend','Website'),
+                        'value' => function($model){
+                            return Html::a($model->web_site,$model->web_site,['target'=>'_blank']);
+                        }
+                    ],
                     'web_site',
                     [
                         'label' => Yii::t('backend','Дата регистрации'),
