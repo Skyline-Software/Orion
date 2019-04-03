@@ -60,7 +60,7 @@ $this->title = Yii::t('backend','Детальная карточка агент�
                     'email:email',
                     'name',
                     'phone',
-                    'price',
+                    #'price',
                     [
                         'label'=>Yii::t('backend','Рабочий статус'),
                         'format'=>'raw',
