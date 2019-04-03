@@ -94,7 +94,7 @@ function initMap() {
         var markers = [];
 
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 10,
+            zoom: 15,
             center: myLatlng,
             mapTypeId: 'roadmap'
         });
@@ -292,7 +292,7 @@ function initMap() {
          map.fitBounds(bounds);
 
         var listener = google.maps.event.addListener(map, \"idle\", function () {
-            map.setZoom(10);
+            map.setZoom(15);
             google.maps.event.removeListener(listener);
         });
     }
