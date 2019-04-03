@@ -54,7 +54,6 @@ class DefaultController extends Controller
             try{
                 $this->adminService->edit(\Yii::$app->user->id, $form);
                 Yii::$app->language = $form->profile->language;
-                \Yii::$app->session->setFlash('success',Yii::t('backend','Данные успешно сохранены'));
                 return $this->refresh();
             }catch (\DomainException | \RuntimeException $e){
                 \Yii::$app->session->setFlash('error',$e->getMessage());
