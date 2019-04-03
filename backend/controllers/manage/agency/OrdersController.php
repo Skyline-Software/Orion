@@ -38,8 +38,8 @@ class OrdersController extends Controller
                    $form->agency_id,
                    $form->agent_id,
                    $form->user_id,
-                   $form->start_coordinates,
-                   $form->end_coordinates,
+                   implode(',',[$form->lat1,$form->lon1]),
+                   implode(',',[$form->lat2,$form->lon2]),
                    $form->price,
                    $form->start_time,
                    $form->status
@@ -78,8 +78,8 @@ class OrdersController extends Controller
                     $form->agency_id,
                     $form->agent_id,
                     $form->user_id,
-                    $form->start_coordinates,
-                    $form->end_coordinates,
+                    implode(',',[$form->lat1,$form->lon1]),
+                    implode(',',[$form->lat2,$form->lon2]),
                     $form->price,
                     $form->start_time,
                     $form->status

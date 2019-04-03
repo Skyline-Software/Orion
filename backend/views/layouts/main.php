@@ -20,6 +20,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
     <?php $this->head() ?>
     <link rel="icon" type="image/png" href="/fav.png" />
     <link rel="apple-touch-icon" href="/fav.png" />
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <?php $this->beginBody() ?>

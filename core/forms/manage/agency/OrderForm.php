@@ -38,11 +38,21 @@ class OrderForm extends Model
     public $rating;
     public $comment;
     public $status;
+    public $lat1;
+    public $lon1;
+    public $lat2;
+    public $lon2;
 
     public function __construct(Order $agency = null, array $config = [])
     {
         if($agency){
             $this->setAttributes($agency->getAttributes(),false);
+            $coords1 = explode(',',$agency->start_coordinates);
+            $coords2 = explode(',',$agency->end_coordinates);
+            $this->lat1 = $coords1[0];
+            $this->lon1 = $coords1[1];
+            $this->lat2 = $coords2[0];
+            $this->lon2 = $coords2[1];
         }
         parent::__construct($config);
     }
@@ -52,7 +62,8 @@ class OrderForm extends Model
         return [
             [['agency_id','agent_id','user_id','start_coordinates','end_coordinates','start_time','end_time','price'],'safe'],
             [['status'],'integer'],
-            [['rating','comment','end_time'],'safe']
+            [['rating','comment','end_time'],'safe'],
+            [['lat1','lat2','lon1','lon2'],'required']
         ];
     }
 

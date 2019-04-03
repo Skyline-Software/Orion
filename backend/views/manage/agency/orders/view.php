@@ -4,6 +4,8 @@ use yii\widgets\DetailView;
 use yii\grid\GridView;
 /* @var $model \core\entities\agency\Agency */
 $this->title = Yii::t('backend','Детальная карточка заказа');
+$coords1 = explode(',',$model->start_coordinates);
+$coords2 = explode(',',$model->end_coordinates);
 ?>
 <div class="user-view">
     <div class="box ">
@@ -104,43 +106,35 @@ $this->title = Yii::t('backend','Детальная карточка заказ�
                     ],
                 ],
             ]) ?>
-            <h3><?= Yii::t('backend','Начальное положение'); ?></h3>
-            <?php
-            $coords = explode(',',$model->start_coordinates);
-            echo \pigolab\locationpicker\LocationPickerWidget::widget([
-                'key' => 'AIzaSyATAHGMoZ0B9U2akKcrFESRwETYlWC_4s0',	// require , Put your google map api key
-                'options' => [
-                    'style' => 'width: 100%; height: 400px', // map canvas width and height
-                ] ,
-                'clientOptions' => [
-                    'location' => [
-                        'latitude'  => \yii\helpers\ArrayHelper::getValue($coords,0) ,
-                        'longitude' => \yii\helpers\ArrayHelper::getValue($coords,1) ,
-                    ],
-                    'radius'    => 300,
-                    'addressFormat' => 'street_number',
-                ]
-            ]);
-            ?>
-            <h3><?= Yii::t('backend','Конечное положение'); ?></h3>
-            <?php
-            $coords = explode(',',$model->end_coordinates);
-            echo \pigolab\locationpicker\LocationPickerWidget::widget([
-                'key' => 'AIzaSyATAHGMoZ0B9U2akKcrFESRwETYlWC_4s0',	// require , Put your google map api key
-                'options' => [
-                    'style' => 'width: 100%; height: 400px', // map canvas width and height
-                ] ,
-                'clientOptions' => [
-                    'location' => [
-                        'latitude'  => \yii\helpers\ArrayHelper::getValue($coords,0) ,
-                        'longitude' => \yii\helpers\ArrayHelper::getValue($coords,1) ,
-                    ],
-                    'radius'    => 300,
-                    'addressFormat' => 'street_number',
-                ]
-            ]);
-            ?>
-
+            <h3><?= Yii::t('backend','Map'); ?></h3>
+            <div id="map" style="height: 500px;"></div>
         </div>
     </div>
 </div>
+<?php $this->registerJs("
+function initMap() {
+        var myLatlng = {lat: $coords1[0], lng: $coords1[1]};
+        var markers = [];
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: myLatlng,
+            mapTypeId: 'roadmap'
+        });
+        
+        var preSetupedFrom = new google.maps.Marker({
+                map: map,
+                title: 'From',
+                position: {lat: $coords1[0], lng: $coords1[1]},
+        });
+         var preSetapedTo = new google.maps.Marker({
+                map: map,
+                title: 'To',
+                position: {lat: $coords2[0], lng: $coords2[1]},
+        });
+    }
+",\yii\web\View::POS_BEGIN);
+?>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATAHGMoZ0B9U2akKcrFESRwETYlWC_4s0&libraries=places&&callback=initMap">
+</script>
