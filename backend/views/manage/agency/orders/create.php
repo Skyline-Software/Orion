@@ -255,7 +255,7 @@ function initMap() {
 
         }
     }
-",\yii\web\View::POS_END);
+",\yii\web\View::POS_BEGIN);
 ?>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATAHGMoZ0B9U2akKcrFESRwETYlWC_4s0&libraries=places&&callback=initMap">
