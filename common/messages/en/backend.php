@@ -50,6 +50,7 @@ return [
     'Администраторы агентства' => 'Administrators of agency',
     'Адрес' => 'Address',
     'Аккаунт' => 'Account',
+    'Войти' => 'Account',
     'Активен' => 'Active',
     'В час' => 'Per hour',
     'Веб-сайт' => 'Website',
