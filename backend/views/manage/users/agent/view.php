@@ -2,6 +2,7 @@
 
 use core\helpers\AgencyHelper;
 use yii\bootstrap\Html;
+use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use yii\widgets\DetailView;
 /* @var $model \core\entities\user\User */
@@ -123,7 +124,7 @@ $this->title = Yii::t('backend','Детальная карточка агент�
                             if($assn->agency->agent_price){
                                 echo $assn->agency->agent_price.'/'.Yii::t('backend',\core\entities\agency\Agency::AGENCY_METRIK_LIST[$assn->agency->agent_metrik]);
                             }else{
-                                echo $assn->agent_price.'/'.Yii::t('backend',\core\entities\agency\Agency::AGENCY_METRIK_LIST[$assn->agent_metrik]);
+                                echo $assn->agent_price.'/'.Yii::t('backend',ArrayHelper::getValue(\core\entities\agency\Agency::AGENCY_METRIK_LIST,$assn->agent_metrik));
                             }
                             ?></td>
                     </tr>
