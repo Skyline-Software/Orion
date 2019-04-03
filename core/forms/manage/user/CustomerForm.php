@@ -15,6 +15,7 @@ use core\entities\user\User;
 use core\forms\ImageForm;
 use core\forms\MultipleInputForm;
 use elisdn\compositeForm\CompositeForm;
+use Yii;
 
 /**
  * Class ManagerForm

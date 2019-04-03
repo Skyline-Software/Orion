@@ -3,6 +3,8 @@
 /* @var $this \yii\web\View */
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use Yii;
+
 $this->title = Yii::t('backend','Редактирование профиля');
 $this->registerJs("
 var select = document.getElementById('customerform-status').getElementsByTagName('option');

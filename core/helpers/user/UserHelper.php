@@ -29,9 +29,9 @@ class UserHelper
     public static function agencyRoleList(): array
     {
         return [
-            User::ROLE_AGENCY_ADMIN => 'Администратор агентства',
-            User::ROLE_AGENT => 'Агент',
-            User::ROLE_CUSTOMER => 'Пользователь'
+            User::ROLE_AGENCY_ADMIN => Yii::t('backend','Администратор агентства'),
+            User::ROLE_AGENT => Yii::t('backend','Агент'),
+            User::ROLE_CUSTOMER => Yii::t('backend','Пользователь')
         ];
     }
 
