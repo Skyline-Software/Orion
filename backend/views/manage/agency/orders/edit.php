@@ -286,6 +286,15 @@ function initMap() {
             document.getElementById('orderform-lat2').value = location.latLng.lat();
             document.getElementById('orderform-lon2').value = location.latLng.lng();
          });
+         bounds.extend(preSetupedFrom.position);
+         bounds.extend(preSetapedTo.position);
+
+         map.fitBounds(bounds);
+
+        var listener = google.maps.event.addListener(map, \"idle\", function () {
+            map.setZoom(3);
+            google.maps.event.removeListener(listener);
+        });
     }
 ",\yii\web\View::POS_BEGIN);
 ?>

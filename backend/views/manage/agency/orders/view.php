@@ -132,6 +132,15 @@ function initMap() {
                 title: 'To',
                 position: {lat: $coords2[0], lng: $coords2[1]},
         });
+        bounds.extend(preSetupedFrom.position);
+         bounds.extend(preSetapedTo.position);
+
+         map.fitBounds(bounds);
+
+        var listener = google.maps.event.addListener(map, \"idle\", function () {
+            map.setZoom(3);
+            google.maps.event.removeListener(listener);
+        });
     }
 ",\yii\web\View::POS_BEGIN);
 ?>
