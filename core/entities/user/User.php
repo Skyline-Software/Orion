@@ -365,7 +365,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getAgencyAssn():ActiveQuery
     {
-        return $this->hasMany(UserAgencyAssn::class,['user_agency_assn.user_id'=>'id']);
+        return $this->hasMany(UserAgencyAssn::class,['user_id'=>'id']);
     }
 
     public function isAgencyAdmin($agency_id)
