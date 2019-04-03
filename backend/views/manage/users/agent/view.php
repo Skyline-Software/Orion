@@ -1,4 +1,6 @@
 <?php
+
+use core\helpers\AgencyHelper;
 use yii\bootstrap\Html;
 use yii\web\JsExpression;
 use yii\widgets\DetailView;
@@ -107,7 +109,12 @@ $this->title = Yii::t('backend','Детальная карточка агент�
                 <th><?= Yii::t('backend','Ценообразование') ?></th>
                 </thead>
                 <tbody>
-                <?php foreach ($model->agencyAssn as $assn){ ?>
+                <?php if(!Yii::$app->user->identity->isAdmin()){
+                        $assns = $model->getAgencyAssn()->where(['in','agency_id',AgencyHelper::getAllowedAgenciesIds()])->all();
+                    }else{
+                    $assns = $model->agencyAssn;
+                    } ?>
+                <?php foreach ($assns as $assn){ ?>
                     <tr>
                         <td><?= $assn->agency->name; ?></td>
                         <td><?= \core\helpers\user\UserHelper::roleName($assn->role); ?></td>
