@@ -14,6 +14,7 @@ use core\entities\Rows;
 use core\entities\user\User;
 use core\forms\ImageForm;
 use core\forms\MultipleInputForm;
+use core\helpers\AgencyHelper;
 use elisdn\compositeForm\CompositeForm;
 use Yii;
 
@@ -42,7 +43,7 @@ class AgencyAdminForm extends CompositeForm
             $this->status = $user->status;
             $this->profile = new ProfileForm($user->profile);
             $this->photo = new ImageForm('PhotoForm', new Image($user->profile->photo));
-            $this->agencies = new MultipleInputForm('AgenciesForm', new Rows($user->agencyAssn));
+            $this->agencies = new MultipleInputForm('AgenciesForm', new Rows($user->getAgencyAssn()->where(['in','agency_id',AgencyHelper::getAllowedAgenciesIds()])));
 
             $this->_user = $user;
         }else{

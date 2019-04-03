@@ -131,10 +131,15 @@ $this->title = Yii::t('backend','Заказы');
                                 return Html::a('<i class="fa fa-eye" title="'.Yii::t('backend','Детальная информация').'"></i>',$url,['class'=>'btn']);
                             },
                             'edit' => function ($url, $model, $key) {
-                                if(!Yii::$app->user->getIdentity()->isAdmin()){
-                                    return '';
+                                if(Yii::$app->user->getIdentity()->isAgencyAdmin($model->agency_id)){
+                                    return Html::a('<i class="fa fa-edit" title="'.Yii::t('backend','Редактирование').'"></i>',$url,['class'=>'btn']);
                                 }
-                                return Html::a('<i class="fa fa-edit" title="'.Yii::t('backend','Редактирование').'"></i>',$url,['class'=>'btn']);
+                                if(Yii::$app->user->getIdentity()->isAdmin()){
+                                    return Html::a('<i class="fa fa-edit" title="'.Yii::t('backend','Редактирование').'"></i>',$url,['class'=>'btn']);
+
+                                }
+                                return '';
+
                             },
                             'delete' => function ($url, $model, $key) {
                                 if(!Yii::$app->user->getIdentity()->isAdmin()){

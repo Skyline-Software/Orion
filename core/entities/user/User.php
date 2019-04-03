@@ -368,6 +368,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(UserAgencyAssn::class,['user_id'=>'id']);
     }
 
+    public function isAgencyAdmin($agency_id)
+    {
+        return $this->getAgencyAssn()->where(['agency_id'=>$agency_id,'role'=>self::ROLE_AGENCY_ADMIN])->one();
+    }
+
     public function behaviors()
     {
         return [

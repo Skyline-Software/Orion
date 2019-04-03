@@ -11,13 +11,13 @@ use yii\web\JsExpression;
 $this->title = Yii::t('backend','Агентства');
 ?>
 <div class="orders-index">
+    <?php if(Yii::$app->user->identity->isAdmin()){ ?>
     <div class="box">
         <div class="box-body">
             <div class="col-md-4">
                 <p class="lead"><?= Yii::t('backend','Управление:'); ?></p>
             </div>
             <div class="col-md-8 ">
-
                 <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
                     <?= Html::a(Yii::t('backend','Добавить агентство'), ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
@@ -29,6 +29,7 @@ $this->title = Yii::t('backend','Агентства');
             </div>
         </div>
     </div>
+    <?php } ?>
     <div class="box">
         <div class="box-body">
             <div class="table-responsive">
