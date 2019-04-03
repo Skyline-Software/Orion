@@ -43,7 +43,11 @@ class AgencyAdminForm extends CompositeForm
             $this->status = $user->status;
             $this->profile = new ProfileForm($user->profile);
             $this->photo = new ImageForm('PhotoForm', new Image($user->profile->photo));
-            $this->agencies = new MultipleInputForm('AgenciesForm', new Rows($user->getAgencyAssn()->where(['in','user_agency_assn.agency_id',AgencyHelper::getAllowedAgenciesIds()])));
+            if(!Yii::$app->user->identity->isAdmin()){
+                $this->agencies = new MultipleInputForm('AgenciesForm', new Rows($user->getAgencyAssn()->where(['in','agency_id',AgencyHelper::getAllowedAgenciesIds()])->all()));
+            }else{
+                $this->agencies = new MultipleInputForm('AgenciesForm', new Rows($user->agencyAssn));
+            }
 
             $this->_user = $user;
         }else{
