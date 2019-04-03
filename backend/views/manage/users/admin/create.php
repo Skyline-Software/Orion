@@ -33,8 +33,8 @@ $this->title = Yii::t('backend','Создание нового админист�
             )->label(Yii::t('backend','Фото')); ?>
 
             <?= $form->field($model->profile,'language')->dropDownList([
-                'ru' => Yii::t('backend','Ru'),
                 'en' => Yii::t('backend','En'),
+                'ru' => Yii::t('backend','Ru'),
             ]); ?>
 
             <div class="form-group">

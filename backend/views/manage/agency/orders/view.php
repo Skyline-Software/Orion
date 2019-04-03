@@ -101,7 +101,7 @@ $coords2 = explode(',',$model->end_coordinates);
                     [
                         'label' => Yii::t('backend','Статус'),
                         'value' => function($model){
-                            return \core\entities\agency\Order::STATUS_LIST[$model->status];
+                            return Yii::t('backend',\core\entities\agency\Order::STATUS_LIST[$model->status]);
                         }
                     ],
                 ],

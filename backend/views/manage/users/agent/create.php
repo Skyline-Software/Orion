@@ -41,8 +41,8 @@ $this->title = Yii::t('backend','Создание нового агента');
             )->label(Yii::t('backend','Фото')); ?>
 
             <?= $form->field($model->profile,'language')->dropDownList([
-                'ru' => Yii::t('backend','Ru'),
                 'en' => Yii::t('backend','En'),
+                'ru' => Yii::t('backend','Ru'),
             ]); ?>
 
             <?= $form->field($model,'working_status')->dropDownList(\core\helpers\user\AgentHelper::roleList()); ?>

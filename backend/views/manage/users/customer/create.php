@@ -42,8 +42,8 @@ select[0].disabled = true;
             )->label(Yii::t('backend','Фото')); ?>
 
             <?= $form->field($model->profile,'language')->dropDownList([
-                'ru' => Yii::t('backend','Ru'),
                 'en' => Yii::t('backend','En'),
+                'ru' => Yii::t('backend','Ru'),
             ]); ?>
 
             <?= $form->field($model->agencies, 'config')->widget(\unclead\multipleinput\MultipleInput::className(), [
