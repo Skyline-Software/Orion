@@ -51,7 +51,7 @@ return [
     'Адрес' => 'Address',
     'Аккаунт' => 'Account',
     'Активен' => 'Active',
-    'В час' => 'per hour',
+    'В час' => 'Per hour',
     'Веб-сайт' => 'Website',
     'Вкл.' => 'On',
     'Время назначения' => 'Time of create',
