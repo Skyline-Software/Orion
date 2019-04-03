@@ -34,7 +34,7 @@ $this->title = Yii::t('backend','Редактирование агентства
                     'url' => ['/file-storage/upload','type'=>'AgencyForm.LogoForm'],
                     'maxFileSize' => 5000000,
                 ]
-            )->label('Лого'); ?>
+            )->label(Yii::t('backend','Лого')); ?>
             <?= $form->field($model,'status')->dropDownList(
                 [
                     1 => Yii::t('backend','Вкл.'),

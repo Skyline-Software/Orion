@@ -10,7 +10,7 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'name' => 'Orion',
-    'language' => 'en',
+    'language' => 'en-EN',
     'controllerNamespace' => 'backend\controllers',
     'defaultRoute' => 'manage/users/admin/index',
     'bootstrap' => ['log'],
@@ -70,7 +70,9 @@ return [
     ],
     'params' => $params,
     'on beforeAction' => function($event) {
-        Yii::$app->language = Yii::$app->user->identity->language;
+        if(!Yii::$app->user->isGuest){
+            Yii::$app->language = Yii::$app->user->identity->getLang();
+        }
     } ,
     'as beforeRequest' => [
         'class' => 'yii\filters\AccessControl',

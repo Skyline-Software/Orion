@@ -30,7 +30,7 @@ $this->title = Yii::t('backend','Редактирование профиля');
                     'url' => ['/file-storage/upload','type'=>'AdminForm.PhotoForm'],
                     'maxFileSize' => 5000000,
                 ]
-            )->label('Фото'); ?>
+            )->label(Yii::t('backend','Фото')); ?>
 
             <?= $form->field($model->profile,'language')->dropDownList([
                 'ru' => Yii::t('backend','Ru'),

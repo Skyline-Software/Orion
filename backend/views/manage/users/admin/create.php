@@ -30,11 +30,11 @@ $this->title = Yii::t('backend','Создание нового админист�
                     'url' => ['/file-storage/upload','type'=>'AdminForm.PhotoForm'],
                     'maxFileSize' => 5000000,
                 ]
-            )->label('Фото'); ?>
+            )->label(Yii::t('backend','Фото')); ?>
 
             <?= $form->field($model->profile,'language')->dropDownList([
-                'ru' => 'Ru',
-                'en' => 'En',
+                'ru' => Yii::t('backend','Ru'),
+                'en' => Yii::t('backend','En'),
             ]); ?>
 
             <div class="form-group">

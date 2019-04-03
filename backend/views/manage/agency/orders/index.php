@@ -16,10 +16,9 @@ $this->title = Yii::t('backend','Заказы');
     <div class="box">
         <div class="box-body">
             <div class="col-md-4">
-                <p class="lead">Управление:</p>
+                <p class="lead"><?= Yii::t('backend','Управление:') ?></p>
             </div>
             <div class="col-md-8 ">
-
                 <div class="btn-group btn-group-lg btn-group btn-group-justified hidden-xs" role="group">
                     <?= Html::a(Yii::t('backend','Добавить заказ'), ['create'], ['class' => 'btn btn-primary']) ?>
                 </div>
@@ -118,7 +117,10 @@ $this->title = Yii::t('backend','Заказы');
                         'content' => function($model){
                             return Yii::t('backend',$model::STATUS_LIST[$model->status]);
                         },
-                        'filter' => \core\entities\agency\Order::STATUS_LIST
+                        'filter' => [
+                            \core\entities\agency\Order::STATUS_NOT_PAYED => Yii::t('backend','Не оплачен'),
+                            \core\entities\agency\Order::STATUS_PAYED => Yii::t('backend','Оплачен'),
+                        ]
 
                     ],
                     [

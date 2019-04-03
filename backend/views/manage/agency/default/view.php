@@ -62,7 +62,7 @@ $this->title = Yii::t('backend','Детальная карточка агент�
                         'label' => Yii::t('backend','Цена агента'),
                         'value' => function($model){
                             if($model->agent_price){
-                                return $model->agent_price.'/'.\core\entities\agency\Agency::AGENCY_METRIK_LIST[$model->agent_metrik];
+                                return $model->agent_price.'/'.Yii::t('backend',\core\entities\agency\Agency::AGENCY_METRIK_LIST[$model->agent_metrik]);
                             }
                             return Yii::t('backend','Агент может назначать свою цену');
                         }

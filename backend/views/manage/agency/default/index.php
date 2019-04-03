@@ -14,7 +14,7 @@ $this->title = Yii::t('backend','Агентства');
     <div class="box">
         <div class="box-body">
             <div class="col-md-4">
-                <p class="lead">Управление:</p>
+                <p class="lead"><?= Yii::t('backend','Управление:'); ?></p>
             </div>
             <div class="col-md-8 ">
 

@@ -10,6 +10,7 @@ namespace core\helpers\user;
 
 
 use core\entities\user\User;
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -18,10 +19,10 @@ class AgentHelper
     public static function roleList(): array
     {
         return [
-            User::WORKING_STATUS_READY => 'Готов к работе',
-            User::WORKING_STATUS_IN_PROCESS => 'Выполняю заказ',
-            User::WORKING_STATUS_REST => 'Не готов к работе',
-            User::WORKING_STATUS_BANNED => 'Заблокирован',
+            User::WORKING_STATUS_READY => Yii::t('backend','Готов к работе'),
+            User::WORKING_STATUS_IN_PROCESS => Yii::t('backend','Выполняю заказ'),
+            User::WORKING_STATUS_REST => Yii::t('backend','Не готов к работе'),
+            User::WORKING_STATUS_BANNED => Yii::t('backend','Заблокирован'),
         ];
     }
 

@@ -414,7 +414,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     public function getLang(){
-        if($this->language = 'ru'){
+        if($this->language == 'ru'){
             return 'ru-RU';
         }
         return 'en-EN';
