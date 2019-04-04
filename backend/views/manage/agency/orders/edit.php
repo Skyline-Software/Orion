@@ -82,6 +82,7 @@ $this->title = 'Редактирование заказа';
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('backend','Сохранить'),['class'=>'btn btn-primary']); ?>
+                <?= Html::a(Yii::t('backend','Cancel'), ['index'], ['class'=>'btn btn-danger']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
