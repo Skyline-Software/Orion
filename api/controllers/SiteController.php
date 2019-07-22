@@ -49,6 +49,5 @@ class SiteController extends Controller
         $rec = RecipientList::find()->where(['id'=>$id])->one();
         $rec->status = RecipientList::WATCHED;
         $rec->update(false);
-        echo 'https://api.ulitsarubinshteina.ru/dot.png';
     }
 }
