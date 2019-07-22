@@ -78,13 +78,13 @@ $requirements = array(
         'memo' => 'Required for PostgreSQL database.',
     ),
     // Cache :
-    array(
-        'name' => 'Memcache extension',
-        'mandatory' => false,
-        'condition' => extension_loaded('memcache') || extension_loaded('memcached'),
-        'by' => '<a href="http://www.yiiframework.com/doc-2.0/yii-caching-memcache.html">MemCache</a>',
-        'memo' => extension_loaded('memcached') ? 'To use memcached set <a href="http://www.yiiframework.com/doc-2.0/yii-caching-memcache.html#$useMemcached-detail">MemCache::useMemcached</a> to <code>true</code>.' : ''
-    ),
+    // array(
+    //     'name' => 'Memcache extension',
+    //     'mandatory' => false,
+    //     'condition' => extension_loaded('memcache') || extension_loaded('memcached'),
+    //     'by' => '<a href="http://www.yiiframework.com/doc-2.0/yii-caching-memcache.html">MemCache</a>',
+    //     'memo' => extension_loaded('memcached') ? 'To use memcached set <a href="http://www.yiiframework.com/doc-2.0/yii-caching-memcache.html#$useMemcached-detail">MemCache::useMemcached</a> to <code>true</code>.' : ''
+    // ),
     array(
         'name' => 'APC extension',
         'mandatory' => false,
@@ -121,12 +121,12 @@ $requirements = array(
         'by' => 'Security reasons',
         'memo' => '"allow_url_include" should be disabled at php.ini',
     ),
-    'phpSmtp' => array(
-        'name' => 'PHP mail SMTP',
-        'mandatory' => false,
-        'condition' => strlen(ini_get('SMTP')) > 0,
-        'by' => 'Email sending',
-        'memo' => 'PHP mail SMTP server required',
-    ),
+    // 'phpSmtp' => array(
+    //     'name' => 'PHP mail SMTP',
+    //     'mandatory' => false,
+    //     'condition' => strlen(ini_get('SMTP')) > 0,
+    //     'by' => 'Email sending',
+    //     'memo' => 'PHP mail SMTP server required',
+    // ),
 );
 $requirementsChecker->checkYii()->check($requirements)->render();

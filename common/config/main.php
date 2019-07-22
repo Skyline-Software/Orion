@@ -17,7 +17,7 @@ return [
         ],
         'cache' => [
             'class' => 'yii\caching\MemCache',
-            'useMemcached' => true
+            'useMemcached' => false
         ],
         'fcm' => [
             'class' => 'understeam\fcm\Client',
