@@ -15,10 +15,6 @@ return [
             'cachePath' => '@runtime/glide',
             'signKey' => false // "false" if you do not want to use HTTP signatures
         ],
-        'cache' => [
-            'class' => 'yii\caching\MemCache',
-            'useMemcached' => false
-        ],
         'fcm' => [
             'class' => 'understeam\fcm\Client',
             'apiKey' => 'AAAAEPFFJ_o:APA91bEoU3Vz1z8-bH3wJ9hFrjp724Az4RCJq4CvNQPwJ1BTO1xLN6DMa9DAG48nKdHwXzvZnWIkwhzQXUDXElTrsxgwQOiG_7nrb-B9eoqg4ZmaymgV_obeR_uspwqmNn75Iw0ujiS9',
