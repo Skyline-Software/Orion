@@ -75,6 +75,6 @@
         }
     ],
     "scripts": {
-        "post-install-cmd": "php init --env=Production --overwrite=n"
+        "post-install-cmd": "sh post-install-cmd.sh"
     }
 }
