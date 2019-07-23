@@ -33,8 +33,7 @@ class AuthController extends Controller
 
         $form = new LoginForm();
         if ($form->load(Yii::$app->request->post())) {
-          echo 'POSTPOSTPOST'
-            // try{
+            try{
                 $user = $this->_authService->auth($form);
                 if(!$user->isUserHasAdminRights()){
                     Yii::$app->session->setFlash('error',Yii::t('backend','У вас нет прав'));
@@ -43,10 +42,10 @@ class AuthController extends Controller
                 Yii::$app->user->login($user,$form->rememberMe ? 3600 * 24 * 30 : 0);
 
                 return $this->redirect(['/manage/agency/default']);
-            // }catch (\DomainException $e){
-                // Yii::$app->errorHandler->logException($e);
-                // Yii::$app->session->setFlash('error',$e->getMessage());
-            // }
+            }catch (\DomainException $e){
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error',$e->getMessage());
+            }
         }
 
         return $this->render('login', [
