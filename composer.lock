@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10d4212393bfb445cc96f022efc2c6b4",
+    "content-hash": "cf292a138c049993a4c029489160a0d7",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -934,6 +934,45 @@
             ],
             "description": "Flexible Stub wrapper for PHPUnit's Mock Builder",
             "time": "2018-07-26T11:55:37+00:00"
+        },
+        {
+            "name": "codemix/yii2-streamlog",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codemix/yii2-streamlog.git",
+                "reference": "46717733b46a91dd323888349b323fb0bd989e2e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codemix/yii2-streamlog/zipball/46717733b46a91dd323888349b323fb0bd989e2e",
+                "reference": "46717733b46a91dd323888349b323fb0bd989e2e",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "codemix\\streamlog\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Härtl",
+                    "email": "haertl.mike@gmail.com"
+                }
+            ],
+            "description": "A Yii 2 log target for streams in URL format",
+            "keywords": [
+                "log",
+                "stdout",
+                "stream",
+                "yii2"
+            ],
+            "time": "2017-02-16T14:50:01+00:00"
         },
         {
             "name": "composer/installers",
@@ -8523,7 +8562,8 @@
         "flow/jsonpath": 20,
         "delikates-nsk/yii2-tree-dropdown": 20,
         "kartik-v/yii2-widget-select2": 20,
-        "kartik-v/yii2-widget-depdrop": 20
+        "kartik-v/yii2-widget-depdrop": 20,
+        "codemix/yii2-streamlog": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
